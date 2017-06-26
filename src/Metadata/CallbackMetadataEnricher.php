@@ -1,6 +1,6 @@
 <?php
 
-namespace Accordia\MessageBus\Metadata;
+namespace Daikon\MessageBus\Metadata;
 
 final class CallbackMetadataEnricher implements MetadataEnricherInterface
 {

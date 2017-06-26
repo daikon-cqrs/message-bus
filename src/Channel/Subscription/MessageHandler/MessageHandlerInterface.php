@@ -1,8 +1,8 @@
 <?php
 
-namespace Accordia\MessageBus\Channel\Subscription\MessageHandler;
+namespace Daikon\MessageBus\Channel\Subscription\MessageHandler;
 
-use Accordia\MessageBus\EnvelopeInterface;
+use Daikon\MessageBus\EnvelopeInterface;
 
 interface MessageHandlerInterface
 {

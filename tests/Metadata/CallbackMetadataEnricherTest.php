@@ -1,9 +1,9 @@
 <?php
 
-namespace Accordia\Tests\MessageBus\Metadata;
+namespace Daikon\Tests\MessageBus\Metadata;
 
-use Accordia\MessageBus\Metadata\CallbackMetadataEnricher;
-use Accordia\MessageBus\Metadata\Metadata;
+use Daikon\MessageBus\Metadata\CallbackMetadataEnricher;
+use Daikon\MessageBus\Metadata\Metadata;
 use PHPUnit\Framework\TestCase;
 
 final class CallbackMetadataEnricherTest extends TestCase

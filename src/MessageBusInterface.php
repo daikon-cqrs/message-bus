@@ -1,8 +1,8 @@
 <?php
 
-namespace Accordia\MessageBus;
+namespace Daikon\MessageBus;
 
-use Accordia\MessageBus\Metadata\Metadata;
+use Daikon\MessageBus\Metadata\Metadata;
 
 interface MessageBusInterface
 {

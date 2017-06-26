@@ -1,16 +1,16 @@
 <?php
 
-namespace Accordia\Tests\MessageBus;
+namespace Daikon\Tests\MessageBus;
 
-use Accordia\MessageBus\Channel\ChannelInterface;
-use Accordia\MessageBus\Channel\ChannelMap;
-use Accordia\MessageBus\Envelope;
-use Accordia\MessageBus\EnvelopeInterface;
-use Accordia\MessageBus\Error\ChannelUnknown;
-use Accordia\MessageBus\Error\EnvelopeNotAcceptable;
-use Accordia\MessageBus\MessageBus;
-use Accordia\MessageBus\MessageInterface;
-use Accordia\MessageBus\Metadata\Metadata;
+use Daikon\MessageBus\Channel\ChannelInterface;
+use Daikon\MessageBus\Channel\ChannelMap;
+use Daikon\MessageBus\Envelope;
+use Daikon\MessageBus\EnvelopeInterface;
+use Daikon\MessageBus\Error\ChannelUnknown;
+use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
+use Daikon\MessageBus\MessageBus;
+use Daikon\MessageBus\MessageInterface;
+use Daikon\MessageBus\Metadata\Metadata;
 use PHPUnit\Framework\TestCase;
 
 final class MessageBusTest extends TestCase

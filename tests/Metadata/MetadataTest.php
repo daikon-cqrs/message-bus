@@ -1,8 +1,8 @@
 <?php
 
-namespace Accordia\Tests\MessageBus\Metadata;
+namespace Daikon\Tests\MessageBus\Metadata;
 
-use Accordia\MessageBus\Metadata\Metadata;
+use Daikon\MessageBus\Metadata\Metadata;
 use PHPUnit\Framework\TestCase;
 
 final class MetadataTest extends TestCase

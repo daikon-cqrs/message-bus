@@ -1,6 +1,6 @@
 <?php
 
-namespace Accordia\MessageBus;
+namespace Daikon\MessageBus;
 
 trait FromArrayTrait
 {

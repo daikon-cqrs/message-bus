@@ -1,18 +1,18 @@
 <?php
 
-namespace Accordia\Tests\MessageBus\Channel;
+namespace Daikon\Tests\MessageBus\Channel;
 
-use Accordia\MessageBus\Channel\Channel;
-use Accordia\MessageBus\Channel\ChannelInterface;
-use Accordia\MessageBus\Channel\Subscription\SubscriptionInterface;
-use Accordia\MessageBus\Channel\Subscription\SubscriptionMap;
-use Accordia\MessageBus\Envelope;
-use Accordia\MessageBus\EnvelopeInterface;
-use Accordia\MessageBus\Error\EnvelopeNotAcceptable;
-use Accordia\MessageBus\Error\SubscriptionUnknown;
-use Accordia\MessageBus\MessageBusInterface;
-use Accordia\MessageBus\MessageInterface;
-use Accordia\MessageBus\Metadata\Metadata;
+use Daikon\MessageBus\Channel\Channel;
+use Daikon\MessageBus\Channel\ChannelInterface;
+use Daikon\MessageBus\Channel\Subscription\SubscriptionInterface;
+use Daikon\MessageBus\Channel\Subscription\SubscriptionMap;
+use Daikon\MessageBus\Envelope;
+use Daikon\MessageBus\EnvelopeInterface;
+use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
+use Daikon\MessageBus\Error\SubscriptionUnknown;
+use Daikon\MessageBus\MessageBusInterface;
+use Daikon\MessageBus\MessageInterface;
+use Daikon\MessageBus\Metadata\Metadata;
 use PHPUnit\Framework\TestCase;
 
 final class ChannelTest extends TestCase

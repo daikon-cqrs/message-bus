@@ -1,6 +1,6 @@
 <?php
 
-namespace Accordia\Tests\MessageBus\Fixture;
+namespace Daikon\Tests\MessageBus\Fixture;
 
 final class Username
 {

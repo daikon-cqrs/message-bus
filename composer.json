@@ -6,7 +6,6 @@
     "homepage": "https://github.com/accordia/message-bus",
     "license": "MPL-2.0",
     "prefer-stable": true,
-    "minimum-stability": "dev",
     "require": {
         "php": ">=7.1",
         "accordia/data-structures": "master@dev",
@@ -18,10 +17,10 @@
         "satooshi/php-coveralls": "master@dev"
     },
     "autoload": {
-        "psr-4": { "Accordia\\MessageBus\\" : "src" }
+        "psr-4": { "Daikon\\MessageBus\\" : "src" }
     },
     "autoload-dev": {
-        "psr-4": { "Accordia\\Tests\\MessageBus\\": "tests" }
+        "psr-4": { "Daikon\\Tests\\MessageBus\\": "tests" }
     },
     "scripts": {
         "build": [

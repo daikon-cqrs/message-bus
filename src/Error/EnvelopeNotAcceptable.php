@@ -1,6 +1,6 @@
 <?php
 
-namespace Accordia\MessageBus\Error;
+namespace Daikon\MessageBus\Error;
 
 final class EnvelopeNotAcceptable extends \Exception implements ErrorInterface
 {

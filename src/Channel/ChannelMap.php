@@ -1,8 +1,8 @@
 <?php
 
-namespace Accordia\MessageBus\Channel;
+namespace Daikon\MessageBus\Channel;
 
-use Accordia\DataStructures\TypedMapTrait;
+use Daikon\DataStructures\TypedMapTrait;
 
 final class ChannelMap implements \IteratorAggregate, \Countable
 {

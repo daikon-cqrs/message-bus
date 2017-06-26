@@ -1,8 +1,8 @@
 <?php
 
-namespace Accordia\MessageBus\Channel\Subscription;
+namespace Daikon\MessageBus\Channel\Subscription;
 
-use Accordia\DataStructures\TypedMapTrait;
+use Daikon\DataStructures\TypedMapTrait;
 
 final class SubscriptionMap implements \IteratorAggregate, \Countable
 {

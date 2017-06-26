@@ -1,9 +1,9 @@
 <?php
 
-namespace Accordia\MessageBus\Channel;
+namespace Daikon\MessageBus\Channel;
 
-use Accordia\MessageBus\EnvelopeInterface;
-use Accordia\MessageBus\MessageBusInterface;
+use Daikon\MessageBus\EnvelopeInterface;
+use Daikon\MessageBus\MessageBusInterface;
 
 interface ChannelInterface
 {

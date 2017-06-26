@@ -1,16 +1,16 @@
 <?php
 
-namespace Accordia\MessageBus\Channel\Subscription;
+namespace Daikon\MessageBus\Channel\Subscription;
 
-use Accordia\MessageBus\Channel\Subscription\MessageHandler\MessageHandlerList;
-use Accordia\MessageBus\Channel\Subscription\Transport\TransportInterface;
-use Accordia\MessageBus\EnvelopeInterface;
-use Accordia\MessageBus\Error\EnvelopeNotAcceptable;
-use Accordia\MessageBus\MessageBusInterface;
-use Accordia\MessageBus\Metadata\CallbackMetadataEnricher;
-use Accordia\MessageBus\Metadata\Metadata;
-use Accordia\MessageBus\Metadata\MetadataEnricherInterface;
-use Accordia\MessageBus\Metadata\MetadataEnricherList;
+use Daikon\MessageBus\Channel\Subscription\MessageHandler\MessageHandlerList;
+use Daikon\MessageBus\Channel\Subscription\Transport\TransportInterface;
+use Daikon\MessageBus\EnvelopeInterface;
+use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
+use Daikon\MessageBus\MessageBusInterface;
+use Daikon\MessageBus\Metadata\CallbackMetadataEnricher;
+use Daikon\MessageBus\Metadata\Metadata;
+use Daikon\MessageBus\Metadata\MetadataEnricherInterface;
+use Daikon\MessageBus\Metadata\MetadataEnricherList;
 
 final class Subscription implements SubscriptionInterface
 {

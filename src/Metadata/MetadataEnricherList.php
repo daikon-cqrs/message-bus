@@ -1,8 +1,8 @@
 <?php
 
-namespace Accordia\MessageBus\Metadata;
+namespace Daikon\MessageBus\Metadata;
 
-use Accordia\DataStructures\TypedListTrait;
+use Daikon\DataStructures\TypedListTrait;
 
 final class MetadataEnricherList implements \IteratorAggregate, \Countable
 {

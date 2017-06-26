@@ -1,14 +1,14 @@
 <?php
 
-namespace Accordia\MessageBus;
+namespace Daikon\MessageBus;
 
-use Accordia\MessageBus\Channel\ChannelInterface;
-use Accordia\MessageBus\Channel\ChannelMap;
-use Accordia\MessageBus\Error\ChannelUnknown;
-use Accordia\MessageBus\Error\EnvelopeNotAcceptable;
-use Accordia\MessageBus\Metadata\Metadata;
-use Accordia\MessageBus\Metadata\MetadataEnricherInterface;
-use Accordia\MessageBus\Metadata\MetadataEnricherList;
+use Daikon\MessageBus\Channel\ChannelInterface;
+use Daikon\MessageBus\Channel\ChannelMap;
+use Daikon\MessageBus\Error\ChannelUnknown;
+use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
+use Daikon\MessageBus\Metadata\Metadata;
+use Daikon\MessageBus\Metadata\MetadataEnricherInterface;
+use Daikon\MessageBus\Metadata\MetadataEnricherList;
 
 final class MessageBus implements MessageBusInterface
 {

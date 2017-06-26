@@ -1,8 +1,8 @@
 <?php
 
-namespace Accordia\Tests\MessageBus\Fixture;
+namespace Daikon\Tests\MessageBus\Fixture;
 
-use Accordia\MessageBus\MessageInterface;
+use Daikon\MessageBus\MessageInterface;
 
 final class ChangeUsername implements MessageInterface
 {

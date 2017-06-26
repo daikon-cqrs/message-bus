@@ -1,9 +1,9 @@
 <?php
 
-namespace Accordia\MessageBus;
+namespace Daikon\MessageBus;
 
 use DateTimeImmutable;
-use Accordia\MessageBus\Metadata\Metadata;
+use Daikon\MessageBus\Metadata\Metadata;
 use Ramsey\Uuid\Uuid;
 
 final class Envelope implements EnvelopeInterface

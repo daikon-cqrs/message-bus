@@ -1,8 +1,8 @@
 <?php
 
-namespace Accordia\MessageBus\Channel\Subscription\MessageHandler;
+namespace Daikon\MessageBus\Channel\Subscription\MessageHandler;
 
-use Accordia\DataStructures\TypedListTrait;
+use Daikon\DataStructures\TypedListTrait;
 
 final class MessageHandlerList implements \IteratorAggregate, \Countable
 {

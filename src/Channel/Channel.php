@@ -1,17 +1,17 @@
 <?php
 
-namespace Accordia\MessageBus\Channel;
+namespace Daikon\MessageBus\Channel;
 
-use Accordia\MessageBus\Channel\Subscription\SubscriptionInterface;
-use Accordia\MessageBus\Channel\Subscription\SubscriptionMap;
-use Accordia\MessageBus\EnvelopeInterface;
-use Accordia\MessageBus\Error\EnvelopeNotAcceptable;
-use Accordia\MessageBus\Error\SubscriptionUnknown;
-use Accordia\MessageBus\MessageBusInterface;
-use Accordia\MessageBus\Metadata\CallbackMetadataEnricher;
-use Accordia\MessageBus\Metadata\Metadata;
-use Accordia\MessageBus\Metadata\MetadataEnricherInterface;
-use Accordia\MessageBus\Metadata\MetadataEnricherList;
+use Daikon\MessageBus\Channel\Subscription\SubscriptionInterface;
+use Daikon\MessageBus\Channel\Subscription\SubscriptionMap;
+use Daikon\MessageBus\EnvelopeInterface;
+use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
+use Daikon\MessageBus\Error\SubscriptionUnknown;
+use Daikon\MessageBus\MessageBusInterface;
+use Daikon\MessageBus\Metadata\CallbackMetadataEnricher;
+use Daikon\MessageBus\Metadata\Metadata;
+use Daikon\MessageBus\Metadata\MetadataEnricherInterface;
+use Daikon\MessageBus\Metadata\MetadataEnricherList;
 
 final class Channel implements ChannelInterface
 {

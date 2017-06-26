@@ -1,19 +1,19 @@
 <?php
 
-namespace Accordia\Tests\MessageBus\Channel\Subscription;
+namespace Daikon\Tests\MessageBus\Channel\Subscription;
 
-use Accordia\MessageBus\Channel\ChannelInterface;
-use Accordia\MessageBus\Channel\Subscription\MessageHandler\MessageHandlerInterface;
-use Accordia\MessageBus\Channel\Subscription\MessageHandler\MessageHandlerList;
-use Accordia\MessageBus\Channel\Subscription\Subscription;
-use Accordia\MessageBus\Channel\Subscription\SubscriptionInterface;
-use Accordia\MessageBus\Channel\Subscription\Transport\TransportInterface;
-use Accordia\MessageBus\Envelope;
-use Accordia\MessageBus\EnvelopeInterface;
-use Accordia\MessageBus\Error\EnvelopeNotAcceptable;
-use Accordia\MessageBus\MessageBusInterface;
-use Accordia\MessageBus\MessageInterface;
-use Accordia\MessageBus\Metadata\Metadata;
+use Daikon\MessageBus\Channel\ChannelInterface;
+use Daikon\MessageBus\Channel\Subscription\MessageHandler\MessageHandlerInterface;
+use Daikon\MessageBus\Channel\Subscription\MessageHandler\MessageHandlerList;
+use Daikon\MessageBus\Channel\Subscription\Subscription;
+use Daikon\MessageBus\Channel\Subscription\SubscriptionInterface;
+use Daikon\MessageBus\Channel\Subscription\Transport\TransportInterface;
+use Daikon\MessageBus\Envelope;
+use Daikon\MessageBus\EnvelopeInterface;
+use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
+use Daikon\MessageBus\MessageBusInterface;
+use Daikon\MessageBus\MessageInterface;
+use Daikon\MessageBus\Metadata\Metadata;
 use PHPUnit\Framework\TestCase;
 
 final class SubscriptionTest extends TestCase

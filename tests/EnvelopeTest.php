@@ -1,16 +1,16 @@
 <?php
 
-namespace Accordia\Tests\MessageBus;
+namespace Daikon\Tests\MessageBus;
 
 use DateTimeImmutable;
-use Accordia\MessageBus\Envelope;
-use Accordia\MessageBus\MessageInterface;
-use Accordia\MessageBus\Metadata\Metadata;
-use Accordia\Tests\MessageBus\Fixture\ChangeUsername;
-use Accordia\Tests\MessageBus\Fixture\KnownRevision;
-use Accordia\Tests\MessageBus\Fixture\Message;
-use Accordia\Tests\MessageBus\Fixture\UserId;
-use Accordia\Tests\MessageBus\Fixture\Username;
+use Daikon\MessageBus\Envelope;
+use Daikon\MessageBus\MessageInterface;
+use Daikon\MessageBus\Metadata\Metadata;
+use Daikon\Tests\MessageBus\Fixture\ChangeUsername;
+use Daikon\Tests\MessageBus\Fixture\KnownRevision;
+use Daikon\Tests\MessageBus\Fixture\Message;
+use Daikon\Tests\MessageBus\Fixture\UserId;
+use Daikon\Tests\MessageBus\Fixture\Username;
 use Ramsey\Uuid\Uuid;
 use PHPUnit\Framework\TestCase;
 

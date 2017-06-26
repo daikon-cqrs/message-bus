@@ -1,14 +1,14 @@
 <?php
 
-namespace Accordia\Tests\MessageBus\Channel\Subscription;
+namespace Daikon\Tests\MessageBus\Channel\Subscription;
 
-use Accordia\MessageBus\Channel\ChannelInterface;
-use Accordia\MessageBus\Channel\Subscription\SubscriptionInterface;
-use Accordia\MessageBus\Channel\Subscription\Transport\InProcessTransport;
-use Accordia\MessageBus\Envelope;
-use Accordia\MessageBus\MessageBusInterface;
-use Accordia\MessageBus\MessageInterface;
-use Accordia\MessageBus\Metadata\Metadata;
+use Daikon\MessageBus\Channel\ChannelInterface;
+use Daikon\MessageBus\Channel\Subscription\SubscriptionInterface;
+use Daikon\MessageBus\Channel\Subscription\Transport\InProcessTransport;
+use Daikon\MessageBus\Envelope;
+use Daikon\MessageBus\MessageBusInterface;
+use Daikon\MessageBus\MessageInterface;
+use Daikon\MessageBus\Metadata\Metadata;
 use PHPUnit\Framework\TestCase;
 
 final class InProcessTransportTest extends TestCase
