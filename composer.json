@@ -1,14 +1,14 @@
 {
-    "name": "accordia/message-bus",
+    "name": "daikon/message-bus",
     "type": "library",
     "description": "Lightweight message bus for php.",
     "keywords": [ "message-bus", "messaging" ],
-    "homepage": "https://github.com/accordia/message-bus",
+    "homepage": "https://github.com/daikon-cqrs/message-bus",
     "license": "MPL-2.0",
     "prefer-stable": true,
     "require": {
         "php": ">=7.1",
-        "accordia/data-structures": "master@dev",
+        "daikon/data-structures": "master@dev",
         "ramsey/uuid": "3.6.*"
     },
     "require-dev": {
