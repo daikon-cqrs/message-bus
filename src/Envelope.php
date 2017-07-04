@@ -1,4 +1,12 @@
 <?php
+/**
+ * This file is part of the daikon/message-bus project.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
 
 namespace Daikon\MessageBus;
 
@@ -8,42 +16,19 @@ use Ramsey\Uuid\Uuid;
 
 final class Envelope implements EnvelopeInterface
 {
-    /**
-     * @var Uuid
-     */
     private $uuid;
 
-    /**
-     * @var DateTimeImmutable
-     */
     private $timestamp;
 
-    /**
-     * @var MessageInterface
-     */
     private $message;
 
-    /**
-     * @var Metadata
-     */
     private $metadata;
 
-    /**
-     * @param MessageInterface $message
-     * @param Metadata|null $metadata
-     * @return EnvelopeInterface
-     */
     public static function wrap(MessageInterface $message, Metadata $metadata = null): EnvelopeInterface
     {
         return new self($message, $metadata);
     }
 
-    /**
-     * @param MessageInterface $message
-     * @param Metadata|null $metadata
-     * @param Uuid|null $uuid
-     * @param DateTimeImmutable|null $timestamp
-     */
     private function __construct(
         MessageInterface $message,
         Metadata $metadata = null,
@@ -56,34 +41,21 @@ final class Envelope implements EnvelopeInterface
         $this->timestamp = $timestamp ?? new DateTimeImmutable;
     }
 
-    /**
-     * @return DateTimeImmutable
-     */
     public function getTimestamp(): DateTimeImmutable
     {
         return $this->timestamp;
     }
 
-    /**
-     * @return Uuid
-     */
     public function getUuid(): Uuid
     {
         return $this->uuid;
     }
 
-    /**
-     * @return Metadata
-     */
     public function getMetadata(): Metadata
     {
         return $this->metadata;
     }
 
-    /**
-     * @param Metadata $metadata
-     * @return EnvelopeInterface
-     */
     public function withMetadata(Metadata $metadata): EnvelopeInterface
     {
         $copy = clone $this;
@@ -91,17 +63,11 @@ final class Envelope implements EnvelopeInterface
         return $copy;
     }
 
-    /**
-     * @return MessageInterface
-     */
     public function getMessage(): MessageInterface
     {
         return $this->message;
     }
 
-    /**
-     * @return mixed[]
-     */
     public function toArray(): array
     {
         return [
@@ -113,10 +79,6 @@ final class Envelope implements EnvelopeInterface
         ];
     }
 
-    /**
-     * @param array $nativeRepresentation
-     * @return EnvelopeInterface
-     */
     public static function fromArray(array $nativeRepresentation): EnvelopeInterface
     {
         $messageType = $nativeRepresentation['@message_type'];

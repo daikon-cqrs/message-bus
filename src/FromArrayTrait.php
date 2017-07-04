@@ -1,13 +1,17 @@
 <?php
+/**
+ * This file is part of the daikon/message-bus project.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
 
 namespace Daikon\MessageBus;
 
 trait FromArrayTrait
 {
-    /**
-     * @param array $arrayState
-     * @return MessageInterface
-     */
     public static function fromArray(array $arrayState): MessageInterface
     {
         $classReflection = new \ReflectionClass(static::class);
@@ -22,11 +26,7 @@ trait FromArrayTrait
             foreach ($classProps as $prop) {
                 $propName = $prop->getName();
                 $docBlock = $prop->getDocComment();
-                if (!preg_match('/@var (.*)/', $docBlock, $matches)) {
-                    continue;
-                }
-                $valueImplementor = $matches[1];
-                if (!preg_match('/@buzz::fromArray->(.*)/', $docBlock, $matches)) {
+                if (!preg_match("/@MessageBus::deserialize\((.*)\)/", $docBlock, $matches)) {
                     continue;
                 }
                 $factoryMethod = $matches[1];
@@ -35,7 +35,7 @@ trait FromArrayTrait
                         return new $valueImplementor($value);
                     };
                 } else {
-                    $valueFactories[$propName] = [ $valueImplementor, $factoryMethod ];
+                    $valueFactories[$propName] = $factoryMethod;
                 }
             }
         }

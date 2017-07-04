@@ -1,4 +1,12 @@
 <?php
+/**
+ * This file is part of the daikon/message-bus project.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
 
 namespace Daikon\MessageBus\Channel;
 
@@ -9,21 +17,9 @@ interface ChannelInterface
 {
     const METADATA_KEY = "_channel";
 
-    /**
-     * @return string
-     */
     public function getKey(): string;
 
-    /**
-     * @param EnvelopeInterface $envelope
-     * @param MessageBusInterface $messageBus
-     * @return bool
-     */
     public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): bool;
 
-    /**
-     * @param EnvelopeInterface $envelope
-     * @return bool
-     */
     public function receive(EnvelopeInterface $envelope): bool;
 }

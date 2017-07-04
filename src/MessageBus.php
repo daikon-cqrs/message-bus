@@ -1,4 +1,12 @@
 <?php
+/**
+ * This file is part of the daikon/message-bus project.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
 
 namespace Daikon\MessageBus;
 
@@ -12,26 +20,12 @@ use Daikon\MessageBus\Metadata\MetadataEnricherList;
 
 final class MessageBus implements MessageBusInterface
 {
-    /**
-     * @var ChannelMap
-     */
     private $channelMap;
 
-    /**
-     * @var MetadataEnricherList
-     */
     private $metadataEnrichers;
 
-    /**
-     * @var string
-     */
     private $envelopeType;
 
-    /**
-     * @param ChannelMap $channelMap
-     * @param MetadataEnricherList|null $metadataEnrichers
-     * @param string|null $envelopeType
-     */
     public function __construct(
         ChannelMap $channelMap,
         MetadataEnricherList $metadataEnrichers = null,
@@ -42,13 +36,6 @@ final class MessageBus implements MessageBusInterface
         $this->envelopeType = $envelopeType ?? Envelope::CLASS;
     }
 
-    /**
-     * @param MessageInterface $message
-     * @param string $channel
-     * @param Metadata|null $metadata
-     * @return bool
-     * @throws ChannelUnknown
-     */
     public function publish(MessageInterface $message, string $channel, Metadata $metadata = null): bool
     {
         if (!$this->channelMap->has($channel)) {
@@ -61,11 +48,6 @@ final class MessageBus implements MessageBusInterface
         return $channel->publish($envelope, $this);
     }
 
-    /**
-     * @param EnvelopeInterface $envelope
-     * @return bool
-     * @throws ChannelUnknown
-     */
     public function receive(EnvelopeInterface $envelope): bool
     {
         $this->verify($envelope);
@@ -77,10 +59,6 @@ final class MessageBus implements MessageBusInterface
         return $channel->receive($envelope);
     }
 
-    /**
-     * @param Metadata $metadata
-     * @return Metadata
-     */
     private function enrichMetadata(Metadata $metadata): Metadata
     {
         return array_reduce(
@@ -92,10 +70,6 @@ final class MessageBus implements MessageBusInterface
         );
     }
 
-    /**
-     * @param EnvelopeInterface $envelope
-     * @throws EnvelopeNotAcceptable
-     */
     private function verify(EnvelopeInterface $envelope)
     {
         $metadata = $envelope->getMetadata();

@@ -1,4 +1,12 @@
 <?php
+/**
+ * This file is part of the daikon/message-bus project.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
 
 namespace Daikon\MessageBus\Channel;
 
@@ -15,32 +23,14 @@ use Daikon\MessageBus\Metadata\MetadataEnricherList;
 
 final class Channel implements ChannelInterface
 {
-    /**
-     * @var string
-     */
     private $key;
 
-    /**
-     * @var SubscriptionMap
-     */
     private $subscriptions;
 
-    /**
-     * @var callable
-     */
     private $guard;
 
-    /**
-     * @var MetadataEnricherList
-     */
     private $metadataEnrichers;
 
-    /**
-     * @param string $key
-     * @param SubscriptionMap $subscriptions
-     * @param callable|null $guard
-     * @param MetadataEnricherList|null $metadataEnrichers
-     */
     public function __construct(
         string $key,
         SubscriptionMap $subscriptions,
@@ -56,11 +46,6 @@ final class Channel implements ChannelInterface
             }));
     }
 
-    /**
-     * @param EnvelopeInterface $envelope
-     * @param MessageBusInterface $messageBus
-     * @return bool
-     */
     public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): bool
     {
         $envelope = $this->enrichMetadata($envelope);
@@ -76,11 +61,6 @@ final class Channel implements ChannelInterface
         return $messageWasPublished;
     }
 
-    /**
-     * @param EnvelopeInterface $envelope
-     * @return bool
-     * @throws SubscriptionUnknown
-     */
     public function receive(EnvelopeInterface $envelope): bool
     {
         $this->verify($envelope);
@@ -95,18 +75,11 @@ final class Channel implements ChannelInterface
         return $subscription->receive($envelope);
     }
 
-    /**
-     * @return string
-     */
     public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * @param EnvelopeInterface $envelope
-     * @return EnvelopeInterface
-     */
     private function enrichMetadata(EnvelopeInterface $envelope): EnvelopeInterface
     {
         return $envelope->withMetadata(array_reduce(
@@ -118,10 +91,6 @@ final class Channel implements ChannelInterface
         ));
     }
 
-    /**
-     * @param EnvelopeInterface $envelope
-     * @return bool
-     */
     private function accepts(EnvelopeInterface $envelope)
     {
         if ($this->guard) {
@@ -130,10 +99,6 @@ final class Channel implements ChannelInterface
         return true;
     }
 
-    /**
-     * @param EnvelopeInterface $envelope
-     * @throws EnvelopeNotAcceptable
-     */
     private function verify(EnvelopeInterface $envelope)
     {
         $metadata = $envelope->getMetadata();
