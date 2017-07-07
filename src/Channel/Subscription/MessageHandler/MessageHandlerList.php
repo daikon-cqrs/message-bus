@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Daikon\MessageBus\Channel\Subscription\MessageHandler;
 
-use Daikon\DataStructures\TypedListTrait;
+use Daikon\DataStructure\TypedListTrait;
 
 final class MessageHandlerList implements \IteratorAggregate, \Countable
 {

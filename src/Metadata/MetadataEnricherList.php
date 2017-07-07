@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Daikon\MessageBus\Metadata;
 
-use Daikon\DataStructures\TypedListTrait;
+use Daikon\DataStructure\TypedListTrait;
 
 final class MetadataEnricherList implements \IteratorAggregate, \Countable
 {

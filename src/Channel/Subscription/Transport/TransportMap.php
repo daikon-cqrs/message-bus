@@ -2,7 +2,7 @@
 
 namespace Daikon\MessageBus\Channel\Subscription\Transport;
 
-use Daikon\DataStructures\TypedMapTrait;
+use Daikon\DataStructure\TypedMapTrait;
 
 final class TransportMap implements \IteratorAggregate, \Countable
 {

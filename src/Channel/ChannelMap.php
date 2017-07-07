@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Daikon\MessageBus\Channel;
 
-use Daikon\DataStructures\TypedMapTrait;
+use Daikon\DataStructure\TypedMapTrait;
 
 final class ChannelMap implements \IteratorAggregate, \Countable
 {
