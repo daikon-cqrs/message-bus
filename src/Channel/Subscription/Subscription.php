@@ -43,14 +43,11 @@ final class Subscription implements SubscriptionInterface
         $this->transport = $transport;
         $this->messageHandlers = $messageHandlers;
         $this->guard = $guard;
-        $this->metadataEnrichers = $metadataEnrichers ?? new MetadataEnricherList;
-        if ($this->metadataEnrichers->isEmpty()) {
-            $this->metadataEnrichers = $this->metadataEnrichers->prepend(
-                new CallbackMetadataEnricher(function (Metadata $metadata): Metadata {
-                    return $metadata->with(self::METADATA_KEY, $this->getKey());
-                })
-            );
-        }
+        $this->metadataEnrichers = ($metadataEnrichers ?? new MetadataEnricherList)->prepend(
+            new CallbackMetadataEnricher(function (Metadata $metadata): Metadata {
+                return $metadata->with(self::METADATA_KEY, $this->getKey());
+            })
+        );
     }
 
     public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): bool
