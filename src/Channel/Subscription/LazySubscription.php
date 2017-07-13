@@ -31,17 +31,16 @@ final class LazySubscription implements SubscriptionInterface
         MetadataEnricherList $metadataEnrichers = null
     ) {
         $this->factoryCallback = function () use ($key, $transport, $messageHandlers, $guard, $metadataEnrichers) {
-            $metadataEnrichers = $metadataEnrichers->prepend(
-                new CallbackMetadataEnricher(function (Metadata $metadata): Metadata {
-                    return $metadata->with(self::METADATA_KEY, $this->getKey());
-                })
-            );
             return new Subscription(
                 $key,
                 $transport(),
                 $messageHandlers(),
                 $guard,
-                $metadataEnrichers
+                ($metadataEnrichers ?? new MetadataEnricherList)->prepend(
+                    new CallbackMetadataEnricher(function (Metadata $metadata): Metadata {
+                        return $metadata->with(self::METADATA_KEY, $this->getKey());
+                    })
+                )
             );
         };
     }
