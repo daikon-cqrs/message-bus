@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Daikon\MessageBus;
 
-use DateTimeImmutable;
 use Daikon\MessageBus\Metadata\Metadata;
+use DateTimeImmutable;
 use Ramsey\Uuid\Uuid;
 
 interface EnvelopeInterface

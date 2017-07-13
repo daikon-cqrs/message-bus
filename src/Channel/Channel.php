@@ -40,10 +40,14 @@ final class Channel implements ChannelInterface
         $this->key = $key;
         $this->subscriptions = $subscriptions;
         $this->guard = $guard;
-        $this->metadataEnrichers = ($metadataEnrichers ?? new MetadataEnricherList)
-            ->push(new CallbackMetadataEnricher(function (Metadata $metadata): Metadata {
-                return $metadata->with(self::METADATA_KEY, $this->getKey());
-            }));
+        $this->metadataEnrichers = $metadataEnrichers ?? new MetadataEnricherList;
+        if ($this->metadataEnrichers->isEmpty()) {
+            $this->metadataEnrichers = $this->metadataEnrichers->prepend(
+                new CallbackMetadataEnricher(function (Metadata $metadata): Metadata {
+                    return $metadata->with(self::METADATA_KEY, $this->getKey());
+                })
+            );
+        }
     }
 
     public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): bool
