@@ -63,7 +63,7 @@ final class LazySubscription implements SubscriptionInterface
         return $this->key;
     }
 
-    private function getSubscription(): MessageHandlerList
+    private function getSubscription(): SubscriptionInterface
     {
         if (!$this->compositeSubscription) {
             $this->compositeSubscription = call_user_func($this->factoryCallback);
