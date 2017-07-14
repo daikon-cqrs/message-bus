@@ -50,7 +50,7 @@ final class LazySubscription implements SubscriptionInterface
 
     public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): bool
     {
-        return $this->getSubscription()->publish($envelope);
+        return $this->getSubscription()->publish($envelope, $messageBus);
     }
 
     public function receive(EnvelopeInterface $envelope): bool
