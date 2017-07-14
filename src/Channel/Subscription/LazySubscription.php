@@ -19,6 +19,8 @@ use Daikon\MessageBus\Metadata\MetadataEnricherList;
 
 final class LazySubscription implements SubscriptionInterface
 {
+    private $key;
+
     private $compositeSubscription;
 
     private $factoryCallback;
@@ -30,9 +32,10 @@ final class LazySubscription implements SubscriptionInterface
         callable $guard = null,
         MetadataEnricherList $metadataEnrichers = null
     ) {
-        $this->factoryCallback = function () use ($key, $transport, $messageHandlers, $guard, $metadataEnrichers) {
+        $this->key = $key;
+        $this->factoryCallback = function () use ($transport, $messageHandlers, $guard, $metadataEnrichers) {
             return new Subscription(
-                $key,
+                $this->key,
                 $transport(),
                 $messageHandlers(),
                 $guard,
@@ -57,7 +60,7 @@ final class LazySubscription implements SubscriptionInterface
 
     public function getKey(): string
     {
-        return $this->getSubscription()->getKey();
+        return $this->key;
     }
 
     private function getSubscription(): MessageHandlerList
