@@ -30,7 +30,7 @@ final class LazySubscription implements SubscriptionInterface
         callable $transport,
         callable $messageHandlers,
         callable $guard = null,
-        MetadataEnricherList $metadataEnrichers = null
+        callable $metadataEnrichers = null
     ) {
         $this->key = $key;
         $this->factoryCallback = function () use ($transport, $messageHandlers, $guard, $metadataEnrichers) {
@@ -39,7 +39,7 @@ final class LazySubscription implements SubscriptionInterface
                 $transport(),
                 $messageHandlers(),
                 $guard,
-                ($metadataEnrichers ?? new MetadataEnricherList)->prepend(
+                $metadataEnrichers ? $metadataEnrichers() : (new MetadataEnricherList)->prepend(
                     new CallbackMetadataEnricher(function (Metadata $metadata): Metadata {
                         return $metadata->with(self::METADATA_KEY, $this->getKey());
                     })
