@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Daikon\MessageBus;
 
+use Daikon\MessageBus\Metadata\MetadataInterface;
 use Daikon\MessageBus\Metadata\Metadata;
 use DateTimeImmutable;
 use Ramsey\Uuid\Uuid;
@@ -24,14 +25,14 @@ final class Envelope implements EnvelopeInterface
 
     private $metadata;
 
-    public static function wrap(MessageInterface $message, Metadata $metadata = null): EnvelopeInterface
+    public static function wrap(MessageInterface $message, MetadataInterface $metadata = null): EnvelopeInterface
     {
         return new self($message, $metadata);
     }
 
     private function __construct(
         MessageInterface $message,
-        Metadata $metadata = null,
+        MetadataInterface $metadata = null,
         Uuid $uuid = null,
         DateTimeImmutable $timestamp = null
     ) {
@@ -51,12 +52,12 @@ final class Envelope implements EnvelopeInterface
         return $this->uuid;
     }
 
-    public function getMetadata(): Metadata
+    public function getMetadata(): MetadataInterface
     {
         return $this->metadata;
     }
 
-    public function withMetadata(Metadata $metadata): EnvelopeInterface
+    public function withMetadata(MetadataInterface $metadata): EnvelopeInterface
     {
         $copy = clone $this;
         $copy->metadata = $metadata;
@@ -82,6 +83,7 @@ final class Envelope implements EnvelopeInterface
     public static function fromArray(array $nativeRepresentation): EnvelopeInterface
     {
         $messageType = $nativeRepresentation['@message_type'];
+        // @todo support any MetadataInterface impl and resolve it from @metadata_type
         return new self(
             $messageType::fromArray($nativeRepresentation['message']),
             Metadata::fromArray($nativeRepresentation["metadata"]),

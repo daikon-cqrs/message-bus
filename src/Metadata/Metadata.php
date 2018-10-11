@@ -12,16 +12,16 @@ namespace Daikon\MessageBus\Metadata;
 
 use Ds\Map;
 
-final class Metadata implements \IteratorAggregate, \Countable
+final class Metadata implements MetadataInterface
 {
     private $compositeMap;
 
-    public static function fromArray(array $metadata): Metadata
+    public static function fromArray(array $metadata): MetadataInterface
     {
         return new self($metadata);
     }
 
-    public static function makeEmpty(): Metadata
+    public static function makeEmpty(): MetadataInterface
     {
         return new self;
     }
@@ -31,7 +31,7 @@ final class Metadata implements \IteratorAggregate, \Countable
         $this->compositeMap = new Map($metadata);
     }
 
-    public function equals(Metadata $metadata)
+    public function equals(MetadataInterface $metadata)
     {
         foreach ($metadata as $key => $value) {
             if (!$this->has($key) || $this->get($key) !== $value) {
@@ -46,7 +46,7 @@ final class Metadata implements \IteratorAggregate, \Countable
         return $this->compositeMap->hasKey($key);
     }
 
-    public function with(string $key, $value): Metadata
+    public function with(string $key, $value): MetadataInterface
     {
         $copy = clone $this;
         $copy->compositeMap->put($key, $value);

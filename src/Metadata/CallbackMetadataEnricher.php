@@ -19,7 +19,7 @@ final class CallbackMetadataEnricher implements MetadataEnricherInterface
         $this->codeBlock = $codeBlock;
     }
 
-    public function enrich(Metadata $metadata): Metadata
+    public function enrich(MetadataInterface $metadata): MetadataInterface
     {
         return call_user_func($this->codeBlock, $metadata);
     }

@@ -12,5 +12,5 @@ namespace Daikon\MessageBus\Metadata;
 
 interface MetadataEnricherInterface
 {
-    public function enrich(Metadata $metadata): Metadata;
+    public function enrich(MetadataInterface $metadata): MetadataInterface;
 }

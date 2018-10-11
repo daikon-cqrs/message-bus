@@ -16,7 +16,7 @@ use Daikon\MessageBus\EnvelopeInterface;
 use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
 use Daikon\MessageBus\MessageBusInterface;
 use Daikon\MessageBus\Metadata\CallbackMetadataEnricher;
-use Daikon\MessageBus\Metadata\Metadata;
+use Daikon\MessageBus\Metadata\MetadataInterface;
 use Daikon\MessageBus\Metadata\MetadataEnricherInterface;
 use Daikon\MessageBus\Metadata\MetadataEnricherList;
 
@@ -43,11 +43,8 @@ final class Subscription implements SubscriptionInterface
         $this->transport = $transport;
         $this->messageHandlers = $messageHandlers;
         $this->guard = $guard;
-        $this->metadataEnrichers = ($metadataEnrichers ?? new MetadataEnricherList)->prepend(
-            new CallbackMetadataEnricher(function (Metadata $metadata): Metadata {
-                return $metadata->with(self::METADATA_KEY, $this->getKey());
-            })
-        );
+        $this->metadataEnrichers = $metadataEnrichers
+            ?? MetadataEnricherList::defaultEnrichers(self::METADATA_KEY, $this->key);
     }
 
     public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): bool
@@ -77,7 +74,7 @@ final class Subscription implements SubscriptionInterface
     {
         return $envelope->withMetadata(array_reduce(
             $this->metadataEnrichers->toArray(),
-            function (Metadata $metadata, MetadataEnricherInterface $metadataEnricher) {
+            function (MetadataInterface $metadata, MetadataEnricherInterface $metadataEnricher) {
                 return $metadataEnricher->enrich($metadata);
             },
             $envelope->getMetadata()

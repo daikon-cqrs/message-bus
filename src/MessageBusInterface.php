@@ -10,11 +10,11 @@ declare(strict_types=1);
 
 namespace Daikon\MessageBus;
 
-use Daikon\MessageBus\Metadata\Metadata;
+use Daikon\MessageBus\Metadata\MetadataInterface;
 
 interface MessageBusInterface
 {
-    public function publish(MessageInterface $message, string $channel, Metadata $metadata = null): bool;
+    public function publish(MessageInterface $message, string $channel, MetadataInterface $metadata = null): bool;
 
     public function receive(EnvelopeInterface $envelope): bool;
 }

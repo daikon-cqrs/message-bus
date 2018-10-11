@@ -14,6 +14,7 @@ use Daikon\MessageBus\Channel\ChannelInterface;
 use Daikon\MessageBus\Channel\ChannelMap;
 use Daikon\MessageBus\Error\ChannelUnknown;
 use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
+use Daikon\MessageBus\Metadata\MetadataInterface;
 use Daikon\MessageBus\Metadata\Metadata;
 use Daikon\MessageBus\Metadata\MetadataEnricherInterface;
 use Daikon\MessageBus\Metadata\MetadataEnricherList;
@@ -36,7 +37,7 @@ final class MessageBus implements MessageBusInterface
         $this->envelopeType = $envelopeType ?? Envelope::CLASS;
     }
 
-    public function publish(MessageInterface $message, string $channel, Metadata $metadata = null): bool
+    public function publish(MessageInterface $message, string $channel, MetadataInterface $metadata = null): bool
     {
         if (!$this->channelMap->has($channel)) {
             throw new ChannelUnknown("Channel '$channel' has not been registered on message bus.");
@@ -59,11 +60,11 @@ final class MessageBus implements MessageBusInterface
         return $channel->receive($envelope);
     }
 
-    private function enrichMetadata(Metadata $metadata): Metadata
+    private function enrichMetadata(MetadataInterface $metadata): MetadataInterface
     {
         return array_reduce(
             $this->metadataEnrichers->toArray(),
-            function (Metadata $metadata, MetadataEnricherInterface $metadataEnricher) {
+            function (MetadataInterface $metadata, MetadataEnricherInterface $metadataEnricher) {
                 return $metadataEnricher->enrich($metadata);
             },
             $metadata
