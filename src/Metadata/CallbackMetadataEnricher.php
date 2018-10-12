@@ -12,6 +12,9 @@ namespace Daikon\MessageBus\Metadata;
 
 final class CallbackMetadataEnricher implements MetadataEnricherInterface
 {
+    /**
+     * @var callable
+     */
     private $codeBlock;
 
     public function __construct(callable $codeBlock)

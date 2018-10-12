@@ -18,6 +18,6 @@ final class MessageHandlerList implements \IteratorAggregate, \Countable
 
     public function __construct(array $messageHandlers = [])
     {
-        $this->init($messageHandlers, MessageHandlerInterface::CLASS);
+        $this->init($messageHandlers, MessageHandlerInterface::class);
     }
 }

@@ -12,7 +12,7 @@ namespace Daikon\MessageBus;
 
 use Daikon\MessageBus\Metadata\MetadataInterface;
 use DateTimeImmutable;
-use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 interface EnvelopeInterface
 {
@@ -22,7 +22,7 @@ interface EnvelopeInterface
 
     public function getTimestamp(): DateTimeImmutable;
 
-    public function getUuid(): Uuid;
+    public function getUuid(): UuidInterface;
 
     public function getMetadata(): MetadataInterface;
 

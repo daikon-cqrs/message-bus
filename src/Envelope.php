@@ -11,18 +11,32 @@ declare(strict_types=1);
 namespace Daikon\MessageBus;
 
 use Daikon\MessageBus\Metadata\MetadataInterface;
+use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
 use Daikon\MessageBus\Metadata\Metadata;
 use DateTimeImmutable;
+use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
 
 final class Envelope implements EnvelopeInterface
 {
+    /**
+     * @var UuidInterface
+     */
     private $uuid;
 
+    /**
+     * @var DateTimeImmutable
+     */
     private $timestamp;
 
+    /**
+     * @var MessageInterface
+     */
     private $message;
 
+    /**
+     * @var MetadataInterface
+     */
     private $metadata;
 
     public static function wrap(MessageInterface $message, MetadataInterface $metadata = null): EnvelopeInterface
@@ -33,7 +47,7 @@ final class Envelope implements EnvelopeInterface
     private function __construct(
         MessageInterface $message,
         MetadataInterface $metadata = null,
-        Uuid $uuid = null,
+        UuidInterface $uuid = null,
         DateTimeImmutable $timestamp = null
     ) {
         $this->message = $message;
@@ -47,7 +61,7 @@ final class Envelope implements EnvelopeInterface
         return $this->timestamp;
     }
 
-    public function getUuid(): Uuid
+    public function getUuid(): UuidInterface
     {
         return $this->uuid;
     }
@@ -82,13 +96,17 @@ final class Envelope implements EnvelopeInterface
 
     public static function fromArray(array $nativeRepresentation): EnvelopeInterface
     {
+        $timestamp = DateTimeImmutable::createFromFormat(self::TIMESTAMP_FORMAT, $nativeRepresentation["timestamp"]);
+        if (false === $timestamp) {
+            throw new EnvelopeNotAcceptable("Unable to parse given timestamp.", EnvelopeNotAcceptable::UNPARSEABLE);
+        }
         $messageType = $nativeRepresentation['@message_type'];
         // @todo support any MetadataInterface impl and resolve it from @metadata_type
         return new self(
             $messageType::fromArray($nativeRepresentation['message']),
             Metadata::fromArray($nativeRepresentation["metadata"]),
             Uuid::fromString($nativeRepresentation["uuid"]),
-            DateTimeImmutable::createFromFormat(self::TIMESTAMP_FORMAT, $nativeRepresentation["timestamp"])
+            $timestamp
         );
     }
 }

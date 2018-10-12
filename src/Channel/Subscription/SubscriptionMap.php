@@ -18,9 +18,9 @@ final class SubscriptionMap implements \IteratorAggregate, \Countable
 
     public function __construct(array $subscriptions = [])
     {
-        $this->init(array_reduce($subscriptions, function (array $carry, SubscriptionInterface $subscription) {
+        $this->init(array_reduce($subscriptions, function (array $carry, SubscriptionInterface $subscription): array {
             $carry[$subscription->getKey()] = $subscription; // enforce consistent channel keys
             return $carry;
-        }, []), SubscriptionInterface::CLASS);
+        }, []), SubscriptionInterface::class);
     }
 }

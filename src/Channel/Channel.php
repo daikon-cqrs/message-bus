@@ -23,12 +23,24 @@ use Daikon\MessageBus\Metadata\MetadataEnricherList;
 
 final class Channel implements ChannelInterface
 {
+    /**
+     * @var string
+     */
     private $key;
 
+    /**
+     * @var SubscriptionMap
+     */
     private $subscriptions;
 
+    /**
+     * @var callable
+     */
     private $guard;
 
+    /**
+     * @var MetadataEnricherList
+     */
     private $metadataEnrichers;
 
     public function __construct(
@@ -39,7 +51,9 @@ final class Channel implements ChannelInterface
     ) {
         $this->key = $key;
         $this->subscriptions = $subscriptions;
-        $this->guard = $guard;
+        $this->guard = $guard ?? function (EnvelopeInterface $envelope): bool {
+            return true;
+        };
         $this->metadataEnrichers = $metadataEnrichers
             ?? MetadataEnricherList::defaultEnrichers(self::METADATA_KEY, $this->key);
     }
@@ -82,22 +96,19 @@ final class Channel implements ChannelInterface
     {
         return $envelope->withMetadata(array_reduce(
             $this->metadataEnrichers->toArray(),
-            function (MetadataInterface $metadata, MetadataEnricherInterface $metadataEnricher) {
+            function (MetadataInterface $metadata, MetadataEnricherInterface $metadataEnricher): MetadataInterface {
                 return $metadataEnricher->enrich($metadata);
             },
             $envelope->getMetadata()
         ));
     }
 
-    private function accepts(EnvelopeInterface $envelope)
+    private function accepts(EnvelopeInterface $envelope): bool
     {
-        if ($this->guard) {
-            return (bool)call_user_func($this->guard, $envelope);
-        }
-        return true;
+        return (bool)call_user_func($this->guard, $envelope);
     }
 
-    private function verify(EnvelopeInterface $envelope)
+    private function verify(EnvelopeInterface $envelope): void
     {
         $metadata = $envelope->getMetadata();
         if (!$metadata->has(self::METADATA_KEY)) {

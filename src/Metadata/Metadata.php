@@ -14,6 +14,9 @@ use Ds\Map;
 
 final class Metadata implements MetadataInterface
 {
+    /**
+     * @var Map
+     */
     private $compositeMap;
 
     public static function fromArray(array $metadata): MetadataInterface
@@ -31,7 +34,7 @@ final class Metadata implements MetadataInterface
         $this->compositeMap = new Map($metadata);
     }
 
-    public function equals(MetadataInterface $metadata)
+    public function equals(MetadataInterface $metadata): bool
     {
         foreach ($metadata as $key => $value) {
             if (!$this->has($key) || $this->get($key) !== $value) {
@@ -46,6 +49,12 @@ final class Metadata implements MetadataInterface
         return $this->compositeMap->hasKey($key);
     }
 
+    /**
+     * @param string $key
+     * @param mixed $value
+     *
+     * @return self
+     */
     public function with(string $key, $value): MetadataInterface
     {
         $copy = clone $this;
@@ -53,17 +62,23 @@ final class Metadata implements MetadataInterface
         return $copy;
     }
 
+    /**
+     * @param string $key
+     * @param mixed $default
+     *
+     * @return mixed
+     */
     public function get(string $key, $default = null)
     {
         return $this->has($key) ? $this->compositeMap->get($key) : $default;
     }
 
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return $this->compositeMap->isEmpty();
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): \Traversable
     {
         return $this->compositeMap->getIterator();
     }

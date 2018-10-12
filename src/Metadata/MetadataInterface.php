@@ -18,7 +18,7 @@ interface MetadataInterface extends \IteratorAggregate, \Countable
 
     public static function makeEmpty(): MetadataInterface;
 
-    public function equals(MetadataInterface $metadata);
+    public function equals(MetadataInterface $metadata): bool;
 
     public function has(string $key): bool;
 
@@ -26,9 +26,9 @@ interface MetadataInterface extends \IteratorAggregate, \Countable
 
     public function get(string $key, $default = null);
 
-    public function isEmpty();
+    public function isEmpty(): bool;
 
-    public function getIterator(): \Iterator;
+    public function getIterator(): \Traversable;
 
     public function count(): int;
 

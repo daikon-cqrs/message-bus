@@ -21,10 +21,19 @@ use Daikon\MessageBus\Metadata\MetadataEnricherList;
 
 final class MessageBus implements MessageBusInterface
 {
+    /**
+     * @var ChannelMap
+     */
     private $channelMap;
 
+    /**
+     * @var MetadataEnricherList
+     */
     private $metadataEnrichers;
 
+    /**
+     * @var string
+     */
     private $envelopeType;
 
     public function __construct(
@@ -34,7 +43,7 @@ final class MessageBus implements MessageBusInterface
     ) {
         $this->channelMap = $channelMap;
         $this->metadataEnrichers = $metadataEnrichers ?? new MetadataEnricherList;
-        $this->envelopeType = $envelopeType ?? Envelope::CLASS;
+        $this->envelopeType = $envelopeType ?? Envelope::class;
     }
 
     public function publish(MessageInterface $message, string $channel, MetadataInterface $metadata = null): bool
@@ -64,14 +73,14 @@ final class MessageBus implements MessageBusInterface
     {
         return array_reduce(
             $this->metadataEnrichers->toArray(),
-            function (MetadataInterface $metadata, MetadataEnricherInterface $metadataEnricher) {
+            function (MetadataInterface $metadata, MetadataEnricherInterface $metadataEnricher): MetadataInterface {
                 return $metadataEnricher->enrich($metadata);
             },
             $metadata
         );
     }
 
-    private function verify(EnvelopeInterface $envelope)
+    private function verify(EnvelopeInterface $envelope): void
     {
         $metadata = $envelope->getMetadata();
         if (!$metadata->has(ChannelInterface::METADATA_KEY)) {
