@@ -95,7 +95,7 @@ final class Channel implements ChannelInterface
     private function enrichMetadata(EnvelopeInterface $envelope): EnvelopeInterface
     {
         return $envelope->withMetadata(array_reduce(
-            $this->metadataEnrichers->toArray(),
+            $this->metadataEnrichers->toNative(),
             function (MetadataInterface $metadata, MetadataEnricherInterface $metadataEnricher): MetadataInterface {
                 return $metadataEnricher->enrich($metadata);
             },

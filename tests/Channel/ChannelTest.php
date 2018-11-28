@@ -81,7 +81,7 @@ final class ChannelTest extends TestCase
 
     public function testReceive()
     {
-        $envelopeExpectation = Envelope::wrap($this->createMock(MessageInterface::CLASS), Metadata::fromArray([
+        $envelopeExpectation = Envelope::wrap($this->createMock(MessageInterface::CLASS), Metadata::fromNative([
             ChannelInterface::METADATA_KEY => self::CHANNEL_NAME,
             SubscriptionInterface::METADATA_KEY => self::SUB_NAME
         ]));
@@ -101,7 +101,7 @@ final class ChannelTest extends TestCase
 
     public function testReceiveWithExistingSubscription()
     {
-        $envelope = Envelope::wrap($this->createMock(MessageInterface::CLASS), Metadata::fromArray([
+        $envelope = Envelope::wrap($this->createMock(MessageInterface::CLASS), Metadata::fromNative([
             ChannelInterface::METADATA_KEY => self::CHANNEL_NAME,
             SubscriptionInterface::METADATA_KEY => "foobar"
         ]));
@@ -143,7 +143,7 @@ final class ChannelTest extends TestCase
 
     public function testReceiveWithWrongChannel()
     {
-        $envelope = Envelope::wrap($this->createMock(MessageInterface::CLASS), Metadata::fromArray([
+        $envelope = Envelope::wrap($this->createMock(MessageInterface::CLASS), Metadata::fromNative([
             ChannelInterface::METADATA_KEY => "foobar"
         ]));
         $channel = new Channel(
@@ -163,7 +163,7 @@ final class ChannelTest extends TestCase
 
     public function testReceiveWithMissingSubscription()
     {
-        $envelope = Envelope::wrap($this->createMock(MessageInterface::CLASS), Metadata::fromArray([
+        $envelope = Envelope::wrap($this->createMock(MessageInterface::CLASS), Metadata::fromNative([
             ChannelInterface::METADATA_KEY => self::CHANNEL_NAME
         ]));
         $channel = new Channel(

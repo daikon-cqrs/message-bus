@@ -10,12 +10,12 @@ declare(strict_types=1);
 
 namespace Daikon\MessageBus\Metadata;
 
+use Daikon\Interop\FromNativeInterface;
+use Daikon\Interop\ToNativeInterface;
 use Ds\Map;
 
-interface MetadataInterface extends \IteratorAggregate, \Countable
+interface MetadataInterface extends \IteratorAggregate, \Countable, FromNativeInterface, ToNativeInterface
 {
-    public static function fromArray(array $metadata): MetadataInterface;
-
     public static function makeEmpty(): MetadataInterface;
 
     public function equals(MetadataInterface $metadata): bool;
@@ -31,8 +31,6 @@ interface MetadataInterface extends \IteratorAggregate, \Countable
     public function getIterator(): \Traversable;
 
     public function count(): int;
-
-    public function toArray(): array;
 
     public function __get(string $key);
 }

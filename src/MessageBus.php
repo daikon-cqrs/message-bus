@@ -72,7 +72,7 @@ final class MessageBus implements MessageBusInterface
     private function enrichMetadata(MetadataInterface $metadata): MetadataInterface
     {
         return array_reduce(
-            $this->metadataEnrichers->toArray(),
+            $this->metadataEnrichers->toNative(),
             function (MetadataInterface $metadata, MetadataEnricherInterface $metadataEnricher): MetadataInterface {
                 return $metadataEnricher->enrich($metadata);
             },

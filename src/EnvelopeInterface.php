@@ -10,11 +10,13 @@ declare(strict_types=1);
 
 namespace Daikon\MessageBus;
 
+use Daikon\Interop\FromNativeInterface;
+use Daikon\Interop\ToNativeInterface;
 use Daikon\MessageBus\Metadata\MetadataInterface;
 use DateTimeImmutable;
 use Ramsey\Uuid\UuidInterface;
 
-interface EnvelopeInterface
+interface EnvelopeInterface extends FromNativeInterface, ToNativeInterface
 {
     const TIMESTAMP_FORMAT = "Y-m-d\\TH:i:s.uP";
 
@@ -29,8 +31,4 @@ interface EnvelopeInterface
     public function withMetadata(MetadataInterface $metadata): EnvelopeInterface;
 
     public function getMessage(): MessageInterface;
-
-    public function toArray(): array;
-
-    public static function fromArray(array $nativeRepresentation): EnvelopeInterface;
 }

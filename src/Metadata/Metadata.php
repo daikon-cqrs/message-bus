@@ -19,7 +19,7 @@ final class Metadata implements MetadataInterface
      */
     private $compositeMap;
 
-    public static function fromArray(array $metadata): MetadataInterface
+    public static function fromNative($metadata): MetadataInterface
     {
         return new self($metadata);
     }
@@ -88,7 +88,7 @@ final class Metadata implements MetadataInterface
         return $this->compositeMap->count();
     }
 
-    public function toArray(): array
+    public function toNative(): array
     {
         return $this->compositeMap->toArray();
     }

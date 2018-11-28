@@ -60,7 +60,7 @@ final class SubscriptionTest extends TestCase
 
     public function testReceive()
     {
-        $envelopeExpectation = Envelope::wrap($this->createMock(MessageInterface::CLASS), Metadata::fromArray([
+        $envelopeExpectation = Envelope::wrap($this->createMock(MessageInterface::CLASS), Metadata::fromNative([
             ChannelInterface::METADATA_KEY => self::CHANNEL_NAME,
             SubscriptionInterface::METADATA_KEY => self::SUB_NAME
         ]));
@@ -79,7 +79,7 @@ final class SubscriptionTest extends TestCase
 
     public function testReceiveWithWrongSubscription()
     {
-        $envelope = Envelope::wrap($this->createMock(MessageInterface::CLASS), Metadata::fromArray([
+        $envelope = Envelope::wrap($this->createMock(MessageInterface::CLASS), Metadata::fromNative([
             ChannelInterface::METADATA_KEY => self::CHANNEL_NAME,
             SubscriptionInterface::METADATA_KEY => "foobar"
         ]));

@@ -8,7 +8,8 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.2",
-        "daikon/data-structure": "dev-upgrade-7.2",
+        "daikon/data-structure": "dev-upgrade/nativecalls",
+        "daikon/interop": "master@dev",
         "ramsey/uuid": "^3.8"
     },
     "require-dev": {

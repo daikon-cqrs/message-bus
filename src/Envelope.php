@@ -83,18 +83,18 @@ final class Envelope implements EnvelopeInterface
         return $this->message;
     }
 
-    public function toArray(): array
+    public function toNative(): array
     {
         return [
             "uuid" => $this->uuid->toString(),
             "timestamp" => $this->timestamp->format(self::TIMESTAMP_FORMAT),
-            "metadata" => $this->metadata->toArray(),
-            "message" => $this->message->toArray(),
+            "metadata" => $this->metadata->toNative(),
+            "message" => $this->message->toNative(),
             "@message_type" => get_class($this->message)
         ];
     }
 
-    public static function fromArray(array $nativeRepresentation): EnvelopeInterface
+    public static function fromNative($nativeRepresentation): EnvelopeInterface
     {
         $timestamp = DateTimeImmutable::createFromFormat(self::TIMESTAMP_FORMAT, $nativeRepresentation["timestamp"]);
         if (false === $timestamp) {
@@ -103,8 +103,8 @@ final class Envelope implements EnvelopeInterface
         $messageType = $nativeRepresentation['@message_type'];
         // @todo support any MetadataInterface impl and resolve it from @metadata_type
         return new self(
-            $messageType::fromArray($nativeRepresentation['message']),
-            Metadata::fromArray($nativeRepresentation["metadata"]),
+            $messageType::fromNative($nativeRepresentation['message']),
+            Metadata::fromNative($nativeRepresentation["metadata"]),
             Uuid::fromString($nativeRepresentation["uuid"]),
             $timestamp
         );
