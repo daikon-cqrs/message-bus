@@ -1,11 +1,12 @@
 {
     "name": "daikon/message-bus",
     "type": "library",
-    "description": "Lightweight message bus for php.",
+    "description": "Lightweight message bus for PHP7.",
     "keywords": [ "message-bus", "messaging" ],
     "homepage": "https://github.com/daikon-cqrs/message-bus",
     "license": "MPL-2.0",
     "prefer-stable": true,
+    "minimum-stability": "dev",
     "require": {
         "php": "^7.2",
         "daikon/data-structure": "dev-upgrade/nativecalls",
@@ -23,6 +24,12 @@
     },
     "autoload-dev": {
         "psr-4": { "Daikon\\Tests\\MessageBus\\": "tests" }
+    },
+    "archive": {
+        "exclude": [
+            "/build",
+            "/vendor"
+        ]
     },
     "scripts": {
         "build": [ "@sniff", "@tests" ],

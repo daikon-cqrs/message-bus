@@ -94,18 +94,19 @@ final class Envelope implements EnvelopeInterface
         ];
     }
 
-    public static function fromNative($nativeRepresentation): EnvelopeInterface
+    /** @param array $state */
+    public static function fromNative($state): EnvelopeInterface
     {
-        $timestamp = DateTimeImmutable::createFromFormat(self::TIMESTAMP_FORMAT, $nativeRepresentation["timestamp"]);
+        $timestamp = DateTimeImmutable::createFromFormat(self::TIMESTAMP_FORMAT, $state["timestamp"]);
         if (false === $timestamp) {
             throw new EnvelopeNotAcceptable("Unable to parse given timestamp.", EnvelopeNotAcceptable::UNPARSEABLE);
         }
-        $messageType = $nativeRepresentation['@message_type'];
+        $messageType = $state['@message_type'];
         // @todo support any MetadataInterface impl and resolve it from @metadata_type
         return new self(
-            $messageType::fromNative($nativeRepresentation['message']),
-            Metadata::fromNative($nativeRepresentation["metadata"]),
-            Uuid::fromString($nativeRepresentation["uuid"]),
+            $messageType::fromNative($state['message']),
+            Metadata::fromNative($state["metadata"]),
+            Uuid::fromString($state["uuid"]),
             $timestamp
         );
     }

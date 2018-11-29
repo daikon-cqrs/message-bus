@@ -19,6 +19,7 @@ final class Metadata implements MetadataInterface
      */
     private $compositeMap;
 
+    /** @param array $metadata */
     public static function fromNative($metadata): MetadataInterface
     {
         return new self($metadata);
