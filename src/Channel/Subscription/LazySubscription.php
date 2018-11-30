@@ -17,19 +17,13 @@ use Daikon\MessageBus\Metadata\MetadataEnricherList;
 
 final class LazySubscription implements SubscriptionInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $key;
 
-    /**
-     * @var SubscriptionInterface|null
-     */
+    /** @var SubscriptionInterface|null */
     private $compositeSubscription;
 
-    /**
-     * @var callable|null
-     */
+    /** @var callable|null */
     private $factoryCallback;
 
     public function __construct(

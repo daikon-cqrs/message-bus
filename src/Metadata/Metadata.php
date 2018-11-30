@@ -14,15 +14,13 @@ use Ds\Map;
 
 final class Metadata implements MetadataInterface
 {
-    /**
-     * @var Map
-     */
+    /** @var Map */
     private $compositeMap;
 
-    /** @param array $metadata */
-    public static function fromNative($metadata): MetadataInterface
+    /** @param array $state */
+    public static function fromNative($state): MetadataInterface
     {
-        return new self($metadata);
+        return new self($state);
     }
 
     public static function makeEmpty(): MetadataInterface
@@ -50,12 +48,7 @@ final class Metadata implements MetadataInterface
         return $this->compositeMap->hasKey($key);
     }
 
-    /**
-     * @param string $key
-     * @param mixed $value
-     *
-     * @return self
-     */
+    /** @param mixed $value*/
     public function with(string $key, $value): MetadataInterface
     {
         $copy = clone $this;
@@ -64,9 +57,7 @@ final class Metadata implements MetadataInterface
     }
 
     /**
-     * @param string $key
      * @param mixed $default
-     *
      * @return mixed
      */
     public function get(string $key, $default = null)

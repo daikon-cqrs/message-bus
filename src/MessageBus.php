@@ -21,19 +21,13 @@ use Daikon\MessageBus\Metadata\MetadataEnricherList;
 
 final class MessageBus implements MessageBusInterface
 {
-    /**
-     * @var ChannelMap
-     */
+    /** @var ChannelMap */
     private $channelMap;
 
-    /**
-     * @var MetadataEnricherList
-     */
+    /** @var MetadataEnricherList */
     private $metadataEnrichers;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $envelopeType;
 
     public function __construct(
@@ -65,7 +59,8 @@ final class MessageBus implements MessageBusInterface
         if (!$this->channelMap->has($channelKey)) {
             throw new ChannelUnknown("Channel '$channelKey' has not been registered on message bus.");
         }
-        $channel = $this->channelMap->get($channelKey); /* @var $channel ChannelInterface */
+        /** @var ChannelInterface $channel */
+        $channel = $this->channelMap->get($channelKey);
         return $channel->receive($envelope);
     }
 

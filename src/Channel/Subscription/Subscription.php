@@ -22,29 +22,19 @@ use Daikon\MessageBus\Metadata\MetadataEnricherList;
 
 final class Subscription implements SubscriptionInterface
 {
-    /**
-     * @var TransportInterface
-     */
+    /** @var TransportInterface */
     private $transport;
 
-    /**
-     * @var MessageHandlerList
-     */
+    /** @var MessageHandlerList */
     private $messageHandlers;
 
-    /**
-     * @var callable
-     */
+    /** @var callable */
     private $guard;
 
-    /**
-     * @var MetadataEnricherList
-     */
+    /** @var MetadataEnricherList */
     private $metadataEnrichers;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $key;
 
     public function __construct(

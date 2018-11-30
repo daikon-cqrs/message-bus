@@ -23,24 +23,16 @@ use Daikon\MessageBus\Metadata\MetadataEnricherList;
 
 final class Channel implements ChannelInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $key;
 
-    /**
-     * @var SubscriptionMap
-     */
+    /** @var SubscriptionMap */
     private $subscriptions;
 
-    /**
-     * @var callable
-     */
+    /** @var callable */
     private $guard;
 
-    /**
-     * @var MetadataEnricherList
-     */
+    /** @var MetadataEnricherList */
     private $metadataEnrichers;
 
     public function __construct(

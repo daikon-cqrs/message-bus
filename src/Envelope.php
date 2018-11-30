@@ -19,24 +19,16 @@ use Ramsey\Uuid\Uuid;
 
 final class Envelope implements EnvelopeInterface
 {
-    /**
-     * @var UuidInterface
-     */
+    /** @var UuidInterface */
     private $uuid;
 
-    /**
-     * @var DateTimeImmutable
-     */
+    /** @var DateTimeImmutable */
     private $timestamp;
 
-    /**
-     * @var MessageInterface
-     */
+    /** @var MessageInterface */
     private $message;
 
-    /**
-     * @var MetadataInterface
-     */
+    /** @var MetadataInterface */
     private $metadata;
 
     public static function wrap(MessageInterface $message, MetadataInterface $metadata = null): EnvelopeInterface
@@ -101,10 +93,10 @@ final class Envelope implements EnvelopeInterface
         if (false === $timestamp) {
             throw new EnvelopeNotAcceptable("Unable to parse given timestamp.", EnvelopeNotAcceptable::UNPARSEABLE);
         }
-        $messageType = $state['@message_type'];
+        $messageType = $state["@message_type"];
         // @todo support any MetadataInterface impl and resolve it from @metadata_type
         return new self(
-            $messageType::fromNative($state['message']),
+            $messageType::fromNative($state["message"]),
             Metadata::fromNative($state["metadata"]),
             Uuid::fromString($state["uuid"]),
             $timestamp

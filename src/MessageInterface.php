@@ -15,4 +15,5 @@ use Daikon\Interop\ToNativeInterface;
 
 interface MessageInterface extends FromNativeInterface, ToNativeInterface
 {
+
 }
