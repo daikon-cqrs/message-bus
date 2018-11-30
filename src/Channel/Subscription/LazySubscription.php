@@ -13,7 +13,6 @@ namespace Daikon\MessageBus\Channel\Subscription;
 use Daikon\MessageBus\Channel\Subscription\MessageHandler\MessageHandlerList;
 use Daikon\MessageBus\EnvelopeInterface;
 use Daikon\MessageBus\MessageBusInterface;
-use Daikon\MessageBus\Metadata\MetadataEnricherList;
 
 final class LazySubscription implements SubscriptionInterface
 {
@@ -45,9 +44,7 @@ final class LazySubscription implements SubscriptionInterface
                 $transport(),
                 $messageHandlers(),
                 $guard,
-                $metadataEnrichers
-                    ? $metadataEnrichers()
-                    : MetadataEnricherList::defaultEnrichers(self::METADATA_KEY, $this->key)
+                $metadataEnrichers ? $metadataEnrichers() : null
             );
         };
     }

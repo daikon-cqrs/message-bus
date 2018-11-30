@@ -50,8 +50,8 @@ final class Subscription implements SubscriptionInterface
         $this->guard = $guard ?? function (EnvelopeInterface $envelope): bool {
             return true;
         };
-        $this->metadataEnrichers = $metadataEnrichers
-            ?? MetadataEnricherList::defaultEnrichers(self::METADATA_KEY, $this->key);
+        $metadataEnrichers = $metadataEnrichers ?? new MetadataEnricherList;
+        $this->metadataEnrichers = $metadataEnrichers->prependDefaultEnricher(self::METADATA_KEY, $this->key);
     }
 
     public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): bool
