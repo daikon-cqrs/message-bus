@@ -10,9 +10,10 @@ declare(strict_types=1);
 
 namespace Daikon\MessageBus;
 
-interface MessageInterface
-{
-    public function toArray(): array;
+use Daikon\Interop\FromNativeInterface;
+use Daikon\Interop\ToNativeInterface;
 
-    public static function fromArray(array $data): MessageInterface;
+interface MessageInterface extends FromNativeInterface, ToNativeInterface
+{
+
 }

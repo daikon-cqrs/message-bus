@@ -15,9 +15,9 @@ use PHPUnit\Framework\TestCase;
 
 final class MetadataTest extends TestCase
 {
-    public function testFromArray()
+    public function testFromNative()
     {
-        $metadata = Metadata::fromArray([
+        $metadata = Metadata::fromNative([
             "some_string" => "foo",
             "some_yay" => true,
             "some_number" => 23,
@@ -31,7 +31,7 @@ final class MetadataTest extends TestCase
         $this->assertEquals($metadata->get("some_array"), [ "captain" => "arr" ]);
     }
 
-    public function testToArray()
+    public function testToNative()
     {
         $metadataArray = [
             "foo" => "bar",
@@ -40,8 +40,8 @@ final class MetadataTest extends TestCase
             "some_float" => 23.42,
             "some_array" => [ "captain" => "arr" ]
         ];
-        $metadata = Metadata::fromArray($metadataArray);
-        $this->assertEquals($metadata->toArray(), $metadataArray);
+        $metadata = Metadata::fromNative($metadataArray);
+        $this->assertEquals($metadata->toNative(), $metadataArray);
     }
 
     public function testWith()
@@ -62,7 +62,7 @@ final class MetadataTest extends TestCase
     public function testEquals()
     {
         $metadata = Metadata::makeEmpty()->with("foo", "bar");
-        $this->assertTrue($metadata->equals(Metadata::fromArray([ "foo" => "bar" ])));
-        $this->assertFalse($metadata->equals(Metadata::fromArray([ "foo" => "baz" ])));
+        $this->assertTrue($metadata->equals(Metadata::fromNative([ "foo" => "bar" ])));
+        $this->assertFalse($metadata->equals(Metadata::fromNative([ "foo" => "baz" ])));
     }
 }

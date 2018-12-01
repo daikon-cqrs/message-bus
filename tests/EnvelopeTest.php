@@ -44,7 +44,7 @@ final class EnvelopeTest extends TestCase
             new KnownRevision(2),
             new Username('frodo')
         ));
-        $newEnvelope = Envelope::fromArray($envelope->toArray());
-        $this->assertEquals($envelope->toArray(), $newEnvelope->toArray());
+        $newEnvelope = Envelope::fromNative($envelope->toNative());
+        $this->assertEquals($envelope->toNative(), $newEnvelope->toNative());
     }
 }

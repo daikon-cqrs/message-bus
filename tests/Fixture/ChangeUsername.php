@@ -42,7 +42,7 @@ final class ChangeUsername implements MessageInterface
         return $this->username;
     }
 
-    public function toArray(): array
+    public function toNative(): array
     {
         return [
             "identifier" => $this->identifier->toNative(),
@@ -51,12 +51,13 @@ final class ChangeUsername implements MessageInterface
         ];
     }
 
-    public static function fromArray(array $data): MessageInterface
+    /** @param array $state */
+    public static function fromNative($state): MessageInterface
     {
         return new self(
-            new UserId($data["identifier"]),
-            new KnownRevision((int)$data["knownRevision"]),
-            new Username($data["username"])
+            new UserId($state["identifier"]),
+            new KnownRevision((int)$state["knownRevision"]),
+            new Username($state["username"])
         );
     }
 }

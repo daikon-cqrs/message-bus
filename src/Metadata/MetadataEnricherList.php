@@ -16,8 +16,19 @@ final class MetadataEnricherList implements \IteratorAggregate, \Countable
 {
     use TypedListTrait;
 
+    public function prependDefaultEnricher(string $namespace, string $value): self
+    {
+        return $this->prepend(
+            new CallbackMetadataEnricher(
+                function (MetadataInterface $metadata) use ($namespace, $value): MetadataInterface {
+                    return $metadata->with($namespace, $value);
+                }
+            )
+        );
+    }
+
     public function __construct(array $enrichers = [])
     {
-        $this->init($enrichers, MetadataEnricherInterface::CLASS);
+        $this->init($enrichers, MetadataEnricherInterface::class);
     }
 }

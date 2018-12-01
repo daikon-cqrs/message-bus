@@ -18,9 +18,9 @@ final class ChannelMap implements \IteratorAggregate, \Countable
 
     public function __construct(array $channels = [])
     {
-        $this->init(array_reduce($channels, function (array $carry, ChannelInterface $channel) {
+        $this->init(array_reduce($channels, function (array $carry, ChannelInterface $channel): array {
             $carry[$channel->getKey()] = $channel; // enforce consistent channel keys
             return $carry;
-        }, []), ChannelInterface::CLASS);
+        }, []), ChannelInterface::class);
     }
 }

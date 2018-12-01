@@ -15,6 +15,7 @@ use Daikon\MessageBus\MessageBusInterface;
 
 final class InProcessTransport implements TransportInterface
 {
+    /** @var string */
     private $key;
 
     public function __construct(string $key)

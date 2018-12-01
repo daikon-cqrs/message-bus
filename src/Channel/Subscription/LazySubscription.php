@@ -13,16 +13,16 @@ namespace Daikon\MessageBus\Channel\Subscription;
 use Daikon\MessageBus\Channel\Subscription\MessageHandler\MessageHandlerList;
 use Daikon\MessageBus\EnvelopeInterface;
 use Daikon\MessageBus\MessageBusInterface;
-use Daikon\MessageBus\Metadata\CallbackMetadataEnricher;
-use Daikon\MessageBus\Metadata\Metadata;
-use Daikon\MessageBus\Metadata\MetadataEnricherList;
 
 final class LazySubscription implements SubscriptionInterface
 {
+    /** @var string */
     private $key;
 
+    /** @var SubscriptionInterface|null */
     private $compositeSubscription;
 
+    /** @var callable|null */
     private $factoryCallback;
 
     public function __construct(
@@ -33,17 +33,18 @@ final class LazySubscription implements SubscriptionInterface
         callable $metadataEnrichers = null
     ) {
         $this->key = $key;
-        $this->factoryCallback = function () use ($transport, $messageHandlers, $guard, $metadataEnrichers) {
+        $this->factoryCallback = function () use (
+            $transport,
+            $messageHandlers,
+            $guard,
+            $metadataEnrichers
+        ): SubscriptionInterface {
             return new Subscription(
                 $this->key,
                 $transport(),
                 $messageHandlers(),
                 $guard,
-                $metadataEnrichers ? $metadataEnrichers() : (new MetadataEnricherList)->prepend(
-                    new CallbackMetadataEnricher(function (Metadata $metadata): Metadata {
-                        return $metadata->with(self::METADATA_KEY, $this->getKey());
-                    })
-                )
+                $metadataEnrichers ? $metadataEnrichers() : null
             );
         };
     }
@@ -65,7 +66,7 @@ final class LazySubscription implements SubscriptionInterface
 
     private function getSubscription(): SubscriptionInterface
     {
-        if (!$this->compositeSubscription) {
+        if ($this->factoryCallback) {
             $this->compositeSubscription = call_user_func($this->factoryCallback);
             $this->factoryCallback = null;
         }

@@ -14,16 +14,20 @@ use Daikon\MessageBus\Channel\ChannelInterface;
 use Daikon\MessageBus\Channel\ChannelMap;
 use Daikon\MessageBus\Error\ChannelUnknown;
 use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
+use Daikon\MessageBus\Metadata\MetadataInterface;
 use Daikon\MessageBus\Metadata\Metadata;
 use Daikon\MessageBus\Metadata\MetadataEnricherInterface;
 use Daikon\MessageBus\Metadata\MetadataEnricherList;
 
 final class MessageBus implements MessageBusInterface
 {
+    /** @var ChannelMap */
     private $channelMap;
 
+    /** @var MetadataEnricherList */
     private $metadataEnrichers;
 
+    /** @var string */
     private $envelopeType;
 
     public function __construct(
@@ -33,10 +37,10 @@ final class MessageBus implements MessageBusInterface
     ) {
         $this->channelMap = $channelMap;
         $this->metadataEnrichers = $metadataEnrichers ?? new MetadataEnricherList;
-        $this->envelopeType = $envelopeType ?? Envelope::CLASS;
+        $this->envelopeType = $envelopeType ?? Envelope::class;
     }
 
-    public function publish(MessageInterface $message, string $channel, Metadata $metadata = null): bool
+    public function publish(MessageInterface $message, string $channel, MetadataInterface $metadata = null): bool
     {
         if (!$this->channelMap->has($channel)) {
             throw new ChannelUnknown("Channel '$channel' has not been registered on message bus.");
@@ -55,22 +59,23 @@ final class MessageBus implements MessageBusInterface
         if (!$this->channelMap->has($channelKey)) {
             throw new ChannelUnknown("Channel '$channelKey' has not been registered on message bus.");
         }
-        $channel = $this->channelMap->get($channelKey); /* @var $channel ChannelInterface */
+        /** @var ChannelInterface $channel */
+        $channel = $this->channelMap->get($channelKey);
         return $channel->receive($envelope);
     }
 
-    private function enrichMetadata(Metadata $metadata): Metadata
+    private function enrichMetadata(MetadataInterface $metadata): MetadataInterface
     {
         return array_reduce(
-            $this->metadataEnrichers->toArray(),
-            function (Metadata $metadata, MetadataEnricherInterface $metadataEnricher) {
+            $this->metadataEnrichers->toNative(),
+            function (MetadataInterface $metadata, MetadataEnricherInterface $metadataEnricher): MetadataInterface {
                 return $metadataEnricher->enrich($metadata);
             },
             $metadata
         );
     }
 
-    private function verify(EnvelopeInterface $envelope)
+    private function verify(EnvelopeInterface $envelope): void
     {
         $metadata = $envelope->getMetadata();
         if (!$metadata->has(ChannelInterface::METADATA_KEY)) {

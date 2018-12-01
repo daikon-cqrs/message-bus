@@ -12,16 +12,18 @@ namespace Daikon\MessageBus\Metadata;
 
 use Ds\Map;
 
-final class Metadata implements \IteratorAggregate, \Countable
+final class Metadata implements MetadataInterface
 {
+    /** @var Map */
     private $compositeMap;
 
-    public static function fromArray(array $metadata): Metadata
+    /** @param array $state */
+    public static function fromNative($state): MetadataInterface
     {
-        return new self($metadata);
+        return new self($state);
     }
 
-    public static function makeEmpty(): Metadata
+    public static function makeEmpty(): MetadataInterface
     {
         return new self;
     }
@@ -31,7 +33,7 @@ final class Metadata implements \IteratorAggregate, \Countable
         $this->compositeMap = new Map($metadata);
     }
 
-    public function equals(Metadata $metadata)
+    public function equals(MetadataInterface $metadata): bool
     {
         foreach ($metadata as $key => $value) {
             if (!$this->has($key) || $this->get($key) !== $value) {
@@ -46,24 +48,29 @@ final class Metadata implements \IteratorAggregate, \Countable
         return $this->compositeMap->hasKey($key);
     }
 
-    public function with(string $key, $value): Metadata
+    /** @param mixed $value*/
+    public function with(string $key, $value): MetadataInterface
     {
         $copy = clone $this;
         $copy->compositeMap->put($key, $value);
         return $copy;
     }
 
+    /**
+     * @param mixed $default
+     * @return mixed
+     */
     public function get(string $key, $default = null)
     {
         return $this->has($key) ? $this->compositeMap->get($key) : $default;
     }
 
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return $this->compositeMap->isEmpty();
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): \Traversable
     {
         return $this->compositeMap->getIterator();
     }
@@ -73,7 +80,7 @@ final class Metadata implements \IteratorAggregate, \Countable
         return $this->compositeMap->count();
     }
 
-    public function toArray(): array
+    public function toNative(): array
     {
         return $this->compositeMap->toArray();
     }
