@@ -4,11 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb55207a225f3b4739d8d10ffc316500",
+    "content-hash": "cf6f1c58ba70a57ab1a4345e563b63e6",
     "packages": [
         {
             "name": "daikon/data-structure",
-            "version": "dev-upgrade/nativecalls",
+            "version": "dev-upgrade-7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/daikon-cqrs/data-structure.git",

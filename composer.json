@@ -9,7 +9,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^7.2",
-        "daikon/data-structure": "dev-upgrade/nativecalls",
+        "daikon/data-structure": "dev-upgrade-7.2",
         "daikon/interop": "dev-upgrade-7.2",
         "ramsey/uuid": "^3.8"
     },
