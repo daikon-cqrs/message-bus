@@ -10,10 +10,10 @@ declare(strict_types=1);
 
 namespace Daikon\MessageBus;
 
-use Daikon\MessageBus\Metadata\MetadataInterface;
+use DateTimeImmutable;
 use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
 use Daikon\MessageBus\Metadata\Metadata;
-use DateTimeImmutable;
+use Daikon\MessageBus\Metadata\MetadataInterface;
 use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
 
@@ -82,23 +82,40 @@ final class Envelope implements EnvelopeInterface
             "timestamp" => $this->timestamp->format(self::TIMESTAMP_FORMAT),
             "metadata" => $this->metadata->toNative(),
             "message" => $this->message->toNative(),
-            "@message_type" => get_class($this->message)
+            "@message_type" => get_class($this->message),
+            "@metadata_type" => get_class($this->metadata)
         ];
     }
 
     /** @param array $state */
     public static function fromNative($state): EnvelopeInterface
     {
-        $timestamp = DateTimeImmutable::createFromFormat(self::TIMESTAMP_FORMAT, $state["timestamp"]);
+        $uuid = isset($state["uuid"]) ? Uuid::fromString($state["uuid"]) : null;
+
+        $timestamp = isset($state["timestamp"])
+            ? DateTimeImmutable::createFromFormat(self::TIMESTAMP_FORMAT, $state["timestamp"])
+            : null;
         if (false === $timestamp) {
             throw new EnvelopeNotAcceptable("Unable to parse given timestamp.", EnvelopeNotAcceptable::UNPARSEABLE);
         }
-        $messageType = $state["@message_type"];
-        // @todo support any MetadataInterface impl and resolve it from @metadata_type
+
+        $messageType = $state["@message_type"] ?? null;
+        if (!is_subclass_of($messageType, MessageInterface::class)) {
+            throw new EnvelopeNotAcceptable(sprintf(
+                "Message type '%s' given must be an instance of MessageInterface",
+                $messageType
+            ), EnvelopeNotAcceptable::UNPARSEABLE);
+        }
+
+        $metadataType = $state["@metadata_type"] ?? null;
+        $metadata = $metadataType instanceof MetadataInterface
+            ? $metadataType::fromNative($state["metadata"])
+            : Metadata::fromNative($state["metadata"] ?? []);
+
         return new self(
-            $messageType::fromNative($state["message"]),
-            Metadata::fromNative($state["metadata"]),
-            Uuid::fromString($state["uuid"]),
+            $messageType::fromNative($state["message"] ?? null),
+            $metadata,
+            $uuid,
             $timestamp
         );
     }
