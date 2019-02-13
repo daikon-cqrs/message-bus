@@ -17,5 +17,5 @@ interface TransportInterface
 {
     public function getKey(): string;
 
-    public function send(EnvelopeInterface $envelope, MessageBusInterface $messageBus): bool;
+    public function send(EnvelopeInterface $envelope, MessageBusInterface $messageBus): void;
 }

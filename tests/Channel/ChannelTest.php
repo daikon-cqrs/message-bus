@@ -47,10 +47,9 @@ final class ChannelTest extends TestCase
             ->getMock();
         $subscriptionMock->expects($this->once())
             ->method("publish")
-            ->with($envelopeExpectation, $this->equalTo($messageBusMock))
-            ->willReturn(true);
+            ->with($envelopeExpectation, $this->equalTo($messageBusMock));
         $channel = new Channel(self::CHANNEL_NAME, new SubscriptionMap([ $subscriptionMock ]));
-        $this->assertTrue($channel->publish($envelope, $messageBusMock));
+        $this->assertNull($channel->publish($envelope, $messageBusMock));
     }
 
     public function testPublishPreventedByGuard()
@@ -63,7 +62,7 @@ final class ChannelTest extends TestCase
             return $e->getUuid() === 'this envelope is acceptable';
         };
         $channel = new Channel('foo', new SubscriptionMap([$subscriptionMock]), $guard);
-        $this->assertFalse($channel->publish($envelope, $messageBusMock));
+        $this->assertNull($channel->publish($envelope, $messageBusMock));
     }
 
     public function testPublishAcceptedByGuard()
@@ -71,12 +70,12 @@ final class ChannelTest extends TestCase
         $envelope = Envelope::wrap($this->createMock(MessageInterface::CLASS));
         $messageBusMock = $this->createMock(MessageBusInterface::CLASS);
         $subscriptionMock = $this->getMockBuilder(SubscriptionInterface::CLASS)->getMock();
-        $subscriptionMock->expects($this->once())->method("publish")->willReturn(true);
+        $subscriptionMock->expects($this->once())->method("publish");
         $guard = function (EnvelopeInterface $e) {
             return $e->getUuid() !== 'this envelope is inacceptable';
         };
         $channel = new Channel('foo', new SubscriptionMap([$subscriptionMock]), $guard);
-        $this->assertTrue($channel->publish($envelope, $messageBusMock));
+        $this->assertNull($channel->publish($envelope, $messageBusMock));
     }
 
     public function testReceive()
@@ -93,10 +92,9 @@ final class ChannelTest extends TestCase
             ->willReturn(self::SUB_NAME);
         $subscriptionMock->expects($this->once())
             ->method("receive")
-            ->with($envelopeExpectation)
-            ->willReturn(true);
+            ->with($envelopeExpectation);
         $channel = new Channel(self::CHANNEL_NAME, new SubscriptionMap([ $subscriptionMock ]));
-        $this->assertTrue($channel->receive($envelopeExpectation));
+        $this->assertNull($channel->receive($envelopeExpectation));
     }
 
     public function testReceiveWithExistingSubscription()

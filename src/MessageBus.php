@@ -40,30 +40,27 @@ final class MessageBus implements MessageBusInterface
         $this->envelopeType = $envelopeType ?? Envelope::class;
     }
 
-    public function publish(MessageInterface $message, string $channel, MetadataInterface $metadata = null): bool
+    public function publish(MessageInterface $message, string $channel, MetadataInterface $metadata = null): void
     {
         if (!$this->channelMap->has($channel)) {
             throw new ChannelUnknown("Channel '$channel' has not been registered on message bus.");
         }
         $metadata = $this->enrichMetadata($metadata ?? Metadata::makeEmpty());
-        /** @var EnvelopeInterface $envelopeType  */
         $envelopeType = $this->envelopeType;
         $envelope = $envelopeType::wrap($message, $metadata);
-        /** @var ChannelInterface $channel  */
         $channel = $this->channelMap->get($channel);
-        return $channel->publish($envelope, $this);
+        $channel->publish($envelope, $this);
     }
 
-    public function receive(EnvelopeInterface $envelope): bool
+    public function receive(EnvelopeInterface $envelope): void
     {
         $this->verify($envelope);
         $channelKey = $envelope->getMetadata()->get(ChannelInterface::METADATA_KEY);
         if (!$this->channelMap->has($channelKey)) {
             throw new ChannelUnknown("Channel '$channelKey' has not been registered on message bus.");
         }
-        /** @var ChannelInterface $channel */
         $channel = $this->channelMap->get($channelKey);
-        return $channel->receive($envelope);
+        $channel->receive($envelope);
     }
 
     private function enrichMetadata(MetadataInterface $metadata): MetadataInterface

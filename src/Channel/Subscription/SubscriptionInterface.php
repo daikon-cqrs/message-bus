@@ -17,9 +17,9 @@ interface SubscriptionInterface
 {
     const METADATA_KEY = "_subscription";
 
-    public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): bool;
+    public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): void;
 
-    public function receive(EnvelopeInterface $envelope): bool;
+    public function receive(EnvelopeInterface $envelope): void;
 
     public function getKey(): string;
 }

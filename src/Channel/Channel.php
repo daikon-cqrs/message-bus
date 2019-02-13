@@ -10,13 +10,12 @@ declare(strict_types=1);
 
 namespace Daikon\MessageBus\Channel;
 
+use Daikon\MessageBus\EnvelopeInterface;
+use Daikon\MessageBus\MessageBusInterface;
 use Daikon\MessageBus\Channel\Subscription\SubscriptionInterface;
 use Daikon\MessageBus\Channel\Subscription\SubscriptionMap;
-use Daikon\MessageBus\EnvelopeInterface;
 use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
 use Daikon\MessageBus\Error\SubscriptionUnknown;
-use Daikon\MessageBus\MessageBusInterface;
-use Daikon\MessageBus\Metadata\CallbackMetadataEnricher;
 use Daikon\MessageBus\Metadata\MetadataInterface;
 use Daikon\MessageBus\Metadata\MetadataEnricherInterface;
 use Daikon\MessageBus\Metadata\MetadataEnricherList;
@@ -50,22 +49,17 @@ final class Channel implements ChannelInterface
         $this->metadataEnrichers = $metadataEnrichers->prependDefaultEnricher(self::METADATA_KEY, $this->key);
     }
 
-    public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): bool
+    public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): void
     {
         $envelope = $this->enrichMetadata($envelope);
-        if (!$this->accepts($envelope)) {
-            return false;
-        }
-        $messageWasPublished = false;
-        foreach ($this->subscriptions as $subscription) {
-            if ($subscription->publish($envelope, $messageBus) && !$messageWasPublished) {
-                $messageWasPublished = true;
+        if ($this->accepts($envelope)) {
+            foreach ($this->subscriptions as $subscription) {
+                $subscription->publish($envelope, $messageBus);
             }
         }
-        return $messageWasPublished;
     }
 
-    public function receive(EnvelopeInterface $envelope): bool
+    public function receive(EnvelopeInterface $envelope): void
     {
         $this->verify($envelope);
         $subscriptionKey = $envelope->getMetadata()->get(SubscriptionInterface::METADATA_KEY);
@@ -75,9 +69,8 @@ final class Channel implements ChannelInterface
                 "Envelope '{$envelope->getUuid()}' cannot be handled."
             );
         }
-        /** @var SubscriptionInterface $subscription */
         $subscription = $this->subscriptions->get($subscriptionKey);
-        return $subscription->receive($envelope);
+        $subscription->receive($envelope);
     }
 
     public function getKey(): string

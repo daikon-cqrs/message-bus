@@ -14,5 +14,5 @@ use Daikon\MessageBus\EnvelopeInterface;
 
 interface MessageHandlerInterface
 {
-    public function handle(EnvelopeInterface $envelope): bool;
+    public function handle(EnvelopeInterface $envelope): void;
 }

@@ -23,9 +23,9 @@ final class InProcessTransport implements TransportInterface
         $this->key = $key;
     }
 
-    public function send(EnvelopeInterface $envelope, MessageBusInterface $messageBus): bool
+    public function send(EnvelopeInterface $envelope, MessageBusInterface $messageBus): void
     {
-        return $messageBus->receive($envelope);
+        $messageBus->receive($envelope);
     }
 
     public function getKey(): string

@@ -39,10 +39,9 @@ final class MessageBusTest extends TestCase
             ->willReturn(self::CHANNEL_NAME);
         $channelMock->expects($this->once())
             ->method("publish")
-            ->with($envelopeExpectation)
-            ->willReturn(true);
+            ->with($envelopeExpectation);
         $messageBus = new MessageBus(new ChannelMap([ $channelMock ]));
-        $this->assertTrue($messageBus->publish($messageMock, self::CHANNEL_NAME));
+        $this->assertNull($messageBus->publish($messageMock, self::CHANNEL_NAME));
     }
 
     public function testReceive()
@@ -59,10 +58,9 @@ final class MessageBusTest extends TestCase
             ->willReturn(self::CHANNEL_NAME);
         $channelMock->expects($this->once())
             ->method("receive")
-            ->with($envelopeExpectation)
-            ->willReturn(true);
+            ->with($envelopeExpectation);
         $messageBus = new MessageBus(new ChannelMap([ $channelMock ]));
-        $this->assertTrue($messageBus->receive($envelopeExpectation));
+        $this->assertNull($messageBus->receive($envelopeExpectation));
     }
 
     public function testPublishToNonExistingChannel()

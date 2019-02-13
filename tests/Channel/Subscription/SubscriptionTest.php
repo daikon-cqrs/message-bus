@@ -51,11 +51,10 @@ final class SubscriptionTest extends TestCase
             ->getMock();
         $transportMock->expects($this->once())
             ->method("send")
-            ->with($envelopeExpectation, $this->equalTo($messageBusMock))
-            ->willReturn(true);
+            ->with($envelopeExpectation, $this->equalTo($messageBusMock));
         $subscription = new Subscription(self::SUB_NAME, $transportMock, new MessageHandlerList);
         $envelope = Envelope::wrap($this->createMock(MessageInterface::CLASS));
-        $this->assertTrue($subscription->publish($envelope, $messageBusMock));
+        $this->assertNull($subscription->publish($envelope, $messageBusMock));
     }
 
     public function testReceive()
@@ -70,11 +69,10 @@ final class SubscriptionTest extends TestCase
             ->getMock();
         $messageHandlerMock->expects($this->once())
             ->method("handle")
-            ->with($envelopeExpectation)
-            ->willReturn(true);
+            ->with($envelopeExpectation);
         $mockedHandlers = new MessageHandlerList([ $messageHandlerMock ]);
         $subscription = new Subscription(self::SUB_NAME, $transportMock, $mockedHandlers);
-        $this->assertTrue($subscription->receive($envelopeExpectation));
+        $this->assertNull($subscription->receive($envelopeExpectation));
     }
 
     public function testReceiveWithWrongSubscription()
@@ -128,7 +126,7 @@ final class SubscriptionTest extends TestCase
         };
         $subscription = new Subscription(self::SUB_NAME, $transportMock, new MessageHandlerList, $accept_nothing_guard);
         $envelope = Envelope::wrap($this->createMock(MessageInterface::CLASS));
-        $this->assertFalse($subscription->publish($envelope, $messageBusMock));
+        $this->assertNull($subscription->publish($envelope, $messageBusMock));
     }
 
     public function testPublishAcceptedByGuard()
@@ -141,6 +139,6 @@ final class SubscriptionTest extends TestCase
         };
         $subscription = new Subscription(self::SUB_NAME, $transportMock, new MessageHandlerList, $accept_all_guard);
         $envelope = Envelope::wrap($this->createMock(MessageInterface::CLASS));
-        $this->assertTrue($subscription->publish($envelope, $messageBusMock));
+        $this->assertNull($subscription->publish($envelope, $messageBusMock));
     }
 }

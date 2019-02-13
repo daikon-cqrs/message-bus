@@ -35,8 +35,7 @@ final class InProcessTransportTest extends TestCase
             ->getMock();
         $messageBusMock->expects($this->once())
             ->method("receive")
-            ->with($envelopeExpectation)
-            ->willReturn(true);
-        $this->assertTrue($transport->send($envelopeExpectation, $messageBusMock));
+            ->with($envelopeExpectation);
+        $this->assertNull($transport->send($envelopeExpectation, $messageBusMock));
     }
 }

@@ -19,7 +19,7 @@ interface ChannelInterface
 
     public function getKey(): string;
 
-    public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): bool;
+    public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): void;
 
-    public function receive(EnvelopeInterface $envelope): bool;
+    public function receive(EnvelopeInterface $envelope): void;
 }

@@ -54,22 +54,20 @@ final class Subscription implements SubscriptionInterface
         $this->metadataEnrichers = $metadataEnrichers->prependDefaultEnricher(self::METADATA_KEY, $this->key);
     }
 
-    public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): bool
+    public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): void
     {
         $envelope = $this->enrichMetadata($envelope);
-        return $this->accepts($envelope) && $this->transport->send($envelope, $messageBus);
+        if ($this->accepts($envelope)) {
+            $this->transport->send($envelope, $messageBus);
+        }
     }
 
-    public function receive(EnvelopeInterface $envelope): bool
+    public function receive(EnvelopeInterface $envelope): void
     {
         $this->verify($envelope);
-        $messageWasHandled = false;
         foreach ($this->messageHandlers as $messageHandler) {
-            if ($messageHandler->handle($envelope) && !$messageWasHandled) {
-                $messageWasHandled = true;
-            }
+            $messageHandler->handle($envelope);
         }
-        return $messageWasHandled;
     }
 
     public function getKey(): string
