@@ -56,6 +56,13 @@ final class Metadata implements MetadataInterface
         return $copy;
     }
 
+    public function without(string $key): MetadataInterface
+    {
+        $copy = clone $this;
+        $copy->compositeMap->remove($key);
+        return $copy;
+    }
+
     /**
      * @param mixed $default
      * @return mixed

@@ -75,7 +75,8 @@ final class Channel implements ChannelInterface
                 "Envelope '{$envelope->getUuid()}' cannot be handled."
             );
         }
-        $subscription = $this->subscriptions->get($subscriptionKey); /* @var $subscription SubscriptionInterface */
+        /** @var SubscriptionInterface $subscription */
+        $subscription = $this->subscriptions->get($subscriptionKey);
         return $subscription->receive($envelope);
     }
 

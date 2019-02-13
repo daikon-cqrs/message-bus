@@ -46,9 +46,11 @@ final class MessageBus implements MessageBusInterface
             throw new ChannelUnknown("Channel '$channel' has not been registered on message bus.");
         }
         $metadata = $this->enrichMetadata($metadata ?? Metadata::makeEmpty());
-        $envelopeType = $this->envelopeType; /* @var $envelopeType EnvelopeInterface */
+        /** @var EnvelopeInterface $envelopeType  */
+        $envelopeType = $this->envelopeType;
         $envelope = $envelopeType::wrap($message, $metadata);
-        $channel = $this->channelMap->get($channel); /* @var $channel ChannelInterface */
+        /** @var ChannelInterface $channel  */
+        $channel = $this->channelMap->get($channel);
         return $channel->publish($envelope, $this);
     }
 

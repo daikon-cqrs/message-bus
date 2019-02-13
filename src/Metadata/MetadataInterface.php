@@ -24,6 +24,8 @@ interface MetadataInterface extends \IteratorAggregate, \Countable, FromNativeIn
 
     public function with(string $key, $value): MetadataInterface;
 
+    public function without(string $key): MetadataInterface;
+
     public function get(string $key, $default = null);
 
     public function isEmpty(): bool;
