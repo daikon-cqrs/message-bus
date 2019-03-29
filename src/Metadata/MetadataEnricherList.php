@@ -18,7 +18,7 @@ final class MetadataEnricherList implements \IteratorAggregate, \Countable
 
     public function prependDefaultEnricher(string $namespace, string $value): self
     {
-        return $this->prepend(
+        return $this->unshift(
             new CallbackMetadataEnricher(
                 function (MetadataInterface $metadata) use ($namespace, $value): MetadataInterface {
                     return $metadata->with($namespace, $value);

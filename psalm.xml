@@ -25,6 +25,7 @@
     </projectFiles>
 
     <issueHandlers>
+        <RedundantConditionGivenDocblockType errorLevel="suppress" />
         <LessSpecificReturnType errorLevel="info" />
 
         <!-- level 3 issues - slightly lazy code writing, but provably low false-negatives -->
