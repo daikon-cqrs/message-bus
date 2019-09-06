@@ -12,8 +12,8 @@ namespace Daikon\MessageBus;
 
 use DateTimeImmutable;
 use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
-use Daikon\MessageBus\Metadata\Metadata;
-use Daikon\MessageBus\Metadata\MetadataInterface;
+use Daikon\Metadata\Metadata;
+use Daikon\Metadata\MetadataInterface;
 use Ramsey\Uuid\UuidInterface;
 use Ramsey\Uuid\Uuid;
 
@@ -78,28 +78,28 @@ final class Envelope implements EnvelopeInterface
     public function toNative(): array
     {
         return [
-            "uuid" => $this->uuid->toString(),
-            "timestamp" => $this->timestamp->format(self::TIMESTAMP_FORMAT),
-            "metadata" => $this->metadata->toNative(),
-            "message" => $this->message->toNative(),
-            "@message_type" => get_class($this->message),
-            "@metadata_type" => get_class($this->metadata)
+            'uuid' => $this->uuid->toString(),
+            'timestamp' => $this->timestamp->format(self::TIMESTAMP_FORMAT),
+            'metadata' => $this->metadata->toNative(),
+            'message' => $this->message->toNative(),
+            '@message_type' => get_class($this->message),
+            '@metadata_type' => get_class($this->metadata)
         ];
     }
 
     /** @param array $state */
     public static function fromNative($state): EnvelopeInterface
     {
-        $uuid = isset($state["uuid"]) ? Uuid::fromString($state["uuid"]) : null;
+        $uuid = isset($state['uuid']) ? Uuid::fromString($state['uuid']) : null;
 
-        $timestamp = isset($state["timestamp"])
-            ? DateTimeImmutable::createFromFormat(self::TIMESTAMP_FORMAT, $state["timestamp"])
+        $timestamp = isset($state['timestamp'])
+            ? DateTimeImmutable::createFromFormat(self::TIMESTAMP_FORMAT, $state['timestamp'])
             : null;
         if (false === $timestamp) {
-            throw new EnvelopeNotAcceptable("Unable to parse given timestamp.", EnvelopeNotAcceptable::UNPARSEABLE);
+            throw new EnvelopeNotAcceptable('Unable to parse given timestamp.', EnvelopeNotAcceptable::UNPARSEABLE);
         }
 
-        $messageType = $state["@message_type"] ?? null;
+        $messageType = $state['@message_type'] ?? null;
         if (!is_subclass_of($messageType, MessageInterface::class)) {
             throw new EnvelopeNotAcceptable(sprintf(
                 "Message type '%s' given must be an instance of MessageInterface",
@@ -107,13 +107,13 @@ final class Envelope implements EnvelopeInterface
             ), EnvelopeNotAcceptable::UNPARSEABLE);
         }
 
-        $metadataType = $state["@metadata_type"] ?? null;
+        $metadataType = $state['@metadata_type'] ?? null;
         $metadata = $metadataType instanceof MetadataInterface
-            ? $metadataType::fromNative($state["metadata"])
-            : Metadata::fromNative($state["metadata"] ?? []);
+            ? $metadataType::fromNative($state['metadata'])
+            : Metadata::fromNative($state['metadata'] ?? []);
 
         return new self(
-            $messageType::fromNative($state["message"] ?? null),
+            $messageType::fromNative($state['message'] ?? null),
             $metadata,
             $uuid,
             $timestamp

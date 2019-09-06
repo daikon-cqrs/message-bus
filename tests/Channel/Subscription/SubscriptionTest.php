@@ -21,20 +21,20 @@ use Daikon\MessageBus\EnvelopeInterface;
 use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
 use Daikon\MessageBus\MessageBusInterface;
 use Daikon\MessageBus\MessageInterface;
-use Daikon\MessageBus\Metadata\Metadata;
+use Daikon\Metadata\Metadata;
 use PHPUnit\Framework\TestCase;
 
 final class SubscriptionTest extends TestCase
 {
-    const CHANNEL_NAME = "test_channel";
+    const CHANNEL_NAME = 'test_channel';
 
-    const SUB_NAME = "test_subscription";
+    const SUB_NAME = 'test_subscription';
 
     public function testGetKey()
     {
         $subscription = new Subscription(
             self::SUB_NAME,
-            $this->createMock(TransportInterface::CLASS),
+            $this->createMock(TransportInterface::class),
             new MessageHandlerList
         );
         $this->assertEquals($subscription->getKey(), self::SUB_NAME);
@@ -45,49 +45,49 @@ final class SubscriptionTest extends TestCase
         $envelopeExpectation = $this->callback(function (EnvelopeInterface $envelope) {
             return self::SUB_NAME === $envelope->getMetadata()->get(SubscriptionInterface::METADATA_KEY);
         });
-        $messageBusMock = $this->createMock(MessageBusInterface::CLASS);
-        $transportMock = $this->getMockBuilder(TransportInterface::CLASS)
-            ->setMethods([ "send", "getKey" ])
+        $messageBusMock = $this->createMock(MessageBusInterface::class);
+        $transportMock = $this->getMockBuilder(TransportInterface::class)
+            ->setMethods(['send', 'getKey'])
             ->getMock();
         $transportMock->expects($this->once())
-            ->method("send")
+            ->method('send')
             ->with($envelopeExpectation, $this->equalTo($messageBusMock));
         $subscription = new Subscription(self::SUB_NAME, $transportMock, new MessageHandlerList);
-        $envelope = Envelope::wrap($this->createMock(MessageInterface::CLASS));
+        $envelope = Envelope::wrap($this->createMock(MessageInterface::class));
         $this->assertNull($subscription->publish($envelope, $messageBusMock));
     }
 
     public function testReceive()
     {
-        $envelopeExpectation = Envelope::wrap($this->createMock(MessageInterface::CLASS), Metadata::fromNative([
+        $envelopeExpectation = Envelope::wrap($this->createMock(MessageInterface::class), Metadata::fromNative([
             ChannelInterface::METADATA_KEY => self::CHANNEL_NAME,
             SubscriptionInterface::METADATA_KEY => self::SUB_NAME
         ]));
-        $transportMock = $this->createMock(TransportInterface::CLASS);
-        $messageHandlerMock = $this->getMockBuilder(MessageHandlerInterface::CLASS)
-            ->setMethods([ "handle" ])
+        $transportMock = $this->createMock(TransportInterface::class);
+        $messageHandlerMock = $this->getMockBuilder(MessageHandlerInterface::class)
+            ->setMethods(['handle'])
             ->getMock();
         $messageHandlerMock->expects($this->once())
-            ->method("handle")
+            ->method('handle')
             ->with($envelopeExpectation);
-        $mockedHandlers = new MessageHandlerList([ $messageHandlerMock ]);
+        $mockedHandlers = new MessageHandlerList([$messageHandlerMock]);
         $subscription = new Subscription(self::SUB_NAME, $transportMock, $mockedHandlers);
         $this->assertNull($subscription->receive($envelopeExpectation));
     }
 
     public function testReceiveWithWrongSubscription()
     {
-        $envelope = Envelope::wrap($this->createMock(MessageInterface::CLASS), Metadata::fromNative([
+        $envelope = Envelope::wrap($this->createMock(MessageInterface::class), Metadata::fromNative([
             ChannelInterface::METADATA_KEY => self::CHANNEL_NAME,
-            SubscriptionInterface::METADATA_KEY => "foobar"
+            SubscriptionInterface::METADATA_KEY => 'foobar'
         ]));
         $subscription = new Subscription(
             self::SUB_NAME,
-            $this->createMock(TransportInterface::CLASS),
+            $this->createMock(TransportInterface::class),
             new MessageHandlerList
         );
 
-        $this->expectException(EnvelopeNotAcceptable::CLASS);
+        $this->expectException(EnvelopeNotAcceptable::class);
         $this->expectExceptionMessage(
             "Subscription '".self::SUB_NAME."' inadvertently received Envelope ".
             "'{$envelope->getUuid()}' for subscription 'foobar'."
@@ -99,14 +99,14 @@ final class SubscriptionTest extends TestCase
 
     public function testReceiveWithMissingSubscription()
     {
-        $envelope = Envelope::wrap($this->createMock(MessageInterface::CLASS));
+        $envelope = Envelope::wrap($this->createMock(MessageInterface::class));
         $subscription = new Subscription(
             self::SUB_NAME,
-            $this->createMock(TransportInterface::CLASS),
+            $this->createMock(TransportInterface::class),
             new MessageHandlerList
         );
 
-        $this->expectException(EnvelopeNotAcceptable::CLASS);
+        $this->expectException(EnvelopeNotAcceptable::class);
         $this->expectExceptionMessage(
             "Subscription key '".SubscriptionInterface::METADATA_KEY."' missing in metadata of ".
             "Envelope '{$envelope->getUuid()}' received by subscription '".self::SUB_NAME."'."
@@ -118,27 +118,27 @@ final class SubscriptionTest extends TestCase
 
     public function testPublishPreventedByGuard()
     {
-        $messageBusMock = $this->createMock(MessageBusInterface::CLASS);
-        $transportMock = $this->getMockBuilder(TransportInterface::CLASS)->getMock();
-        $transportMock->expects($this->never())->method("send");
+        $messageBusMock = $this->createMock(MessageBusInterface::class);
+        $transportMock = $this->getMockBuilder(TransportInterface::class)->getMock();
+        $transportMock->expects($this->never())->method('send');
         $accept_nothing_guard = function (EnvelopeInterface $e) {
             return $e->getUuid() === 'this envelope is acceptable';
         };
         $subscription = new Subscription(self::SUB_NAME, $transportMock, new MessageHandlerList, $accept_nothing_guard);
-        $envelope = Envelope::wrap($this->createMock(MessageInterface::CLASS));
+        $envelope = Envelope::wrap($this->createMock(MessageInterface::class));
         $this->assertNull($subscription->publish($envelope, $messageBusMock));
     }
 
     public function testPublishAcceptedByGuard()
     {
-        $messageBusMock = $this->createMock(MessageBusInterface::CLASS);
-        $transportMock = $this->getMockBuilder(TransportInterface::CLASS)->getMock();
-        $transportMock->expects($this->once())->method("send")->willReturn(true);
+        $messageBusMock = $this->createMock(MessageBusInterface::class);
+        $transportMock = $this->getMockBuilder(TransportInterface::class)->getMock();
+        $transportMock->expects($this->once())->method('send');
         $accept_all_guard = function (EnvelopeInterface $e) {
             return $e->getUuid() !== 'this envelope is acceptable';
         };
         $subscription = new Subscription(self::SUB_NAME, $transportMock, new MessageHandlerList, $accept_all_guard);
-        $envelope = Envelope::wrap($this->createMock(MessageInterface::CLASS));
+        $envelope = Envelope::wrap($this->createMock(MessageInterface::class));
         $this->assertNull($subscription->publish($envelope, $messageBusMock));
     }
 }

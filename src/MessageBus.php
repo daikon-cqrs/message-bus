@@ -14,10 +14,10 @@ use Daikon\MessageBus\Channel\ChannelInterface;
 use Daikon\MessageBus\Channel\ChannelMap;
 use Daikon\MessageBus\Error\ChannelUnknown;
 use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
-use Daikon\MessageBus\Metadata\MetadataInterface;
-use Daikon\MessageBus\Metadata\Metadata;
-use Daikon\MessageBus\Metadata\MetadataEnricherInterface;
-use Daikon\MessageBus\Metadata\MetadataEnricherList;
+use Daikon\Metadata\MetadataInterface;
+use Daikon\Metadata\Metadata;
+use Daikon\Metadata\MetadataEnricherInterface;
+use Daikon\Metadata\MetadataEnricherList;
 
 final class MessageBus implements MessageBusInterface
 {
@@ -55,7 +55,7 @@ final class MessageBus implements MessageBusInterface
     public function receive(EnvelopeInterface $envelope): void
     {
         $this->verify($envelope);
-        $channelKey = $envelope->getMetadata()->get(ChannelInterface::METADATA_KEY);
+        $channelKey = (string)$envelope->getMetadata()->get(ChannelInterface::METADATA_KEY);
         if (!$this->channelMap->has($channelKey)) {
             throw new ChannelUnknown("Channel '$channelKey' has not been registered on message bus.");
         }

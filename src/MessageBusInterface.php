@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Daikon\MessageBus;
 
-use Daikon\MessageBus\Metadata\MetadataInterface;
+use Daikon\Metadata\MetadataInterface;
 
 interface MessageBusInterface
 {

@@ -15,7 +15,7 @@ use Daikon\MessageBus\MessageBusInterface;
 
 interface SubscriptionInterface
 {
-    const METADATA_KEY = "_subscription";
+    const METADATA_KEY = '_subscription';
 
     public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): void;
 

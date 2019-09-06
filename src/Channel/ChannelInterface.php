@@ -15,7 +15,7 @@ use Daikon\MessageBus\MessageBusInterface;
 
 interface ChannelInterface
 {
-    const METADATA_KEY = "_channel";
+    const METADATA_KEY = '_channel';
 
     public function getKey(): string;
 

@@ -15,10 +15,9 @@ use Daikon\MessageBus\Channel\Subscription\Transport\TransportInterface;
 use Daikon\MessageBus\EnvelopeInterface;
 use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
 use Daikon\MessageBus\MessageBusInterface;
-use Daikon\MessageBus\Metadata\CallbackMetadataEnricher;
-use Daikon\MessageBus\Metadata\MetadataInterface;
-use Daikon\MessageBus\Metadata\MetadataEnricherInterface;
-use Daikon\MessageBus\Metadata\MetadataEnricherList;
+use Daikon\Metadata\MetadataInterface;
+use Daikon\Metadata\MetadataEnricherInterface;
+use Daikon\Metadata\MetadataEnricherList;
 
 final class Subscription implements SubscriptionInterface
 {

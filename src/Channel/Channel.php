@@ -16,9 +16,9 @@ use Daikon\MessageBus\Channel\Subscription\SubscriptionInterface;
 use Daikon\MessageBus\Channel\Subscription\SubscriptionMap;
 use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
 use Daikon\MessageBus\Error\SubscriptionUnknown;
-use Daikon\MessageBus\Metadata\MetadataInterface;
-use Daikon\MessageBus\Metadata\MetadataEnricherInterface;
-use Daikon\MessageBus\Metadata\MetadataEnricherList;
+use Daikon\Metadata\MetadataInterface;
+use Daikon\Metadata\MetadataEnricherInterface;
+use Daikon\Metadata\MetadataEnricherList;
 
 final class Channel implements ChannelInterface
 {
@@ -62,7 +62,7 @@ final class Channel implements ChannelInterface
     public function receive(EnvelopeInterface $envelope): void
     {
         $this->verify($envelope);
-        $subscriptionKey = $envelope->getMetadata()->get(SubscriptionInterface::METADATA_KEY);
+        $subscriptionKey = (string)$envelope->getMetadata()->get(SubscriptionInterface::METADATA_KEY);
         if (!$this->subscriptions->has($subscriptionKey)) {
             throw new SubscriptionUnknown(
                 "Channel '{$this->key}' has no subscription '$subscriptionKey' and thus ".

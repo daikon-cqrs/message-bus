@@ -11,6 +11,7 @@
         "php": "^7.2",
         "daikon/data-structure": "master@dev",
         "daikon/interop": "master@dev",
+        "daikon/metadata": "master@dev",
         "ramsey/uuid": "^3.8"
     },
     "require-dev": {

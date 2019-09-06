@@ -13,10 +13,9 @@ namespace Daikon\Tests\MessageBus;
 use DateTimeImmutable;
 use Daikon\MessageBus\Envelope;
 use Daikon\MessageBus\MessageInterface;
-use Daikon\MessageBus\Metadata\Metadata;
+use Daikon\Metadata\Metadata;
 use Daikon\Tests\MessageBus\Fixture\ChangeUsername;
 use Daikon\Tests\MessageBus\Fixture\KnownRevision;
-use Daikon\Tests\MessageBus\Fixture\Message;
 use Daikon\Tests\MessageBus\Fixture\UserId;
 use Daikon\Tests\MessageBus\Fixture\Username;
 use Ramsey\Uuid\Uuid;
@@ -31,10 +30,10 @@ final class EnvelopeTest extends TestCase
             new KnownRevision(2),
             new Username('frodo')
         ));
-        $this->assertInstanceOf(Uuid::CLASS, $envelope->getUuid());
-        $this->assertInstanceOf(DateTimeImmutable::CLASS, $envelope->getTimestamp());
-        $this->assertInstanceOf(Metadata::CLASS, $envelope->getMetadata());
-        $this->assertInstanceOf(MessageInterface::CLASS, $envelope->getMessage());
+        $this->assertInstanceOf(Uuid::class, $envelope->getUuid());
+        $this->assertInstanceOf(DateTimeImmutable::class, $envelope->getTimestamp());
+        $this->assertInstanceOf(Metadata::class, $envelope->getMetadata());
+        $this->assertInstanceOf(MessageInterface::class, $envelope->getMessage());
     }
 
     public function testToNativeRoundtrip()
