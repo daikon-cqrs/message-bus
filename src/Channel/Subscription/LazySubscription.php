@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Daikon\MessageBus\Channel\Subscription;
 
-use Daikon\MessageBus\Channel\Subscription\MessageHandler\MessageHandlerList;
 use Daikon\MessageBus\EnvelopeInterface;
 use Daikon\MessageBus\MessageBusInterface;
 
