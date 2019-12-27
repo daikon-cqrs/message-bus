@@ -1,10 +1,19 @@
-<?php
+<?php declare(strict_types=1);
+/**
+ * This file is part of the daikon-cqrs/message-bus project.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Daikon\MessageBus\Channel\Subscription\Transport;
 
+use Countable;
 use Daikon\DataStructure\TypedMapTrait;
+use Daikon\MessageBus\Error\ConfigurationError;
+use IteratorAggregate;
 
-final class TransportMap implements \IteratorAggregate, \Countable
+final class TransportMap implements IteratorAggregate, Countable
 {
     use TypedMapTrait;
 
@@ -12,7 +21,11 @@ final class TransportMap implements \IteratorAggregate, \Countable
     public function __construct(array $transports = [])
     {
         $this->init(array_reduce($transports, function (array $carry, TransportInterface $transport): array {
-            $carry[$transport->getKey()] = $transport; // enforce consistent channel keys
+            $transportKey = $transport->getKey();
+            if (isset($carry[$transportKey])) {
+                throw new ConfigurationError("Transport key '$transportKey' is already defined.");
+            }
+            $carry[$transportKey] = $transport;
             return $carry;
         }, []), TransportInterface::class);
     }

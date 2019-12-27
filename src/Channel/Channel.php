@@ -1,12 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of the daikon-cqrs/message-bus project.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
-declare(strict_types=1);
 
 namespace Daikon\MessageBus\Channel;
 
@@ -66,7 +64,7 @@ final class Channel implements ChannelInterface
         if (!$this->subscriptions->has($subscriptionKey)) {
             throw new SubscriptionUnknown(
                 "Channel '{$this->key}' has no subscription '$subscriptionKey' and thus ".
-                "Envelope '{$envelope->getUuid()}' cannot be handled."
+                "Envelope '{$envelope->getUuid()->toString()}' cannot be handled."
             );
         }
         $subscription = $this->subscriptions->get($subscriptionKey);
@@ -99,23 +97,23 @@ final class Channel implements ChannelInterface
         $metadata = $envelope->getMetadata();
         if (!$metadata->has(self::METADATA_KEY)) {
             throw new EnvelopeNotAcceptable(
-                "Channel key '".self::METADATA_KEY."' missing in metadata of Envelope '{$envelope->getUuid()}' ".
-                "received on channel '{$this->key}'.",
+                "Channel key '".self::METADATA_KEY."' missing in metadata of Envelope ".
+                "'{$envelope->getUuid()->toString()}' received on channel '{$this->key}'.",
                 EnvelopeNotAcceptable::CHANNEL_KEY_MISSING
             );
         }
         $channelKey = $metadata->get(self::METADATA_KEY);
         if ($channelKey !== $this->key) {
             throw new EnvelopeNotAcceptable(
-                "Channel '{$this->key}' inadvertently received Envelope '{$envelope->getUuid()}' ".
-                "for channel '$channelKey'.",
+                "Channel '{$this->key}' inadvertently received Envelope ".
+                "'{$envelope->getUuid()->toString()}' for channel '$channelKey'.",
                 EnvelopeNotAcceptable::CHANNEL_KEY_UNEXPECTED
             );
         }
         if (!$metadata->has(SubscriptionInterface::METADATA_KEY)) {
             throw new EnvelopeNotAcceptable(
                 "Subscription key '".SubscriptionInterface::METADATA_KEY."' missing in metadata of ".
-                "Envelope '{$envelope->getUuid()}' received on channel '{$this->key}'.",
+                "Envelope '{$envelope->getUuid()->toString()}' received on channel '{$this->key}'.",
                 EnvelopeNotAcceptable::SUBSCRIPTION_KEY_MISSING
             );
         }

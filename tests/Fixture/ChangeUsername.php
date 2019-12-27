@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of the daikon-cqrs/message-bus project.
  *
@@ -6,19 +6,20 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types=1);
-
 namespace Daikon\Tests\MessageBus\Fixture;
 
 use Daikon\MessageBus\MessageInterface;
 
 final class ChangeUsername implements MessageInterface
 {
-    private $username;
-
+    /** @var UserId */
     private $identifier;
 
+    /** @var KnownRevision */
     private $knownRevision;
+
+    /** @var Username */
+    private $username;
 
     public function __construct(UserId $identifier, KnownRevision $knownRevision, Username $username)
     {
@@ -45,9 +46,9 @@ final class ChangeUsername implements MessageInterface
     public function toNative(): array
     {
         return [
-            "identifier" => $this->identifier->toNative(),
-            "knownRevision" => $this->knownRevision->toNative(),
-            "username" => $this->username->toNative()
+            'identifier' => $this->identifier->toNative(),
+            'knownRevision' => $this->knownRevision->toNative(),
+            'username' => $this->username->toNative()
         ];
     }
 
@@ -55,9 +56,9 @@ final class ChangeUsername implements MessageInterface
     public static function fromNative($state): MessageInterface
     {
         return new self(
-            new UserId($state["identifier"]),
-            new KnownRevision((int)$state["knownRevision"]),
-            new Username($state["username"])
+            new UserId($state['identifier']),
+            new KnownRevision((int)$state['knownRevision']),
+            new Username($state['username'])
         );
     }
 }

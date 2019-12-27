@@ -1,12 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of the daikon-cqrs/message-bus project.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
-declare(strict_types=1);
 
 namespace Daikon\MessageBus;
 
@@ -100,7 +98,7 @@ final class Envelope implements EnvelopeInterface
         }
 
         $messageType = $state['@message_type'] ?? null;
-        if (!is_subclass_of($messageType, MessageInterface::class)) {
+        if (is_null($messageType) || !is_subclass_of($messageType, MessageInterface::class)) {
             throw new EnvelopeNotAcceptable(sprintf(
                 "Message type '%s' given must be an instance of MessageInterface",
                 $messageType

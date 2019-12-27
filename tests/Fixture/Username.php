@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of the daikon-cqrs/message-bus project.
  *
@@ -6,15 +6,14 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types=1);
-
 namespace Daikon\Tests\MessageBus\Fixture;
 
 final class Username
 {
+    /** @var string */
     private $username;
 
-    public function __construct(string $username = "")
+    public function __construct(string $username = '')
     {
         $this->username = $username;
     }

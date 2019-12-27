@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of the daikon-cqrs/message-bus project.
  *
@@ -6,12 +6,11 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types=1);
-
 namespace Daikon\Tests\MessageBus\Fixture;
 
 final class KnownRevision
 {
+    /** @var int */
     private $revision;
 
     public function __construct(int $revision)

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of the daikon-cqrs/message-bus project.
  *
@@ -6,11 +6,10 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types=1);
-
 namespace Daikon\MessageBus\Error;
 
-final class SubscriptionUnknown extends \Exception implements ErrorInterface
-{
+use Exception;
 
+final class SubscriptionUnknown extends Exception implements ErrorInterface
+{
 }

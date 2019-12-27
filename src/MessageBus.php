@@ -1,12 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of the daikon-cqrs/message-bus project.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
-declare(strict_types=1);
 
 namespace Daikon\MessageBus;
 
@@ -80,7 +78,7 @@ final class MessageBus implements MessageBusInterface
         if (!$metadata->has(ChannelInterface::METADATA_KEY)) {
             throw new EnvelopeNotAcceptable(
                 "Channel key '".ChannelInterface::METADATA_KEY."' missing in metadata of ".
-                "Envelope '{$envelope->getUuid()}' received on message bus.",
+                "Envelope '{$envelope->getUuid()->toString()}' received on message bus.",
                 EnvelopeNotAcceptable::CHANNEL_KEY_MISSING
             );
         }

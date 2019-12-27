@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of the daikon-cqrs/message-bus project.
  *
@@ -6,13 +6,13 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types=1);
-
 namespace Daikon\MessageBus\Channel\Subscription\MessageHandler;
 
+use Countable;
 use Daikon\DataStructure\TypedListTrait;
+use IteratorAggregate;
 
-final class MessageHandlerList implements \IteratorAggregate, \Countable
+final class MessageHandlerList implements IteratorAggregate, Countable
 {
     use TypedListTrait;
 

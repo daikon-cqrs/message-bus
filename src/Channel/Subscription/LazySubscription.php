@@ -1,12 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of the daikon-cqrs/message-bus project.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
-declare(strict_types=1);
 
 namespace Daikon\MessageBus\Channel\Subscription;
 
@@ -18,10 +16,10 @@ final class LazySubscription implements SubscriptionInterface
     /** @var string */
     private $key;
 
-    /** @var SubscriptionInterface|null */
+    /** @var null|SubscriptionInterface */
     private $compositeSubscription;
 
-    /** @var callable|null */
+    /** @var null|callable */
     private $factoryCallback;
 
     public function __construct(

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of the daikon-cqrs/message-bus project.
  *
@@ -6,17 +6,18 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types=1);
-
 namespace Daikon\MessageBus\Channel;
 
+use Countable;
 use Daikon\DataStructure\TypedMapTrait;
 use Daikon\MessageBus\Error\ConfigurationError;
+use IteratorAggregate;
 
-final class ChannelMap implements \IteratorAggregate, \Countable
+final class ChannelMap implements IteratorAggregate, Countable
 {
     use TypedMapTrait;
 
+    /** @param ChannelInterface[] $channels */
     public function __construct(array $channels = [])
     {
         $this->init(array_reduce($channels, function (array $carry, ChannelInterface $channel): array {

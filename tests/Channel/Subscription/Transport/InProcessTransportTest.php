@@ -1,12 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of the daikon-cqrs/message-bus project.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
-declare(strict_types=1);
 
 namespace Daikon\Tests\MessageBus\Channel\Subscription;
 
@@ -19,14 +17,16 @@ use PHPUnit\Framework\TestCase;
 
 final class InProcessTransportTest extends TestCase
 {
-    public function testGetKey()
+    public function testGetKey(): void
     {
         $this->assertEquals((new InProcessTransport('inproc'))->getKey(), 'inproc');
     }
 
-    public function testSend()
+    public function testSend(): void
     {
-        $envelopeExpectation = Envelope::wrap($this->createMock(MessageInterface::class), Metadata::makeEmpty());
+        /** @var MessageInterface $messageMock */
+        $messageMock = $this->createMock(MessageInterface::class);
+        $envelopeExpectation = Envelope::wrap($messageMock, Metadata::makeEmpty());
         $transport = new InProcessTransport('inproc');
         $messageBusMock = $this->getMockBuilder(MessageBusInterface::class)
             ->setMethods(['publish', 'receive'])
@@ -34,6 +34,7 @@ final class InProcessTransportTest extends TestCase
         $messageBusMock->expects($this->once())
             ->method('receive')
             ->with($envelopeExpectation);
+        /** @psalm-suppress InvalidArgument */
         $this->assertNull($transport->send($envelopeExpectation, $messageBusMock));
     }
 }

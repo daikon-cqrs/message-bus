@@ -1,12 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * This file is part of the daikon-cqrs/message-bus project.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
-declare(strict_types=1);
 
 namespace Daikon\MessageBus\Channel\Subscription;
 
@@ -21,6 +19,9 @@ use Daikon\Metadata\MetadataEnricherList;
 
 final class Subscription implements SubscriptionInterface
 {
+    /** @var string */
+    private $key;
+
     /** @var TransportInterface */
     private $transport;
 
@@ -32,9 +33,6 @@ final class Subscription implements SubscriptionInterface
 
     /** @var MetadataEnricherList */
     private $metadataEnrichers;
-
-    /** @var string */
-    private $key;
 
     public function __construct(
         string $key,
@@ -95,16 +93,16 @@ final class Subscription implements SubscriptionInterface
         $metadata = $envelope->getMetadata();
         if (!$metadata->has(self::METADATA_KEY)) {
             throw new EnvelopeNotAcceptable(
-                "Subscription key '".self::METADATA_KEY."' missing in metadata of Envelope '{$envelope->getUuid()}' ".
-                "received by subscription '{$this->key}'.",
+                "Subscription key '".self::METADATA_KEY."' missing in metadata of Envelope ".
+                "'{$envelope->getUuid()->toString()}' received by subscription '{$this->key}'.",
                 EnvelopeNotAcceptable::SUBSCRIPTION_KEY_MISSING
             );
         }
         $subscriptionKey = $metadata->get(self::METADATA_KEY);
         if ($subscriptionKey !== $this->key) {
             throw new EnvelopeNotAcceptable(
-                "Subscription '{$this->key}' inadvertently received Envelope '{$envelope->getUuid()}' ".
-                "for subscription '$subscriptionKey'.",
+                "Subscription '{$this->key}' inadvertently received Envelope ".
+                "'{$envelope->getUuid()->toString()}' for subscription '$subscriptionKey'.",
                 EnvelopeNotAcceptable::SUBSCRIPTION_KEY_UNEXPECTED
             );
         }
