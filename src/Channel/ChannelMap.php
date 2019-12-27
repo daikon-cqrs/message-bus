@@ -10,7 +10,7 @@ namespace Daikon\MessageBus\Channel;
 
 use Countable;
 use Daikon\DataStructure\TypedMapTrait;
-use Daikon\MessageBus\Error\ConfigurationError;
+use InvalidArgumentException;
 use IteratorAggregate;
 
 final class ChannelMap implements IteratorAggregate, Countable
@@ -23,7 +23,7 @@ final class ChannelMap implements IteratorAggregate, Countable
         $this->init(array_reduce($channels, function (array $carry, ChannelInterface $channel): array {
             $channelKey = $channel->getKey();
             if (isset($carry[$channelKey])) {
-                throw new ConfigurationError("Channel key '$channelKey' is already defined.");
+                throw new InvalidArgumentException("Channel key '$channelKey' is already defined.");
             }
             $carry[$channelKey] = $channel;
             return $carry;

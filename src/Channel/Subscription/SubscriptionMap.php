@@ -9,7 +9,7 @@
 namespace Daikon\MessageBus\Channel\Subscription;
 
 use Daikon\DataStructure\TypedMapTrait;
-use Daikon\MessageBus\Error\ConfigurationError;
+use InvalidArgumentException;
 
 final class SubscriptionMap implements \IteratorAggregate, \Countable
 {
@@ -21,7 +21,7 @@ final class SubscriptionMap implements \IteratorAggregate, \Countable
         $this->init(array_reduce($subscriptions, function (array $carry, SubscriptionInterface $subscription): array {
             $subscriptionKey = $subscription->getKey();
             if (isset($carry[$subscriptionKey])) {
-                throw new ConfigurationError("Subscription key '$subscriptionKey' is already defined.");
+                throw new InvalidArgumentException("Subscription key '$subscriptionKey' is already defined.");
             }
             $carry[$subscriptionKey] = $subscription; // enforce consistent channel keys
             return $carry;

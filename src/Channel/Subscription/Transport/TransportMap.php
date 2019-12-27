@@ -10,7 +10,7 @@ namespace Daikon\MessageBus\Channel\Subscription\Transport;
 
 use Countable;
 use Daikon\DataStructure\TypedMapTrait;
-use Daikon\MessageBus\Error\ConfigurationError;
+use InvalidArgumentException;
 use IteratorAggregate;
 
 final class TransportMap implements IteratorAggregate, Countable
@@ -23,7 +23,7 @@ final class TransportMap implements IteratorAggregate, Countable
         $this->init(array_reduce($transports, function (array $carry, TransportInterface $transport): array {
             $transportKey = $transport->getKey();
             if (isset($carry[$transportKey])) {
-                throw new ConfigurationError("Transport key '$transportKey' is already defined.");
+                throw new InvalidArgumentException("Transport key '$transportKey' is already defined.");
             }
             $carry[$transportKey] = $transport;
             return $carry;
