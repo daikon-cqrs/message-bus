@@ -17,7 +17,6 @@ final class SubscriptionMap implements IteratorAggregate, Countable
 {
     use TypedMapTrait;
 
-    /** @param SubscriptionInterface[]|self $subscriptions */
     public function __construct(iterable $subscriptions = [])
     {
         $mappedSubscriptions = [];

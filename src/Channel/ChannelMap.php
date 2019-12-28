@@ -17,7 +17,6 @@ final class ChannelMap implements IteratorAggregate, Countable
 {
     use TypedMapTrait;
 
-    /** @param ChannelInterface[]|self $channels */
     public function __construct(iterable $channels = [])
     {
         $mappedChannels = [];

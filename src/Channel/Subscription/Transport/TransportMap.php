@@ -17,7 +17,6 @@ final class TransportMap implements IteratorAggregate, Countable
 {
     use TypedMapTrait;
 
-    /** @param TransportInterface[]|self $transports */
     public function __construct(iterable $transports = [])
     {
         $mappedTransports = [];
