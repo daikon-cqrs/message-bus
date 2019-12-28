@@ -8,23 +8,28 @@
 
 namespace Daikon\MessageBus\Channel\Subscription;
 
+use Countable;
 use Daikon\DataStructure\TypedMapTrait;
 use InvalidArgumentException;
+use IteratorAggregate;
 
-final class SubscriptionMap implements \IteratorAggregate, \Countable
+final class SubscriptionMap implements IteratorAggregate, Countable
 {
     use TypedMapTrait;
 
-    /** @param SubscriptionInterface[] $subscriptions */
-    public function __construct(array $subscriptions = [])
+    /** @param SubscriptionInterface[]|self $subscriptions */
+    public function __construct(iterable $subscriptions = [])
     {
-        $this->init(array_reduce($subscriptions, function (array $carry, SubscriptionInterface $subscription): array {
+        $mappedSubscriptions = [];
+        /** @var SubscriptionInterface $subscription */
+        foreach ($subscriptions as $subscription) {
             $subscriptionKey = $subscription->getKey();
-            if (isset($carry[$subscriptionKey])) {
+            if (isset($mappedSubscriptions[$subscriptionKey])) {
                 throw new InvalidArgumentException("Subscription key '$subscriptionKey' is already defined.");
             }
-            $carry[$subscriptionKey] = $subscription; // enforce consistent channel keys
-            return $carry;
-        }, []), SubscriptionInterface::class);
+            $mappedSubscriptions[$subscriptionKey] = $subscription;
+        }
+
+        $this->init($mappedSubscriptions, SubscriptionInterface::class);
     }
 }

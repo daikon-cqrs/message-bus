@@ -17,16 +17,19 @@ final class ChannelMap implements IteratorAggregate, Countable
 {
     use TypedMapTrait;
 
-    /** @param ChannelInterface[] $channels */
-    public function __construct(array $channels = [])
+    /** @param ChannelInterface[]|self $channels */
+    public function __construct(iterable $channels = [])
     {
-        $this->init(array_reduce($channels, function (array $carry, ChannelInterface $channel): array {
+        $mappedChannels = [];
+        /** @var ChannelInterface $channel */
+        foreach ($channels as $channel) {
             $channelKey = $channel->getKey();
-            if (isset($carry[$channelKey])) {
+            if (isset($mappedChannels[$channelKey])) {
                 throw new InvalidArgumentException("Channel key '$channelKey' is already defined.");
             }
-            $carry[$channelKey] = $channel;
-            return $carry;
-        }, []), ChannelInterface::class);
+            $mappedChannels[$channelKey] = $channel;
+        }
+
+        $this->init($mappedChannels, ChannelInterface::class);
     }
 }

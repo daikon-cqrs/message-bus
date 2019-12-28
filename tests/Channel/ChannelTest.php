@@ -44,7 +44,7 @@ final class ChannelTest extends TestCase
         /** @var MessageBusInterface $messageBusMock */
         $messageBusMock = $this->createMock(MessageBusInterface::class);
         $subscriptionMock = $this->getMockBuilder(SubscriptionInterface::class)
-            ->setMethods(['publish', 'receive', 'getKey'])
+            ->onlyMethods(['publish', 'receive', 'getKey'])
             ->getMock();
         $subscriptionMock->expects($this->once())
             ->method('publish')
@@ -97,7 +97,7 @@ final class ChannelTest extends TestCase
             SubscriptionInterface::METADATA_KEY => self::SUB_NAME
         ]));
         $subscriptionMock = $this->getMockBuilder(SubscriptionInterface::class)
-            ->setMethods(['publish', 'receive', 'getKey'])
+            ->onlyMethods(['publish', 'receive', 'getKey'])
             ->getMock();
         $subscriptionMock->expects($this->once())
             ->method('getKey')
@@ -119,7 +119,7 @@ final class ChannelTest extends TestCase
             SubscriptionInterface::METADATA_KEY => 'foobar'
         ]));
         $subscriptionMock = $this->getMockBuilder(SubscriptionInterface::class)
-            ->setMethods(['publish', 'receive', 'getKey'])
+            ->onlyMethods(['publish', 'receive', 'getKey'])
             ->getMock();
         $subscriptionMock->expects($this->once())
             ->method('getKey')

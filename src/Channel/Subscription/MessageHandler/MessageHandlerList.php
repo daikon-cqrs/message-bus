@@ -16,7 +16,8 @@ final class MessageHandlerList implements IteratorAggregate, Countable
 {
     use TypedListTrait;
 
-    public function __construct(array $messageHandlers = [])
+    /** @param MessageHandlerInterface[]|self $messageHandlers */
+    public function __construct(iterable $messageHandlers = [])
     {
         $this->init($messageHandlers, MessageHandlerInterface::class);
     }

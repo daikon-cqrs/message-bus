@@ -31,7 +31,7 @@ final class MessageBusTest extends TestCase
             return $messageMock === $envelope->getMessage();
         });
         $channelMock = $this->getMockBuilder(ChannelInterface::class)
-            ->setMethods(['publish', 'receive', 'getKey'])
+            ->onlyMethods(['publish', 'receive', 'getKey'])
             ->getMock();
         $channelMock->expects($this->once())
             ->method('getKey')
@@ -53,7 +53,7 @@ final class MessageBusTest extends TestCase
             Metadata::makeEmpty()->with(ChannelInterface::METADATA_KEY, self::CHANNEL_NAME)
         );
         $channelMock = $this->getMockBuilder(ChannelInterface::class)
-            ->setMethods(['publish', 'receive', 'getKey'])
+            ->onlyMethods(['publish', 'receive', 'getKey'])
             ->getMock();
         $channelMock->expects($this->once())
             ->method('getKey')
@@ -71,7 +71,7 @@ final class MessageBusTest extends TestCase
         /** @var MessageInterface $messageMock */
         $messageMock = $this->createMock(MessageInterface::class);
         $channelMock = $this->getMockBuilder(ChannelInterface::class)
-            ->setMethods(['publish', 'receive', 'getKey'])
+            ->onlyMethods(['publish', 'receive', 'getKey'])
             ->getMock();
         $channelMock->expects($this->once())
             ->method('getKey')
@@ -95,7 +95,7 @@ final class MessageBusTest extends TestCase
             Metadata::makeEmpty()->with(ChannelInterface::METADATA_KEY, 'events')
         );
         $channelMock = $this->getMockBuilder(ChannelInterface::class)
-            ->setMethods(['publish', 'receive', 'getKey'])
+            ->onlyMethods(['publish', 'receive', 'getKey'])
             ->getMock();
         $channelMock->expects($this->once())
             ->method('getKey')

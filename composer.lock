@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/daikon-cqrs/data-structure.git",
-                "reference": "e4ef20d0b53ceaddae8eb3b03de1a0ca49d08918"
+                "reference": "f39030ce81637da411955aef7b4108b3e9e3e697"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/daikon-cqrs/data-structure/zipball/e4ef20d0b53ceaddae8eb3b03de1a0ca49d08918",
-                "reference": "e4ef20d0b53ceaddae8eb3b03de1a0ca49d08918",
+                "url": "https://api.github.com/repos/daikon-cqrs/data-structure/zipball/f39030ce81637da411955aef7b4108b3e9e3e697",
+                "reference": "f39030ce81637da411955aef7b4108b3e9e3e697",
                 "shasum": ""
             },
             "require": {
@@ -48,7 +48,7 @@
                 "list",
                 "map"
             ],
-            "time": "2019-12-27T21:03:55+00:00"
+            "time": "2019-12-27T23:39:25+00:00"
         },
         {
             "name": "daikon/interop",
@@ -56,12 +56,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/daikon-cqrs/interop.git",
-                "reference": "fa1da9dc9743f461b56977df98226d15016c0139"
+                "reference": "bbcfdc37448f4e4c92f7ec72cebc5a017bb5b8bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/daikon-cqrs/interop/zipball/fa1da9dc9743f461b56977df98226d15016c0139",
-                "reference": "fa1da9dc9743f461b56977df98226d15016c0139",
+                "url": "https://api.github.com/repos/daikon-cqrs/interop/zipball/bbcfdc37448f4e4c92f7ec72cebc5a017bb5b8bc",
+                "reference": "bbcfdc37448f4e4c92f7ec72cebc5a017bb5b8bc",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,7 @@
             ],
             "description": "Interop components used across Daikon components.",
             "homepage": "https://github.com/daikon-cqrs/interop",
-            "time": "2019-12-27T20:57:56+00:00"
+            "time": "2019-12-27T23:36:00+00:00"
         },
         {
             "name": "daikon/metadata",
@@ -92,12 +92,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/daikon-cqrs/metadata.git",
-                "reference": "a925359f9bde3ae477cb6df582dd48a3931b6fac"
+                "reference": "07950c2798872ff002a945cbd634a0538f4517d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/daikon-cqrs/metadata/zipball/a925359f9bde3ae477cb6df582dd48a3931b6fac",
-                "reference": "a925359f9bde3ae477cb6df582dd48a3931b6fac",
+                "url": "https://api.github.com/repos/daikon-cqrs/metadata/zipball/07950c2798872ff002a945cbd634a0538f4517d0",
+                "reference": "07950c2798872ff002a945cbd634a0538f4517d0",
                 "shasum": ""
             },
             "require": {
@@ -127,7 +127,7 @@
                 "enricher",
                 "metadata"
             ],
-            "time": "2019-12-27T21:12:54+00:00"
+            "time": "2019-12-28T00:08:44+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -2822,22 +2822,23 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "3.7.2",
+            "version": "3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "d9cae720c1af31db9ba27c2bc1fcf9b0dd092fb0"
+                "reference": "bdb2f3c2be7bd56b180535dca33d72b74ffe1af7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/d9cae720c1af31db9ba27c2bc1fcf9b0dd092fb0",
-                "reference": "d9cae720c1af31db9ba27c2bc1fcf9b0dd092fb0",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/bdb2f3c2be7bd56b180535dca33d72b74ffe1af7",
+                "reference": "bdb2f3c2be7bd56b180535dca33d72b74ffe1af7",
                 "shasum": ""
             },
             "require": {
                 "amphp/amp": "^2.1",
                 "amphp/byte-stream": "^1.5",
                 "composer/xdebug-handler": "^1.1",
+                "ext-dom": "*",
                 "felixfbecker/advanced-json-rpc": "^3.0.3",
                 "felixfbecker/language-server-protocol": "^1.4",
                 "netresearch/jsonmapper": "^1.0",
@@ -2888,7 +2889,8 @@
                     "Psalm\\": "src/Psalm"
                 },
                 "files": [
-                    "src/functions.php"
+                    "src/functions.php",
+                    "src/spl_object_id.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2906,7 +2908,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2019-12-03T13:33:31+00:00"
+            "time": "2019-12-27T22:10:16+00:00"
         },
         {
             "name": "webmozart/assert",

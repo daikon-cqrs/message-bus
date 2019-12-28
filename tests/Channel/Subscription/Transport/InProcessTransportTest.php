@@ -29,7 +29,7 @@ final class InProcessTransportTest extends TestCase
         $envelopeExpectation = Envelope::wrap($messageMock, Metadata::makeEmpty());
         $transport = new InProcessTransport('inproc');
         $messageBusMock = $this->getMockBuilder(MessageBusInterface::class)
-            ->setMethods(['publish', 'receive'])
+            ->onlyMethods(['publish', 'receive'])
             ->getMock();
         $messageBusMock->expects($this->once())
             ->method('receive')

@@ -17,16 +17,19 @@ final class TransportMap implements IteratorAggregate, Countable
 {
     use TypedMapTrait;
 
-    /** @param TransportInterface[] $transports */
-    public function __construct(array $transports = [])
+    /** @param TransportInterface[]|self $transports */
+    public function __construct(iterable $transports = [])
     {
-        $this->init(array_reduce($transports, function (array $carry, TransportInterface $transport): array {
+        $mappedTransports = [];
+        /** @var TransportInterface $transport */
+        foreach ($transports as $transport) {
             $transportKey = $transport->getKey();
-            if (isset($carry[$transportKey])) {
+            if (isset($mappedTransports[$transportKey])) {
                 throw new InvalidArgumentException("Transport key '$transportKey' is already defined.");
             }
-            $carry[$transportKey] = $transport;
-            return $carry;
-        }, []), TransportInterface::class);
+            $mappedTransports[$transportKey] = $transport;
+        }
+
+        $this->init($mappedTransports, TransportInterface::class);
     }
 }

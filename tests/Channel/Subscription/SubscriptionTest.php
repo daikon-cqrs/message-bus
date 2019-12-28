@@ -47,7 +47,7 @@ final class SubscriptionTest extends TestCase
         /** @var MessageBusInterface $messageBusMock */
         $messageBusMock = $this->createMock(MessageBusInterface::class);
         $transportMock = $this->getMockBuilder(TransportInterface::class)
-            ->setMethods(['send', 'getKey'])
+            ->onlyMethods(['send', 'getKey'])
             ->getMock();
         $transportMock->expects($this->once())
             ->method('send')
@@ -68,11 +68,12 @@ final class SubscriptionTest extends TestCase
         /** @var TransportInterface $transportMock */
         $transportMock = $this->createMock(TransportInterface::class);
         $messageHandlerMock = $this->getMockBuilder(MessageHandlerInterface::class)
-            ->setMethods(['handle'])
+            ->onlyMethods(['handle'])
             ->getMock();
         $messageHandlerMock->expects($this->once())
             ->method('handle')
             ->with($envelopeExpectation);
+        /** @psalm-suppress InvalidArgument */
         $mockedHandlers = new MessageHandlerList([$messageHandlerMock]);
         $subscription = new Subscription(self::SUB_NAME, $transportMock, $mockedHandlers);
         $this->assertNull($subscription->receive($envelopeExpectation));
