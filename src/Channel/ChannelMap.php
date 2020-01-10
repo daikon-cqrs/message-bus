@@ -8,12 +8,11 @@
 
 namespace Daikon\MessageBus\Channel;
 
-use Countable;
+use Daikon\DataStructure\TypedMapInterface;
 use Daikon\DataStructure\TypedMapTrait;
 use InvalidArgumentException;
-use IteratorAggregate;
 
-final class ChannelMap implements IteratorAggregate, Countable
+final class ChannelMap implements TypedMapInterface
 {
     use TypedMapTrait;
 
@@ -29,6 +28,6 @@ final class ChannelMap implements IteratorAggregate, Countable
             $mappedChannels[$channelKey] = $channel;
         }
 
-        $this->init($mappedChannels, ChannelInterface::class);
+        $this->init($mappedChannels, [ChannelInterface::class]);
     }
 }

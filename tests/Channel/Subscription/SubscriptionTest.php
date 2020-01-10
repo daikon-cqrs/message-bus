@@ -46,13 +46,11 @@ final class SubscriptionTest extends TestCase
         });
         /** @var MessageBusInterface $messageBusMock */
         $messageBusMock = $this->createMock(MessageBusInterface::class);
-        $transportMock = $this->getMockBuilder(TransportInterface::class)
-            ->onlyMethods(['send', 'getKey'])
-            ->getMock();
+        $transportMock = $this->createMock(TransportInterface::class);
         $transportMock->expects($this->once())
             ->method('send')
             ->with($envelopeExpectation, $this->equalTo($messageBusMock));
-        /** @psalm-suppress InvalidArgument */
+        /** @var TransportInterface $transportMock */
         $subscription = new Subscription(self::SUB_NAME, $transportMock, new MessageHandlerList);
         $this->assertNull($subscription->publish($envelope, $messageBusMock));
     }
@@ -67,13 +65,9 @@ final class SubscriptionTest extends TestCase
         ]));
         /** @var TransportInterface $transportMock */
         $transportMock = $this->createMock(TransportInterface::class);
-        $messageHandlerMock = $this->getMockBuilder(MessageHandlerInterface::class)
-            ->onlyMethods(['handle'])
-            ->getMock();
-        $messageHandlerMock->expects($this->once())
-            ->method('handle')
-            ->with($envelopeExpectation);
-        /** @psalm-suppress InvalidArgument */
+        $messageHandlerMock = $this->createMock(MessageHandlerInterface::class);
+        $messageHandlerMock->expects($this->once())->method('handle')->with($envelopeExpectation);
+        /** @var MessageHandlerInterface $messageHandlerMock */
         $mockedHandlers = new MessageHandlerList([$messageHandlerMock]);
         $subscription = new Subscription(self::SUB_NAME, $transportMock, $mockedHandlers);
         $this->assertNull($subscription->receive($envelopeExpectation));
@@ -129,11 +123,11 @@ final class SubscriptionTest extends TestCase
         $messageBusMock = $this->createMock(MessageBusInterface::class);
         $transportMock = $this->getMockBuilder(TransportInterface::class)->getMock();
         $transportMock->expects($this->never())->method('send');
-        $accept_nothing_guard = function (EnvelopeInterface $e): bool {
+        $guardNone = function (EnvelopeInterface $e): bool {
             return $e->getUuid()->toString() === 'this envelope is acceptable';
         };
-        /** @psalm-suppress InvalidArgument */
-        $subscription = new Subscription(self::SUB_NAME, $transportMock, new MessageHandlerList, $accept_nothing_guard);
+        /** @var TransportInterface $transportMock */
+        $subscription = new Subscription(self::SUB_NAME, $transportMock, new MessageHandlerList, $guardNone);
         $this->assertNull($subscription->publish($envelope, $messageBusMock));
     }
 
@@ -143,10 +137,11 @@ final class SubscriptionTest extends TestCase
         $messageBusMock = $this->createMock(MessageBusInterface::class);
         $transportMock = $this->getMockBuilder(TransportInterface::class)->getMock();
         $transportMock->expects($this->once())->method('send');
-        $accept_all_guard = function (EnvelopeInterface $e): bool {
+        $guardAll = function (EnvelopeInterface $e): bool {
             return $e->getUuid()->toString() !== 'this envelope is acceptable';
         };
-        $subscription = new Subscription(self::SUB_NAME, $transportMock, new MessageHandlerList, $accept_all_guard);
+        /** @var TransportInterface $transportMock */
+        $subscription = new Subscription(self::SUB_NAME, $transportMock, new MessageHandlerList, $guardAll);
         /** @var MessageInterface $messageMock */
         $messageMock = $this->createMock(MessageInterface::class);
         $envelope = Envelope::wrap($messageMock);

@@ -30,17 +30,12 @@ final class MessageBusTest extends TestCase
         $envelopeExpectation = $this->callback(function (EnvelopeInterface $envelope) use ($messageMock) {
             return $messageMock === $envelope->getMessage();
         });
-        $channelMock = $this->getMockBuilder(ChannelInterface::class)
-            ->onlyMethods(['publish', 'receive', 'getKey'])
-            ->getMock();
-        $channelMock->expects($this->once())
-            ->method('getKey')
-            ->willReturn(self::CHANNEL_NAME);
-        $channelMock->expects($this->once())
-            ->method('publish')
-            ->with($envelopeExpectation);
-        /** @psalm-suppress InvalidArgument */
+        $channelMock = $this->createMock(ChannelInterface::class);
+        $channelMock->expects($this->once())->method('getKey')->willReturn(self::CHANNEL_NAME);
+        $channelMock->expects($this->once())->method('publish')->with($envelopeExpectation);
+        /** @var ChannelInterface $channelMock */
         $messageBus = new MessageBus(new ChannelMap([$channelMock]));
+
         $this->assertNull($messageBus->publish($messageMock, self::CHANNEL_NAME));
     }
 
@@ -52,17 +47,12 @@ final class MessageBusTest extends TestCase
             $messageMock,
             Metadata::makeEmpty()->with(ChannelInterface::METADATA_KEY, self::CHANNEL_NAME)
         );
-        $channelMock = $this->getMockBuilder(ChannelInterface::class)
-            ->onlyMethods(['publish', 'receive', 'getKey'])
-            ->getMock();
-        $channelMock->expects($this->once())
-            ->method('getKey')
-            ->willReturn(self::CHANNEL_NAME);
-        $channelMock->expects($this->once())
-            ->method('receive')
-            ->with($envelopeExpectation);
-        /** @psalm-suppress InvalidArgument */
+        $channelMock = $this->createMock(ChannelInterface::class);
+        $channelMock->expects($this->once())->method('getKey')->willReturn(self::CHANNEL_NAME);
+        $channelMock->expects($this->once())->method('receive')->with($envelopeExpectation);
+        /** @var ChannelInterface $channelMock */
         $messageBus = new MessageBus(new ChannelMap([$channelMock]));
+
         $this->assertNull($messageBus->receive($envelopeExpectation));
     }
 
@@ -70,13 +60,9 @@ final class MessageBusTest extends TestCase
     {
         /** @var MessageInterface $messageMock */
         $messageMock = $this->createMock(MessageInterface::class);
-        $channelMock = $this->getMockBuilder(ChannelInterface::class)
-            ->onlyMethods(['publish', 'receive', 'getKey'])
-            ->getMock();
-        $channelMock->expects($this->once())
-            ->method('getKey')
-            ->willReturn(self::CHANNEL_NAME);
-        /** @psalm-suppress InvalidArgument */
+        $channelMock = $this->createMock(ChannelInterface::class);
+        $channelMock->expects($this->once())->method('getKey')->willReturn(self::CHANNEL_NAME);
+        /** @var ChannelInterface $channelMock */
         $messageBus = new MessageBus(new ChannelMap([$channelMock]));
 
         $this->expectException(ChannelUnknown::class);
@@ -94,13 +80,9 @@ final class MessageBusTest extends TestCase
             $messageMock,
             Metadata::makeEmpty()->with(ChannelInterface::METADATA_KEY, 'events')
         );
-        $channelMock = $this->getMockBuilder(ChannelInterface::class)
-            ->onlyMethods(['publish', 'receive', 'getKey'])
-            ->getMock();
-        $channelMock->expects($this->once())
-            ->method('getKey')
-            ->willReturn(self::CHANNEL_NAME);
-        /** @psalm-suppress InvalidArgument */
+        $channelMock = $this->createMock(ChannelInterface::class);
+        $channelMock->expects($this->once())->method('getKey')->willReturn(self::CHANNEL_NAME);
+        /** @var ChannelInterface $channelMock */
         $messageBus = new MessageBus(new ChannelMap([$channelMock]));
 
         $this->expectException(ChannelUnknown::class);
@@ -115,8 +97,8 @@ final class MessageBusTest extends TestCase
         /** @var MessageInterface $messageMock */
         $messageMock = $this->createMock(MessageInterface::class);
         $envelope = Envelope::wrap($messageMock);
-        /** @var ChannelInterface $channelMock */
         $channelMock = $this->createMock(ChannelInterface::class);
+        $channelMock->expects($this->once())->method('getKey')->willReturn(self::CHANNEL_NAME);
         $messageBus = new MessageBus(new ChannelMap([$channelMock]));
 
         $this->expectException(EnvelopeNotAcceptable::class);

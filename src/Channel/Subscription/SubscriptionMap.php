@@ -8,12 +8,11 @@
 
 namespace Daikon\MessageBus\Channel\Subscription;
 
-use Countable;
+use Daikon\DataStructure\TypedMapInterface;
 use Daikon\DataStructure\TypedMapTrait;
 use InvalidArgumentException;
-use IteratorAggregate;
 
-final class SubscriptionMap implements IteratorAggregate, Countable
+final class SubscriptionMap implements TypedMapInterface
 {
     use TypedMapTrait;
 
@@ -29,6 +28,6 @@ final class SubscriptionMap implements IteratorAggregate, Countable
             $mappedSubscriptions[$subscriptionKey] = $subscription;
         }
 
-        $this->init($mappedSubscriptions, SubscriptionInterface::class);
+        $this->init($mappedSubscriptions, [SubscriptionInterface::class]);
     }
 }

@@ -8,16 +8,15 @@
 
 namespace Daikon\MessageBus\Channel\Subscription\MessageHandler;
 
-use Countable;
+use Daikon\DataStructure\TypedListInterface;
 use Daikon\DataStructure\TypedListTrait;
-use IteratorAggregate;
 
-final class MessageHandlerList implements IteratorAggregate, Countable
+final class MessageHandlerList implements TypedListInterface
 {
     use TypedListTrait;
 
     public function __construct(iterable $messageHandlers = [])
     {
-        $this->init($messageHandlers, MessageHandlerInterface::class);
+        $this->init($messageHandlers, [MessageHandlerInterface::class]);
     }
 }

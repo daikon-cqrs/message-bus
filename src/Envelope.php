@@ -10,6 +10,7 @@ namespace Daikon\MessageBus;
 
 use DateTimeImmutable;
 use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
+use Daikon\MessageBus\MessageInterface;
 use Daikon\Metadata\Metadata;
 use Daikon\Metadata\MetadataInterface;
 use Ramsey\Uuid\UuidInterface;
@@ -17,19 +18,15 @@ use Ramsey\Uuid\Uuid;
 
 final class Envelope implements EnvelopeInterface
 {
-    /** @var UuidInterface */
-    private $uuid;
+    private UuidInterface $uuid;
 
-    /** @var DateTimeImmutable */
-    private $timestamp;
+    private DateTimeImmutable $timestamp;
 
-    /** @var MessageInterface */
-    private $message;
+    private MessageInterface $message;
 
-    /** @var MetadataInterface */
-    private $metadata;
+    private MetadataInterface $metadata;
 
-    public static function wrap(MessageInterface $message, MetadataInterface $metadata = null): EnvelopeInterface
+    public static function wrap(MessageInterface $message, MetadataInterface $metadata = null): self
     {
         return new self($message, $metadata);
     }
@@ -61,7 +58,7 @@ final class Envelope implements EnvelopeInterface
         return $this->metadata;
     }
 
-    public function withMetadata(MetadataInterface $metadata): EnvelopeInterface
+    public function withMetadata(MetadataInterface $metadata): self
     {
         $copy = clone $this;
         $copy->metadata = $metadata;
@@ -86,7 +83,7 @@ final class Envelope implements EnvelopeInterface
     }
 
     /** @param array $state */
-    public static function fromNative($state): EnvelopeInterface
+    public static function fromNative($state): self
     {
         $uuid = isset($state['uuid']) ? Uuid::fromString($state['uuid']) : null;
 
@@ -106,15 +103,14 @@ final class Envelope implements EnvelopeInterface
         }
 
         $metadataType = $state['@metadata_type'] ?? null;
+        /** @var MetadataInterface $metadata */
         $metadata = $metadataType instanceof MetadataInterface
             ? $metadataType::fromNative($state['metadata'])
             : Metadata::fromNative($state['metadata'] ?? []);
 
-        return new self(
-            $messageType::fromNative($state['message'] ?? null),
-            $metadata,
-            $uuid,
-            $timestamp
-        );
+        /** @var MessageInterface $message */
+        $message = $messageType::fromNative($state['message'] ?? null);
+
+        return new self($message, $metadata, $uuid, $timestamp);
     }
 }

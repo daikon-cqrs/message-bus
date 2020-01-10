@@ -19,14 +19,11 @@ use Daikon\Metadata\MetadataEnricherList;
 
 final class MessageBus implements MessageBusInterface
 {
-    /** @var ChannelMap */
-    private $channelMap;
+    private ChannelMap $channelMap;
 
-    /** @var MetadataEnricherList */
-    private $metadataEnrichers;
+    private MetadataEnricherList $metadataEnrichers;
 
-    /** @var string */
-    private $envelopeType;
+    private string $envelopeType;
 
     public function __construct(
         ChannelMap $channelMap,
@@ -38,15 +35,17 @@ final class MessageBus implements MessageBusInterface
         $this->envelopeType = $envelopeType ?? Envelope::class;
     }
 
-    public function publish(MessageInterface $message, string $channel, MetadataInterface $metadata = null): void
+    public function publish(MessageInterface $message, string $channelKey, MetadataInterface $metadata = null): void
     {
-        if (!$this->channelMap->has($channel)) {
-            throw new ChannelUnknown("Channel '$channel' has not been registered on message bus.");
+        if (!$this->channelMap->has($channelKey)) {
+            throw new ChannelUnknown("Channel '$channelKey' has not been registered on message bus.");
         }
         $metadata = $this->enrichMetadata($metadata ?? Metadata::makeEmpty());
         $envelopeType = $this->envelopeType;
+        /** @var EnvelopeInterface $envelope */
         $envelope = $envelopeType::wrap($message, $metadata);
-        $channel = $this->channelMap->get($channel);
+        /** @var ChannelInterface $channel */
+        $channel = $this->channelMap->get($channelKey);
         $channel->publish($envelope, $this);
     }
 
@@ -57,6 +56,7 @@ final class MessageBus implements MessageBusInterface
         if (!$this->channelMap->has($channelKey)) {
             throw new ChannelUnknown("Channel '$channelKey' has not been registered on message bus.");
         }
+        /** @var ChannelInterface $channel */
         $channel = $this->channelMap->get($channelKey);
         $channel->receive($envelope);
     }
@@ -64,7 +64,7 @@ final class MessageBus implements MessageBusInterface
     private function enrichMetadata(MetadataInterface $metadata): MetadataInterface
     {
         return array_reduce(
-            $this->metadataEnrichers->toNative(),
+            $this->metadataEnrichers->unwrap(),
             function (MetadataInterface $metadata, MetadataEnricherInterface $metadataEnricher): MetadataInterface {
                 return $metadataEnricher->enrich($metadata);
             },

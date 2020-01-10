@@ -8,12 +8,11 @@
 
 namespace Daikon\MessageBus\Channel\Subscription\Transport;
 
-use Countable;
+use Daikon\DataStructure\TypedMapInterface;
 use Daikon\DataStructure\TypedMapTrait;
 use InvalidArgumentException;
-use IteratorAggregate;
 
-final class TransportMap implements IteratorAggregate, Countable
+final class TransportMap implements TypedMapInterface
 {
     use TypedMapTrait;
 
@@ -29,6 +28,6 @@ final class TransportMap implements IteratorAggregate, Countable
             $mappedTransports[$transportKey] = $transport;
         }
 
-        $this->init($mappedTransports, TransportInterface::class);
+        $this->init($mappedTransports, [TransportInterface::class]);
     }
 }

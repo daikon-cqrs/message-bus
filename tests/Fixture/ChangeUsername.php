@@ -12,14 +12,11 @@ use Daikon\MessageBus\MessageInterface;
 
 final class ChangeUsername implements MessageInterface
 {
-    /** @var UserId */
-    private $identifier;
+    private UserId $identifier;
 
-    /** @var KnownRevision */
-    private $knownRevision;
+    private KnownRevision $knownRevision;
 
-    /** @var Username */
-    private $username;
+    private Username $username;
 
     public function __construct(UserId $identifier, KnownRevision $knownRevision, Username $username)
     {

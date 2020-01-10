@@ -28,13 +28,9 @@ final class InProcessTransportTest extends TestCase
         $messageMock = $this->createMock(MessageInterface::class);
         $envelopeExpectation = Envelope::wrap($messageMock, Metadata::makeEmpty());
         $transport = new InProcessTransport('inproc');
-        $messageBusMock = $this->getMockBuilder(MessageBusInterface::class)
-            ->onlyMethods(['publish', 'receive'])
-            ->getMock();
-        $messageBusMock->expects($this->once())
-            ->method('receive')
-            ->with($envelopeExpectation);
-        /** @psalm-suppress InvalidArgument */
+        $messageBusMock = $this->createMock(MessageBusInterface::class);
+        $messageBusMock->expects($this->once())->method('receive')->with($envelopeExpectation);
+        /** @var MessageBusInterface $messageBusMock */
         $this->assertNull($transport->send($envelopeExpectation, $messageBusMock));
     }
 }

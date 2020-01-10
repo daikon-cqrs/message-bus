@@ -17,8 +17,8 @@ final class SubscriptionMapTest extends TestCase
 {
     public function testConstructWithSelf(): void
     {
-        /** @var SubscriptionInterface $subscriptionMock */
         $subscriptionMock = $this->createMock(SubscriptionInterface::class);
+        $subscriptionMock->expects($this->exactly(2))->method('getKey')->willReturn('mock');
         $subscriptionMap = new SubscriptionMap([$subscriptionMock]);
         $newMap = new SubscriptionMap($subscriptionMap);
         $this->assertCount(1, $newMap);
@@ -38,7 +38,7 @@ final class SubscriptionMapTest extends TestCase
         $emptyMap = new SubscriptionMap;
         /** @var SubscriptionInterface $subscriptionMock */
         $subscriptionMock = $this->createMock(SubscriptionInterface::class);
-        $subscriptionMap = $emptyMap->set('mock', $subscriptionMock);
+        $subscriptionMap = $emptyMap->with('mock', $subscriptionMock);
         $this->assertCount(1, $subscriptionMap);
         $this->assertEquals($subscriptionMock, $subscriptionMap->get('mock'));
         $this->assertTrue($emptyMap->isEmpty());

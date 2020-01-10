@@ -18,7 +18,7 @@ interface EnvelopeInterface extends FromNativeInterface, ToNativeInterface
 {
     public const TIMESTAMP_FORMAT = 'Y-m-d\TH:i:s.uP';
 
-    public static function wrap(MessageInterface $message, MetadataInterface $metadata = null): EnvelopeInterface;
+    public static function wrap(MessageInterface $message, MetadataInterface $metadata = null): self;
 
     public function getTimestamp(): DateTimeImmutable;
 
@@ -26,7 +26,7 @@ interface EnvelopeInterface extends FromNativeInterface, ToNativeInterface
 
     public function getMetadata(): MetadataInterface;
 
-    public function withMetadata(MetadataInterface $metadata): EnvelopeInterface;
+    public function withMetadata(MetadataInterface $metadata): self;
 
     public function getMessage(): MessageInterface;
 }

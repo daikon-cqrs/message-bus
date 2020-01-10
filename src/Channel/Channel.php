@@ -8,6 +8,7 @@
 
 namespace Daikon\MessageBus\Channel;
 
+use Closure;
 use Daikon\MessageBus\EnvelopeInterface;
 use Daikon\MessageBus\MessageBusInterface;
 use Daikon\MessageBus\Channel\Subscription\SubscriptionInterface;
@@ -20,31 +21,25 @@ use Daikon\Metadata\MetadataEnricherList;
 
 final class Channel implements ChannelInterface
 {
-    /** @var string */
-    private $key;
+    private string $key;
 
-    /** @var SubscriptionMap */
-    private $subscriptions;
+    private SubscriptionMap $subscriptions;
 
-    /** @var callable */
-    private $guard;
+    private Closure $guard;
 
-    /** @var MetadataEnricherList */
-    private $metadataEnrichers;
+    private MetadataEnricherList $metadataEnrichers;
 
     public function __construct(
         string $key,
         SubscriptionMap $subscriptions,
-        callable $guard = null,
+        Closure $guard = null,
         MetadataEnricherList $metadataEnrichers = null
     ) {
         $this->key = $key;
         $this->subscriptions = $subscriptions;
-        $this->guard = $guard ?? function (EnvelopeInterface $envelope): bool {
-            return true;
-        };
+        $this->guard = $guard ?? fn(): bool => true;
         $metadataEnrichers = $metadataEnrichers ?? new MetadataEnricherList;
-        $this->metadataEnrichers = $metadataEnrichers->prependDefaultEnricher(self::METADATA_KEY, $this->key);
+        $this->metadataEnrichers = $metadataEnrichers->prependEnricher(self::METADATA_KEY, $this->key);
     }
 
     public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): void
@@ -67,6 +62,7 @@ final class Channel implements ChannelInterface
                 "Envelope '{$envelope->getUuid()->toString()}' cannot be handled."
             );
         }
+        /** @var SubscriptionInterface $subscription */
         $subscription = $this->subscriptions->get($subscriptionKey);
         $subscription->receive($envelope);
     }
@@ -79,7 +75,7 @@ final class Channel implements ChannelInterface
     private function enrichMetadata(EnvelopeInterface $envelope): EnvelopeInterface
     {
         return $envelope->withMetadata(array_reduce(
-            $this->metadataEnrichers->toNative(),
+            $this->metadataEnrichers->unwrap(),
             function (MetadataInterface $metadata, MetadataEnricherInterface $metadataEnricher): MetadataInterface {
                 return $metadataEnricher->enrich($metadata);
             },

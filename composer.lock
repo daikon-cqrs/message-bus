@@ -4,24 +4,87 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "da3ebe22df72756f55189eea37a7edda",
+    "content-hash": "5d5b8d8909c9d28263f056e58172aa98",
     "packages": [
+        {
+            "name": "beberlei/assert",
+            "version": "v3.2.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/beberlei/assert.git",
+                "reference": "d63a6943fc4fd1a2aedb65994e3548715105abcf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/beberlei/assert/zipball/d63a6943fc4fd1a2aedb65994e3548715105abcf",
+                "reference": "d63a6943fc4fd1a2aedb65994e3548715105abcf",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-simplexml": "*",
+                "php": "^7"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "*",
+                "phpstan/phpstan-shim": "*",
+                "phpunit/phpunit": ">=6.0.0 <8"
+            },
+            "suggest": {
+                "ext-intl": "Needed to allow Assertion::count(), Assertion::isCountable(), Assertion::minCount(), and Assertion::maxCount() to operate on ResourceBundles"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Assert\\": "lib/Assert"
+                },
+                "files": [
+                    "lib/Assert/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Richard Quadling",
+                    "email": "rquadling@gmail.com",
+                    "role": "Collaborator"
+                }
+            ],
+            "description": "Thin assertion library for input validation in business models.",
+            "keywords": [
+                "assert",
+                "assertion",
+                "validation"
+            ],
+            "time": "2019-12-19T17:51:41+00:00"
+        },
         {
             "name": "daikon/data-structure",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/daikon-cqrs/data-structure.git",
-                "reference": "f39030ce81637da411955aef7b4108b3e9e3e697"
+                "reference": "a073e74efa77933a5f9461d7dd48a170c25c9b47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/daikon-cqrs/data-structure/zipball/f39030ce81637da411955aef7b4108b3e9e3e697",
-                "reference": "f39030ce81637da411955aef7b4108b3e9e3e697",
+                "url": "https://api.github.com/repos/daikon-cqrs/data-structure/zipball/a073e74efa77933a5f9461d7dd48a170c25c9b47",
+                "reference": "a073e74efa77933a5f9461d7dd48a170c25c9b47",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2",
+                "beberlei/assert": "^3.0",
+                "php": "^7.4",
                 "php-ds/php-ds": "^1.2"
             },
             "require-dev": {
@@ -41,14 +104,15 @@
                 "MPL-2.0"
             ],
             "description": "Immutable data-structure traits based on php/ds.",
-            "homepage": "https://github.com/daikon-cqrs/data-structures",
+            "homepage": "https://github.com/daikon-cqrs/data-structure",
             "keywords": [
-                "data-structures",
+                "data-structure",
                 "immutable",
                 "list",
-                "map"
+                "map",
+                "vector"
             ],
-            "time": "2019-12-27T23:39:25+00:00"
+            "time": "2020-01-10T13:05:24+00:00"
         },
         {
             "name": "daikon/interop",
@@ -56,18 +120,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/daikon-cqrs/interop.git",
-                "reference": "bbcfdc37448f4e4c92f7ec72cebc5a017bb5b8bc"
+                "reference": "44f02fd660c4210fc8aec89e92750752f71350c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/daikon-cqrs/interop/zipball/bbcfdc37448f4e4c92f7ec72cebc5a017bb5b8bc",
-                "reference": "bbcfdc37448f4e4c92f7ec72cebc5a017bb5b8bc",
+                "url": "https://api.github.com/repos/daikon-cqrs/interop/zipball/44f02fd660c4210fc8aec89e92750752f71350c9",
+                "reference": "44f02fd660c4210fc8aec89e92750752f71350c9",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2"
+                "php": "^7.4"
             },
             "require-dev": {
+                "phpunit/phpunit": "^8.0",
                 "sebastian/phpcpd": "^4.1",
                 "squizlabs/php_codesniffer": "^3.3",
                 "vimeo/psalm": "^3.0"
@@ -84,7 +149,7 @@
             ],
             "description": "Interop components used across Daikon components.",
             "homepage": "https://github.com/daikon-cqrs/interop",
-            "time": "2019-12-27T23:36:00+00:00"
+            "time": "2020-01-10T13:01:44+00:00"
         },
         {
             "name": "daikon/metadata",
@@ -92,18 +157,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/daikon-cqrs/metadata.git",
-                "reference": "07950c2798872ff002a945cbd634a0538f4517d0"
+                "reference": "f3cea71ea460f7c01f038fbbf03dc156a7ff93fe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/daikon-cqrs/metadata/zipball/07950c2798872ff002a945cbd634a0538f4517d0",
-                "reference": "07950c2798872ff002a945cbd634a0538f4517d0",
+                "url": "https://api.github.com/repos/daikon-cqrs/metadata/zipball/f3cea71ea460f7c01f038fbbf03dc156a7ff93fe",
+                "reference": "f3cea71ea460f7c01f038fbbf03dc156a7ff93fe",
                 "shasum": ""
             },
             "require": {
                 "daikon/data-structure": "master@dev",
                 "daikon/interop": "master@dev",
-                "php": "^7.2"
+                "php": "^7.4"
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.0",
@@ -127,7 +192,7 @@
                 "enricher",
                 "metadata"
             ],
-            "time": "2019-12-28T00:08:44+00:00"
+            "time": "2020-01-10T13:18:27+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -1094,16 +1159,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "4.3.3",
+            "version": "4.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "2ecaa9fef01634c83bfa8dc1fe35fb5cef223a62"
+                "reference": "da3fd972d6bafd628114f7e7e036f45944b62e9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/2ecaa9fef01634c83bfa8dc1fe35fb5cef223a62",
-                "reference": "2ecaa9fef01634c83bfa8dc1fe35fb5cef223a62",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/da3fd972d6bafd628114f7e7e036f45944b62e9c",
+                "reference": "da3fd972d6bafd628114f7e7e036f45944b62e9c",
                 "shasum": ""
             },
             "require": {
@@ -1115,6 +1180,7 @@
             "require-dev": {
                 "doctrine/instantiator": "^1.0.5",
                 "mockery/mockery": "^1.0",
+                "phpdocumentor/type-resolver": "0.4.*",
                 "phpunit/phpunit": "^6.4"
             },
             "type": "library",
@@ -1141,7 +1207,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2019-12-20T13:40:23+00:00"
+            "time": "2019-12-28T18:55:12+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -1507,16 +1573,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.5.1",
+            "version": "8.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "7870c78da3c5e4883eaef36ae47853ebb3cb86f2"
+                "reference": "018b6ac3c8ab20916db85fa91bf6465acb64d1e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7870c78da3c5e4883eaef36ae47853ebb3cb86f2",
-                "reference": "7870c78da3c5e4883eaef36ae47853ebb3cb86f2",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/018b6ac3c8ab20916db85fa91bf6465acb64d1e0",
+                "reference": "018b6ac3c8ab20916db85fa91bf6465acb64d1e0",
                 "shasum": ""
             },
             "require": {
@@ -1586,7 +1652,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-12-25T14:49:39+00:00"
+            "time": "2020-01-08T08:49:49+00:00"
         },
         {
             "name": "psr/container",
@@ -2822,16 +2888,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "3.8.0",
+            "version": "3.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "bdb2f3c2be7bd56b180535dca33d72b74ffe1af7"
+                "reference": "90d6b73fd8062432030ef39b7b6694b3902daa31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/bdb2f3c2be7bd56b180535dca33d72b74ffe1af7",
-                "reference": "bdb2f3c2be7bd56b180535dca33d72b74ffe1af7",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/90d6b73fd8062432030ef39b7b6694b3902daa31",
+                "reference": "90d6b73fd8062432030ef39b7b6694b3902daa31",
                 "shasum": ""
             },
             "require": {
@@ -2839,6 +2905,10 @@
                 "amphp/byte-stream": "^1.5",
                 "composer/xdebug-handler": "^1.1",
                 "ext-dom": "*",
+                "ext-json": "*",
+                "ext-libxml": "*",
+                "ext-simplexml": "*",
+                "ext-tokenizer": "*",
                 "felixfbecker/advanced-json-rpc": "^3.0.3",
                 "felixfbecker/language-server-protocol": "^1.4",
                 "netresearch/jsonmapper": "^1.0",
@@ -2859,6 +2929,7 @@
                 "ext-curl": "*",
                 "friendsofphp/php-cs-fixer": "^2.15",
                 "phpmyadmin/sql-parser": "^5.0",
+                "phpspec/prophecy": ">=1.9.0",
                 "phpunit/phpunit": "^7.5 || ^8.0",
                 "psalm/plugin-phpunit": "^0.6",
                 "slevomat/coding-standard": "^5.0",
@@ -2908,7 +2979,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2019-12-27T22:10:16+00:00"
+            "time": "2020-01-07T13:50:31+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -3062,7 +3133,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.2"
+        "php": "^7.4"
     },
     "platform-dev": []
 }

@@ -10,8 +10,7 @@ namespace Daikon\Tests\MessageBus\Fixture;
 
 final class UserId
 {
-    /** @var string */
-    private $userId;
+    private string $userId;
 
     public function __construct(string $userId = '')
     {

@@ -10,8 +10,7 @@ namespace Daikon\Tests\MessageBus\Fixture;
 
 final class KnownRevision
 {
-    /** @var int */
-    private $revision;
+    private int $revision;
 
     public function __construct(int $revision)
     {

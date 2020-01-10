@@ -8,42 +8,34 @@
 
 namespace Daikon\MessageBus\Channel\Subscription;
 
+use Closure;
 use Daikon\MessageBus\EnvelopeInterface;
 use Daikon\MessageBus\MessageBusInterface;
 
 final class LazySubscription implements SubscriptionInterface
 {
-    /** @var string */
-    private $key;
+    private string $key;
 
-    /** @var null|SubscriptionInterface */
-    private $compositeSubscription;
+    private ?SubscriptionInterface $compositeSubscription;
 
-    /** @var null|callable */
-    private $factoryCallback;
+    private ?Closure $factoryCallback;
 
     public function __construct(
         string $key,
-        callable $transport,
-        callable $messageHandlers,
-        callable $guard = null,
-        callable $metadataEnrichers = null
+        Closure $transport,
+        Closure $messageHandlers,
+        Closure $guard = null,
+        Closure $metadataEnrichers = null
     ) {
         $this->key = $key;
-        $this->factoryCallback = function () use (
-            $transport,
-            $messageHandlers,
-            $guard,
-            $metadataEnrichers
-        ): SubscriptionInterface {
-            return new Subscription(
+        $this->factoryCallback = fn(): SubscriptionInterface =>
+            new Subscription(
                 $this->key,
                 $transport(),
                 $messageHandlers(),
                 $guard,
                 $metadataEnrichers ? $metadataEnrichers() : null
             );
-        };
     }
 
     public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): void

@@ -17,8 +17,8 @@ final class TransportMapTest extends TestCase
 {
     public function testConstructWithSelf(): void
     {
-        /** @var TransportInterface $transportMock */
         $transportMock = $this->createMock(TransportInterface::class);
+        $transportMock->expects($this->exactly(2))->method('getKey')->willReturn('mock');
         $transportMap = new TransportMap([$transportMock]);
         $newMap = new TransportMap($transportMap);
         $this->assertCount(1, $newMap);
@@ -38,7 +38,7 @@ final class TransportMapTest extends TestCase
         $emptyMap = new TransportMap;
         /** @var TransportInterface $transportMock */
         $transportMock = $this->createMock(TransportInterface::class);
-        $transportMap = $emptyMap->set('mock', $transportMock);
+        $transportMap = $emptyMap->with('mock', $transportMock);
         $this->assertCount(1, $transportMap);
         $this->assertEquals($transportMock, $transportMap->get('mock'));
         $this->assertTrue($emptyMap->isEmpty());
