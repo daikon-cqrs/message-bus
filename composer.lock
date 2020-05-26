@@ -123,12 +123,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/daikon-cqrs/interop.git",
-                "reference": "9240b899c5aa24baab6f84e12e2ca475b1c04fcb"
+                "reference": "ca4538d0ba2948435a25ba77a44ca1a33dd12e8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/daikon-cqrs/interop/zipball/9240b899c5aa24baab6f84e12e2ca475b1c04fcb",
-                "reference": "9240b899c5aa24baab6f84e12e2ca475b1c04fcb",
+                "url": "https://api.github.com/repos/daikon-cqrs/interop/zipball/ca4538d0ba2948435a25ba77a44ca1a33dd12e8c",
+                "reference": "ca4538d0ba2948435a25ba77a44ca1a33dd12e8c",
                 "shasum": ""
             },
             "require": {
@@ -152,7 +152,7 @@
             ],
             "description": "Interop components used across Daikon components.",
             "homepage": "https://github.com/daikon-cqrs/interop",
-            "time": "2020-05-26T15:35:25+00:00"
+            "time": "2020-05-26T18:47:20+00:00"
         },
         {
             "name": "daikon/metadata",
@@ -160,12 +160,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/daikon-cqrs/metadata.git",
-                "reference": "3652fd8ffacde7fa9328a056e6fb4f4c4f91747d"
+                "reference": "f233563d7b069a60817ef9288ebc22410de5be5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/daikon-cqrs/metadata/zipball/3652fd8ffacde7fa9328a056e6fb4f4c4f91747d",
-                "reference": "3652fd8ffacde7fa9328a056e6fb4f4c4f91747d",
+                "url": "https://api.github.com/repos/daikon-cqrs/metadata/zipball/f233563d7b069a60817ef9288ebc22410de5be5a",
+                "reference": "f233563d7b069a60817ef9288ebc22410de5be5a",
                 "shasum": ""
             },
             "require": {
@@ -195,7 +195,7 @@
                 "enricher",
                 "metadata"
             ],
-            "time": "2020-05-26T15:49:20+00:00"
+            "time": "2020-05-26T18:51:18+00:00"
         },
         {
             "name": "paragonie/random_compat",
