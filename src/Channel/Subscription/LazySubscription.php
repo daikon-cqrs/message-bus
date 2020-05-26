@@ -16,9 +16,9 @@ final class LazySubscription implements SubscriptionInterface
 {
     private string $key;
 
-    private ?SubscriptionInterface $compositeSubscription;
+    private SubscriptionInterface $compositeSubscription;
 
-    private ?Closure $factoryCallback;
+    private Closure $factoryCallback;
 
     public function __construct(
         string $key,
@@ -40,12 +40,16 @@ final class LazySubscription implements SubscriptionInterface
 
     public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): void
     {
-        $this->getSubscription()->publish($envelope, $messageBus);
+        if ($subscription = $this->getSubscription()) {
+            $subscription->publish($envelope, $messageBus);
+        }
     }
 
     public function receive(EnvelopeInterface $envelope): void
     {
-        $this->getSubscription()->receive($envelope);
+        if ($subscription = $this->getSubscription()) {
+            $subscription->receive($envelope);
+        }
     }
 
     public function getKey(): string
@@ -55,9 +59,10 @@ final class LazySubscription implements SubscriptionInterface
 
     private function getSubscription(): SubscriptionInterface
     {
-        if ($this->factoryCallback) {
+        /** @psalm-suppress TypeDoesNotContainType */
+        if (!isset($this->compositeSubscription)) {
             $this->compositeSubscription = call_user_func($this->factoryCallback);
-            $this->factoryCallback = null;
+            unset($this->factoryCallback);
         }
         return $this->compositeSubscription;
     }

@@ -98,7 +98,7 @@ final class Envelope implements EnvelopeInterface
         if (is_null($messageType) || !is_subclass_of($messageType, MessageInterface::class)) {
             throw new EnvelopeNotAcceptable(sprintf(
                 "Message type '%s' given must be an instance of MessageInterface",
-                $messageType
+                $messageType ?? 'null'
             ), EnvelopeNotAcceptable::UNPARSEABLE);
         }
 
