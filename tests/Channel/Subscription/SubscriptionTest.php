@@ -16,7 +16,7 @@ use Daikon\MessageBus\Channel\Subscription\SubscriptionInterface;
 use Daikon\MessageBus\Channel\Subscription\Transport\TransportInterface;
 use Daikon\MessageBus\Envelope;
 use Daikon\MessageBus\EnvelopeInterface;
-use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
+use Daikon\MessageBus\Exception\EnvelopeNotAcceptable;
 use Daikon\MessageBus\MessageBusInterface;
 use Daikon\MessageBus\MessageInterface;
 use Daikon\Metadata\Metadata;

@@ -8,9 +8,9 @@
 
 namespace Daikon\Tests\MessageBus;
 
+use Daikon\Interop\InvalidArgumentException;
 use Daikon\MessageBus\Channel\Subscription\SubscriptionInterface;
 use Daikon\MessageBus\Channel\Subscription\SubscriptionMap;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 final class SubscriptionMapTest extends TestCase

@@ -9,7 +9,7 @@
 namespace Daikon\MessageBus;
 
 use DateTimeImmutable;
-use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
+use Daikon\MessageBus\Exception\EnvelopeNotAcceptable;
 use Daikon\MessageBus\MessageInterface;
 use Daikon\Metadata\Metadata;
 use Daikon\Metadata\MetadataInterface;
@@ -96,10 +96,10 @@ final class Envelope implements EnvelopeInterface
 
         $messageType = $state['@message_type'] ?? null;
         if (is_null($messageType) || !is_subclass_of($messageType, MessageInterface::class)) {
-            throw new EnvelopeNotAcceptable(sprintf(
-                "Message type '%s' given must be an instance of MessageInterface",
-                $messageType ?? 'null'
-            ), EnvelopeNotAcceptable::UNPARSEABLE);
+            throw new EnvelopeNotAcceptable(
+                sprintf("Message type '%s' given must be an instance of MessageInterface.", $messageType ?? 'null'),
+                EnvelopeNotAcceptable::UNPARSEABLE
+            );
         }
 
         $metadataType = $state['@metadata_type'] ?? null;

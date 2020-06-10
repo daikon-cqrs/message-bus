@@ -6,8 +6,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Daikon\MessageBus\Error;
+namespace Daikon\MessageBus\Exception;
 
-interface ErrorInterface
+use Daikon\Interop\RuntimeException;
+
+final class ChannelUnknown extends RuntimeException implements MessageBusException
 {
 }

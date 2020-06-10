@@ -8,23 +8,22 @@
 
 namespace Daikon\MessageBus\Channel\Subscription;
 
-use Daikon\DataStructure\TypedMapInterface;
-use Daikon\DataStructure\TypedMapTrait;
-use InvalidArgumentException;
+use Daikon\DataStructure\TypedMap;
+use Daikon\Interop\Assertion;
 
-final class SubscriptionMap implements TypedMapInterface
+final class SubscriptionMap extends TypedMap
 {
-    use TypedMapTrait;
-
     public function __construct(iterable $subscriptions = [])
     {
         $mappedSubscriptions = [];
         /** @var SubscriptionInterface $subscription */
         foreach ($subscriptions as $subscription) {
             $subscriptionKey = $subscription->getKey();
-            if (isset($mappedSubscriptions[$subscriptionKey])) {
-                throw new InvalidArgumentException("Subscription key '$subscriptionKey' is already defined.");
-            }
+            Assertion::keyNotExists(
+                $mappedSubscriptions,
+                $subscriptionKey,
+                "Subscription key '$subscriptionKey' is already defined."
+            );
             $mappedSubscriptions[$subscriptionKey] = $subscription;
         }
 

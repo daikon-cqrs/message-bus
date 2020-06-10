@@ -8,9 +8,9 @@
 
 namespace Daikon\Tests\MessageBus;
 
+use Daikon\Interop\InvalidArgumentException;
 use Daikon\MessageBus\Channel\Subscription\Transport\TransportInterface;
 use Daikon\MessageBus\Channel\Subscription\Transport\TransportMap;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 final class TransportMapTest extends TestCase

@@ -6,11 +6,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Daikon\MessageBus\Error;
+namespace Daikon\MessageBus\Exception;
 
-use Exception;
+use Daikon\Interop\RuntimeException;
 
-final class EnvelopeNotAcceptable extends Exception implements ErrorInterface
+final class EnvelopeNotAcceptable extends RuntimeException implements MessageBusException
 {
     public const SUBSCRIPTION_KEY_MISSING = 6000;
     public const SUBSCRIPTION_KEY_UNEXPECTED = 6001;

@@ -12,7 +12,7 @@ use Closure;
 use Daikon\MessageBus\Channel\Subscription\MessageHandler\MessageHandlerList;
 use Daikon\MessageBus\Channel\Subscription\Transport\TransportInterface;
 use Daikon\MessageBus\EnvelopeInterface;
-use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
+use Daikon\MessageBus\Exception\EnvelopeNotAcceptable;
 use Daikon\MessageBus\MessageBusInterface;
 use Daikon\Metadata\MetadataInterface;
 use Daikon\Metadata\MetadataEnricherInterface;
@@ -42,7 +42,7 @@ final class Subscription implements SubscriptionInterface
         $this->messageHandlers = $messageHandlers;
         $this->guard = $guard ?? fn(): bool => true;
         $metadataEnrichers = $metadataEnrichers ?? new MetadataEnricherList;
-        $this->metadataEnrichers = $metadataEnrichers->prependEnricher(self::METADATA_KEY, $this->key);
+        $this->metadataEnrichers = $metadataEnrichers->enrichWith(self::METADATA_KEY, $this->key);
     }
 
     public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): void
@@ -79,7 +79,7 @@ final class Subscription implements SubscriptionInterface
 
     private function accepts(EnvelopeInterface $envelope): bool
     {
-        return (bool)call_user_func($this->guard, $envelope);
+        return (bool)($this->guard)($envelope);
     }
 
     private function verify(EnvelopeInterface $envelope): void

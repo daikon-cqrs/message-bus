@@ -13,8 +13,8 @@ use Daikon\MessageBus\EnvelopeInterface;
 use Daikon\MessageBus\MessageBusInterface;
 use Daikon\MessageBus\Channel\Subscription\SubscriptionInterface;
 use Daikon\MessageBus\Channel\Subscription\SubscriptionMap;
-use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
-use Daikon\MessageBus\Error\SubscriptionUnknown;
+use Daikon\MessageBus\Exception\EnvelopeNotAcceptable;
+use Daikon\MessageBus\Exception\SubscriptionUnknown;
 use Daikon\Metadata\MetadataInterface;
 use Daikon\Metadata\MetadataEnricherInterface;
 use Daikon\Metadata\MetadataEnricherList;
@@ -39,7 +39,7 @@ final class Channel implements ChannelInterface
         $this->subscriptions = $subscriptions;
         $this->guard = $guard ?? fn(): bool => true;
         $metadataEnrichers = $metadataEnrichers ?? new MetadataEnricherList;
-        $this->metadataEnrichers = $metadataEnrichers->prependEnricher(self::METADATA_KEY, $this->key);
+        $this->metadataEnrichers = $metadataEnrichers->enrichWith(self::METADATA_KEY, $this->key);
     }
 
     public function publish(EnvelopeInterface $envelope, MessageBusInterface $messageBus): void
@@ -85,7 +85,7 @@ final class Channel implements ChannelInterface
 
     private function accepts(EnvelopeInterface $envelope): bool
     {
-        return (bool)call_user_func($this->guard, $envelope);
+        return (bool)($this->guard)($envelope);
     }
 
     private function verify(EnvelopeInterface $envelope): void

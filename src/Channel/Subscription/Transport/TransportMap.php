@@ -8,23 +8,22 @@
 
 namespace Daikon\MessageBus\Channel\Subscription\Transport;
 
-use Daikon\DataStructure\TypedMapInterface;
-use Daikon\DataStructure\TypedMapTrait;
-use InvalidArgumentException;
+use Daikon\DataStructure\TypedMap;
+use Daikon\Interop\Assertion;
 
-final class TransportMap implements TypedMapInterface
+final class TransportMap extends TypedMap
 {
-    use TypedMapTrait;
-
     public function __construct(iterable $transports = [])
     {
         $mappedTransports = [];
         /** @var TransportInterface $transport */
         foreach ($transports as $transport) {
             $transportKey = $transport->getKey();
-            if (isset($mappedTransports[$transportKey])) {
-                throw new InvalidArgumentException("Transport key '$transportKey' is already defined.");
-            }
+            Assertion::keyNotExists(
+                $mappedTransports,
+                $transportKey,
+                "Transport key '$transportKey' is already defined."
+            );
             $mappedTransports[$transportKey] = $transport;
         }
 

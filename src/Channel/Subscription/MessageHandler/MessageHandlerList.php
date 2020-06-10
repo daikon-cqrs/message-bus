@@ -8,13 +8,10 @@
 
 namespace Daikon\MessageBus\Channel\Subscription\MessageHandler;
 
-use Daikon\DataStructure\TypedListInterface;
-use Daikon\DataStructure\TypedListTrait;
+use Daikon\DataStructure\TypedList;
 
-final class MessageHandlerList implements TypedListInterface
+final class MessageHandlerList extends TypedList
 {
-    use TypedListTrait;
-
     public function __construct(iterable $messageHandlers = [])
     {
         $this->init($messageHandlers, [MessageHandlerInterface::class]);

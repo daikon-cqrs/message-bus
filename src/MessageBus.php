@@ -10,8 +10,8 @@ namespace Daikon\MessageBus;
 
 use Daikon\MessageBus\Channel\ChannelInterface;
 use Daikon\MessageBus\Channel\ChannelMap;
-use Daikon\MessageBus\Error\ChannelUnknown;
-use Daikon\MessageBus\Error\EnvelopeNotAcceptable;
+use Daikon\MessageBus\Exception\ChannelUnknown;
+use Daikon\MessageBus\Exception\EnvelopeNotAcceptable;
 use Daikon\Metadata\MetadataInterface;
 use Daikon\Metadata\Metadata;
 use Daikon\Metadata\MetadataEnricherInterface;
@@ -41,9 +41,8 @@ final class MessageBus implements MessageBusInterface
             throw new ChannelUnknown("Channel '$channelKey' has not been registered on message bus.");
         }
         $metadata = $this->enrichMetadata($metadata ?? Metadata::makeEmpty());
-        $envelopeType = $this->envelopeType;
         /** @var EnvelopeInterface $envelope */
-        $envelope = $envelopeType::wrap($message, $metadata);
+        $envelope = $this->envelopeType::wrap($message, $metadata);
         /** @var ChannelInterface $channel */
         $channel = $this->channelMap->get($channelKey);
         $channel->publish($envelope, $this);

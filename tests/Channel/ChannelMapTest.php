@@ -8,9 +8,9 @@
 
 namespace Daikon\Tests\MessageBus;
 
+use Daikon\Interop\InvalidArgumentException;
 use Daikon\MessageBus\Channel\ChannelInterface;
 use Daikon\MessageBus\Channel\ChannelMap;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 final class ChannelMapTest extends TestCase

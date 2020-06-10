@@ -8,23 +8,18 @@
 
 namespace Daikon\MessageBus\Channel;
 
-use Daikon\DataStructure\TypedMapInterface;
-use Daikon\DataStructure\TypedMapTrait;
-use InvalidArgumentException;
+use Daikon\DataStructure\TypedMap;
+use Daikon\Interop\Assertion;
 
-final class ChannelMap implements TypedMapInterface
+final class ChannelMap extends TypedMap
 {
-    use TypedMapTrait;
-
     public function __construct(iterable $channels = [])
     {
         $mappedChannels = [];
         /** @var ChannelInterface $channel */
         foreach ($channels as $channel) {
             $channelKey = $channel->getKey();
-            if (isset($mappedChannels[$channelKey])) {
-                throw new InvalidArgumentException("Channel key '$channelKey' is already defined.");
-            }
+            Assertion::keyNotExists($mappedChannels, $channelKey, "Channel key '$channelKey' is already defined.");
             $mappedChannels[$channelKey] = $channel;
         }
 
