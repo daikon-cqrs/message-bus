@@ -12,22 +12,22 @@ use Daikon\MessageBus\MessageInterface;
 
 final class ChangeUsername implements MessageInterface
 {
-    private UserId $identifier;
+    private UserId $userId;
 
     private KnownRevision $knownRevision;
 
     private Username $username;
-
-    public function __construct(UserId $identifier, KnownRevision $knownRevision, Username $username)
+    
+    public function __construct(UserId $userId, KnownRevision $knownRevision, Username $username)
     {
-        $this->username = $username;
+        $this->userId = $userId;
         $this->knownRevision = $knownRevision;
-        $this->identifier = $identifier;
+        $this->username = $username;
     }
 
-    public function getIdentifier(): UserId
+    public function getUserId(): UserId
     {
-        return $this->identifier;
+        return $this->userId;
     }
 
     public function getKnownRevision(): KnownRevision
@@ -43,7 +43,7 @@ final class ChangeUsername implements MessageInterface
     public function toNative(): array
     {
         return [
-            'identifier' => $this->identifier->toNative(),
+            'userId' => $this->userId->toNative(),
             'knownRevision' => $this->knownRevision->toNative(),
             'username' => $this->username->toNative()
         ];
@@ -53,7 +53,7 @@ final class ChangeUsername implements MessageInterface
     public static function fromNative($state): MessageInterface
     {
         return new self(
-            new UserId($state['identifier']),
+            new UserId($state['userId']),
             new KnownRevision((int)$state['knownRevision']),
             new Username($state['username'])
         );

@@ -175,12 +175,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/daikon-cqrs/interop.git",
-                "reference": "3cfdb5c48c4f81c778f126d31861cc2b6907f237"
+                "reference": "66a85ad9b93010134206ee77ee52682348470ef4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/daikon-cqrs/interop/zipball/3cfdb5c48c4f81c778f126d31861cc2b6907f237",
-                "reference": "3cfdb5c48c4f81c778f126d31861cc2b6907f237",
+                "url": "https://api.github.com/repos/daikon-cqrs/interop/zipball/66a85ad9b93010134206ee77ee52682348470ef4",
+                "reference": "66a85ad9b93010134206ee77ee52682348470ef4",
                 "shasum": ""
             },
             "require": {
@@ -205,7 +205,7 @@
             ],
             "description": "Interoperability code used across Daikon-CQRS components.",
             "homepage": "https://github.com/daikon-cqrs/interop",
-            "time": "2020-07-13T17:46:25+00:00"
+            "time": "2020-07-13T20:13:39+00:00"
         },
         {
             "name": "daikon/metadata",
