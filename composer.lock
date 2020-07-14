@@ -126,12 +126,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/daikon-cqrs/data-structure.git",
-                "reference": "f2a4efe5ea7f5dd8436df81d2efae3168cae42d6"
+                "reference": "eb8e1b5760cbcc38db990f5710579e3a0209e7a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/daikon-cqrs/data-structure/zipball/f2a4efe5ea7f5dd8436df81d2efae3168cae42d6",
-                "reference": "f2a4efe5ea7f5dd8436df81d2efae3168cae42d6",
+                "url": "https://api.github.com/repos/daikon-cqrs/data-structure/zipball/eb8e1b5760cbcc38db990f5710579e3a0209e7a1",
+                "reference": "eb8e1b5760cbcc38db990f5710579e3a0209e7a1",
                 "shasum": ""
             },
             "require": {
@@ -167,7 +167,7 @@
                 "map",
                 "vector"
             ],
-            "time": "2020-07-14T20:19:43+00:00"
+            "time": "2020-07-14T21:01:37+00:00"
         },
         {
             "name": "daikon/interop",
@@ -213,12 +213,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/daikon-cqrs/metadata.git",
-                "reference": "b4f47fbc829421f61365cc7eb002ff20a756c96e"
+                "reference": "bc19dcb8c77fbf31a441eaf6c69d267213de48e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/daikon-cqrs/metadata/zipball/b4f47fbc829421f61365cc7eb002ff20a756c96e",
-                "reference": "b4f47fbc829421f61365cc7eb002ff20a756c96e",
+                "url": "https://api.github.com/repos/daikon-cqrs/metadata/zipball/bc19dcb8c77fbf31a441eaf6c69d267213de48e2",
+                "reference": "bc19dcb8c77fbf31a441eaf6c69d267213de48e2",
                 "shasum": ""
             },
             "require": {
@@ -248,7 +248,7 @@
                 "enricher",
                 "metadata"
             ],
-            "time": "2020-07-14T20:30:17+00:00"
+            "time": "2020-07-14T21:05:31+00:00"
         },
         {
             "name": "php-ds/php-ds",
