@@ -5,7 +5,7 @@
 ![Packagist License](https://img.shields.io/packagist/l/daikon/message-bus)
 
 [![Build Status](https://travis-ci.com/daikon-cqrs/message-bus.svg?branch=master)](https://travis-ci.com/daikon-cqrs/message-bus)
-[![Code Coverage](https://scrutinizer-ci.com/g/daikon-cqrs/message-bus/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/daikon-cqrs/message-bus/?branch=master)
+[![Code Coverage](https://img.shields.io/codecov/c/github/daikon-cqrs/message-bus)](https://codecov.io/gh/daikon-cqrs/message-bus)
 [![Type Coverage](https://shepherd.dev/github/daikon-cqrs/message-bus/coverage.svg)](https://shepherd.dev/github/daikon-cqrs/message-bus)
 [![Libraries.io dependency status](https://img.shields.io/librariesio/github/daikon-cqrs/message-bus)](https://libraries.io/github/daikon-cqrs/message-bus)
 [![Scrutinizer code quality](https://img.shields.io/scrutinizer/quality/g/daikon-cqrs/message-bus/master)](https://scrutinizer-ci.com/g/daikon-cqrs/message-bus/?branch=master)

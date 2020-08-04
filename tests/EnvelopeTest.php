@@ -17,7 +17,7 @@ use Daikon\Tests\MessageBus\Fixture\UserId;
 use Daikon\Tests\MessageBus\Fixture\Username;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
-use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 final class EnvelopeTest extends TestCase
 {
@@ -28,7 +28,7 @@ final class EnvelopeTest extends TestCase
             new KnownRevision(2),
             new Username('frodo')
         ));
-        $this->assertInstanceOf(Uuid::class, $envelope->getUuid());
+        $this->assertInstanceOf(UuidInterface::class, $envelope->getUuid());
         $this->assertInstanceOf(DateTimeImmutable::class, $envelope->getTimestamp());
         $this->assertInstanceOf(Metadata::class, $envelope->getMetadata());
         $this->assertInstanceOf(MessageInterface::class, $envelope->getMessage());
