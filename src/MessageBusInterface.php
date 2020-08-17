@@ -12,7 +12,7 @@ use Daikon\Metadata\MetadataInterface;
 
 interface MessageBusInterface
 {
-    public function publish(MessageInterface $message, string $channel, MetadataInterface $metadata = null): void;
+    public function publish(MessageInterface $message, string $channelKey, MetadataInterface $metadata = null): void;
 
     public function receive(EnvelopeInterface $envelope): void;
 }
