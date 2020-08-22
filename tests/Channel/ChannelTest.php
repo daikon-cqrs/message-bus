@@ -44,12 +44,10 @@ final class ChannelTest extends TestCase
         /** @var MessageBusInterface $messageBusMock */
         $messageBusMock = $this->createMock(MessageBusInterface::class);
         $subscriptionMock = $this->createMock(SubscriptionInterface::class);
-        $subscriptionMock->expects($this->once())->method('getKey')->willReturn('mock');
         $subscriptionMock->expects($this->once())
             ->method('publish')
             ->with($envelopeExpectation, $this->equalTo($messageBusMock));
-        /** @var SubscriptionInterface $subscriptionMock */
-        $channel = new Channel(self::CHANNEL_NAME, new SubscriptionMap([$subscriptionMock]));
+        $channel = new Channel(self::CHANNEL_NAME, new SubscriptionMap(['mock' => $subscriptionMock]));
         $this->assertNull($channel->publish($envelope, $messageBusMock));
     }
 
@@ -62,12 +60,10 @@ final class ChannelTest extends TestCase
         $messageBusMock = $this->createMock(MessageBusInterface::class);
         $subscriptionMock = $this->createMock(SubscriptionInterface::class);
         $subscriptionMock->expects($this->never())->method('publish');
-        $subscriptionMock->expects($this->once())->method('getKey')->willReturn('mock');
         $guard = function (EnvelopeInterface $e): bool {
             return $e->getUuid()->toString() === 'this envelope is acceptable';
         };
-        /** @var SubscriptionInterface $subscriptionMock */
-        $channel = new Channel('foo', new SubscriptionMap([$subscriptionMock]), $guard);
+        $channel = new Channel('foo', new SubscriptionMap(['mock' => $subscriptionMock]), $guard);
         $this->assertNull($channel->publish($envelope, $messageBusMock));
     }
 
@@ -79,13 +75,11 @@ final class ChannelTest extends TestCase
         /** @var MessageBusInterface $messageBusMock */
         $messageBusMock = $this->createMock(MessageBusInterface::class);
         $subscriptionMock = $this->createMock(SubscriptionInterface::class);
-        $subscriptionMock->expects($this->once())->method('getKey')->willReturn('mock');
         $subscriptionMock->expects($this->once())->method('publish');
         $guard = function (EnvelopeInterface $e): bool {
             return $e->getUuid()->toString() !== 'this envelope is inacceptable';
         };
-        /** @var SubscriptionInterface $subscriptionMock */
-        $channel = new Channel('foo', new SubscriptionMap([$subscriptionMock]), $guard);
+        $channel = new Channel('foo', new SubscriptionMap(['mock' => $subscriptionMock]), $guard);
         $this->assertNull($channel->publish($envelope, $messageBusMock));
     }
 
@@ -98,10 +92,8 @@ final class ChannelTest extends TestCase
             SubscriptionInterface::METADATA_KEY => self::SUB_NAME
         ]));
         $subscriptionMock = $this->createMock(SubscriptionInterface::class);
-        $subscriptionMock->expects($this->once())->method('getKey')->willReturn(self::SUB_NAME);
         $subscriptionMock->expects($this->once())->method('receive')->with($envelopeExpectation);
-        /** @var SubscriptionInterface $subscriptionMock */
-        $channel = new Channel(self::CHANNEL_NAME, new SubscriptionMap([$subscriptionMock]));
+        $channel = new Channel(self::CHANNEL_NAME, new SubscriptionMap([self::SUB_NAME => $subscriptionMock]));
         $this->assertNull($channel->receive($envelopeExpectation));
     }
 
@@ -114,9 +106,7 @@ final class ChannelTest extends TestCase
             SubscriptionInterface::METADATA_KEY => 'foobar'
         ]));
         $subscriptionMock = $this->createMock(SubscriptionInterface::class);
-        $subscriptionMock->expects($this->once())->method('getKey')->willReturn(self::SUB_NAME);
-        /** @psalm-suppress InvalidArgument */
-        $channel = new Channel(self::CHANNEL_NAME, new SubscriptionMap([$subscriptionMock]));
+        $channel = new Channel(self::CHANNEL_NAME, new SubscriptionMap(['mock' => $subscriptionMock]));
 
         $this->expectException(SubscriptionUnknown::class);
         $this->expectExceptionMessage(
@@ -126,16 +116,15 @@ final class ChannelTest extends TestCase
         $this->expectExceptionCode(0);
 
         $channel->receive($envelope);
-    } // @codeCoverageIgnore
+    }
 
     public function testReceiveWithMissingChannel(): void
     {
         /** @var MessageInterface $messageMock */
         $messageMock = $this->createMock(MessageInterface::class);
         $subscriptionMock = $this->createMock(SubscriptionInterface::class);
-        $subscriptionMock->expects($this->once())->method('getKey')->willReturn('mock');
         $envelope = Envelope::wrap($messageMock);
-        $channel = new Channel(self::CHANNEL_NAME, new SubscriptionMap([$subscriptionMock]));
+        $channel = new Channel(self::CHANNEL_NAME, new SubscriptionMap(['mock' => $subscriptionMock]));
 
         $this->expectException(EnvelopeNotAcceptable::class);
         $this->expectExceptionMessage(
@@ -145,18 +134,17 @@ final class ChannelTest extends TestCase
         $this->expectExceptionCode(EnvelopeNotAcceptable::CHANNEL_KEY_MISSING);
 
         $channel->receive($envelope);
-    } // @codeCoverageIgnore
+    }
 
     public function testReceiveWithWrongChannel(): void
     {
         /** @var MessageInterface $messageMock */
         $messageMock = $this->createMock(MessageInterface::class);
         $subscriptionMock = $this->createMock(SubscriptionInterface::class);
-        $subscriptionMock->expects($this->once())->method('getKey')->willReturn('mock');
         $envelope = Envelope::wrap($messageMock, Metadata::fromNative([
             ChannelInterface::METADATA_KEY => 'foobar'
         ]));
-        $channel = new Channel(self::CHANNEL_NAME, new SubscriptionMap([$subscriptionMock]));
+        $channel = new Channel(self::CHANNEL_NAME, new SubscriptionMap(['mock' => $subscriptionMock]));
 
         $this->expectException(EnvelopeNotAcceptable::class);
         $this->expectExceptionMessage(
@@ -166,18 +154,17 @@ final class ChannelTest extends TestCase
         $this->expectExceptionCode(EnvelopeNotAcceptable::CHANNEL_KEY_UNEXPECTED);
 
         $channel->receive($envelope);
-    } // @codeCoverageIgnore
+    }
 
     public function testReceiveWithMissingSubscription(): void
     {
         /** @var MessageInterface $messageMock */
         $messageMock = $this->createMock(MessageInterface::class);
         $subscriptionMock = $this->createMock(SubscriptionInterface::class);
-        $subscriptionMock->expects($this->once())->method('getKey')->willReturn('mock');
         $envelope = Envelope::wrap($messageMock, Metadata::fromNative([
             ChannelInterface::METADATA_KEY => self::CHANNEL_NAME
         ]));
-        $channel = new Channel(self::CHANNEL_NAME, new SubscriptionMap([$subscriptionMock]));
+        $channel = new Channel(self::CHANNEL_NAME, new SubscriptionMap(['mock' => $subscriptionMock]));
 
         $this->expectException(EnvelopeNotAcceptable::class);
         $this->expectExceptionMessage(
@@ -187,5 +174,5 @@ final class ChannelTest extends TestCase
         $this->expectExceptionCode(EnvelopeNotAcceptable::SUBSCRIPTION_KEY_MISSING);
 
         $channel->receive($envelope);
-    } // @codeCoverageIgnore
+    }
 }

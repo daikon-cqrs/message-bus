@@ -93,7 +93,7 @@ final class SubscriptionTest extends TestCase
         $this->expectExceptionCode(EnvelopeNotAcceptable::SUBSCRIPTION_KEY_UNEXPECTED);
 
         $subscription->receive($envelope);
-    } // @codeCoverageIgnore
+    }
 
     public function testReceiveWithMissingSubscription(): void
     {
@@ -112,7 +112,7 @@ final class SubscriptionTest extends TestCase
         $this->expectExceptionCode(EnvelopeNotAcceptable::SUBSCRIPTION_KEY_MISSING);
 
         $subscription->receive($envelope);
-    } // @codeCoverageIgnore
+    }
 
     public function testPublishPreventedByGuard(): void
     {

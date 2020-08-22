@@ -8,7 +8,6 @@
 
 namespace Daikon\Tests\MessageBus;
 
-use Daikon\Interop\InvalidArgumentException;
 use Daikon\MessageBus\Channel\Subscription\Transport\TransportInterface;
 use Daikon\MessageBus\Channel\Subscription\Transport\TransportMap;
 use PHPUnit\Framework\TestCase;
@@ -18,19 +17,10 @@ final class TransportMapTest extends TestCase
     public function testConstructWithSelf(): void
     {
         $transportMock = $this->createMock(TransportInterface::class);
-        $transportMock->expects($this->exactly(2))->method('getKey')->willReturn('mock');
-        $transportMap = new TransportMap([$transportMock]);
+        $transportMap = new TransportMap(['mock' => $transportMock]);
         $newMap = new TransportMap($transportMap);
         $this->assertCount(1, $newMap);
         $this->assertFalse($transportMap === $newMap);
-    }
-
-    public function testConstructWithDuplicateKey(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $transportMock = $this->createMock(TransportInterface::class);
-        $transportMock->expects($this->exactly(2))->method('getKey')->willReturn('mock');
-        new TransportMap([$transportMock, $transportMock]);
     }
 
     public function testPush(): void

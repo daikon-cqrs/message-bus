@@ -8,7 +8,6 @@
 
 namespace Daikon\Tests\MessageBus;
 
-use Daikon\Interop\InvalidArgumentException;
 use Daikon\MessageBus\Channel\ChannelInterface;
 use Daikon\MessageBus\Channel\ChannelMap;
 use PHPUnit\Framework\TestCase;
@@ -18,19 +17,10 @@ final class ChannelMapTest extends TestCase
     public function testConstructWithSelf(): void
     {
         $channelMock = $this->createMock(ChannelInterface::class);
-        $channelMock->expects($this->exactly(2))->method('getKey')->willReturn('mock');
-        $channelMap = new ChannelMap([$channelMock]);
+        $channelMap = new ChannelMap(['mock' => $channelMock]);
         $newMap = new ChannelMap($channelMap);
         $this->assertCount(1, $newMap);
         $this->assertFalse($channelMap === $newMap);
-    }
-
-    public function testConstructWithDuplicateKey(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $channelMock = $this->createMock(ChannelInterface::class);
-        $channelMock->expects($this->exactly(2))->method('getKey')->willReturn('mock');
-        new ChannelMap([$channelMock, $channelMock]);
     }
 
     public function testPush(): void

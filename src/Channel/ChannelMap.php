@@ -9,20 +9,11 @@
 namespace Daikon\MessageBus\Channel;
 
 use Daikon\DataStructure\TypedMap;
-use Daikon\Interop\Assertion;
 
 final class ChannelMap extends TypedMap
 {
     public function __construct(iterable $channels = [])
     {
-        $mappedChannels = [];
-        /** @var ChannelInterface $channel */
-        foreach ($channels as $channel) {
-            $channelKey = $channel->getKey();
-            Assertion::keyNotExists($mappedChannels, $channelKey, "Channel key '$channelKey' is already defined.");
-            $mappedChannels[$channelKey] = $channel;
-        }
-
-        $this->init($mappedChannels, [ChannelInterface::class]);
+        $this->init($channels, [ChannelInterface::class]);
     }
 }
