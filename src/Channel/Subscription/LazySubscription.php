@@ -59,7 +59,7 @@ final class LazySubscription implements SubscriptionInterface
 
     private function getSubscription(): SubscriptionInterface
     {
-        /** @psalm-suppress TypeDoesNotContainType */
+        /** @psalm-suppress RedundantPropertyInitializationCheck */
         if (!isset($this->compositeSubscription)) {
             $this->compositeSubscription = ($this->factoryCallback)();
             unset($this->factoryCallback);
